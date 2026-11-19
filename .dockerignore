@@ -1,0 +1,10 @@
+*
+!src/
+!src/**
+!tests/
+!tests/**
+!fixtures/
+!fixtures/**
+!containers/
+!containers/**
+**/__pycache__/

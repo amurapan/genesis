@@ -1,0 +1,2 @@
+# Runtime and tests use only the Python 3.11 standard library.
+# Container runtime is pinned by digest in containers/*.Dockerfile.

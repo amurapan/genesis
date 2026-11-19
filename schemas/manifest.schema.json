@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "generator_version": {
+      "type": "string"
+    },
+    "episode_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "base_currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "currency_exponents": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9
+      }
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "rounding": {
+      "const": "ROUND_HALF_EVEN"
+    },
+    "record_counts": {
+      "type": "object",
+      "properties": {
+        "ledger": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "invoices": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "payments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fx": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "ledger",
+        "invoices",
+        "payments",
+        "fx"
+      ],
+      "additionalProperties": false
+    },
+    "document_count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "schema_version",
+    "generator_version",
+    "episode_id",
+    "base_currency",
+    "currency_exponents",
+    "period_start",
+    "period_end",
+    "timezone",
+    "rounding",
+    "record_counts",
+    "document_count"
+  ],
+  "additionalProperties": false
+}

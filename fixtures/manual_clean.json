@@ -1,0 +1,171 @@
+{
+  "public": {
+    "manifest": {
+      "schema_version": "1.0.0",
+      "generator_version": "manual-1",
+      "episode_id": "ep_90713ba541734405bf80968291c9a102",
+      "base_currency": "KZT",
+      "currency_exponents": {
+        "KZT": 2
+      },
+      "period_start": "2026-11-01T00:00:00+05:00",
+      "period_end": "2026-12-01T00:00:00+05:00",
+      "timezone": "Asia/Almaty",
+      "rounding": "ROUND_HALF_EVEN",
+      "record_counts": {
+        "ledger": 4,
+        "invoices": 1,
+        "payments": 1,
+        "fx": 0
+      },
+      "document_count": 2
+    },
+    "policy": {
+      "profile": "domestic_receivables_v1",
+      "supported_issue_types": [
+        "duplicate_invoice",
+        "payment_allocation"
+      ],
+      "invoice_recognition": "Each source invoice is recognized exactly once",
+      "allocation": "Allocate receipts up to the original invoice outstanding balance",
+      "allocation_order": "Payment timestamps must be distinct within an invoice",
+      "currency_scope": "Invoices and payments use the episode base currency",
+      "rounding": "ROUND_HALF_EVEN",
+      "amount_tolerance_minor": 0,
+      "period_bounds": "start_inclusive_end_exclusive"
+    },
+    "ledger": [
+      {
+        "row_id": "r1",
+        "timestamp": "2026-11-05T09:00:00+05:00",
+        "account": "accounts_receivable",
+        "debit_minor": 100000,
+        "credit_minor": 0,
+        "currency": "KZT",
+        "entity_id": "company-1",
+        "invoice_id": "invoice-1",
+        "payment_id": null
+      },
+      {
+        "row_id": "r2",
+        "timestamp": "2026-11-05T09:00:00+05:00",
+        "account": "revenue",
+        "debit_minor": 0,
+        "credit_minor": 100000,
+        "currency": "KZT",
+        "entity_id": "company-1",
+        "invoice_id": "invoice-1",
+        "payment_id": null
+      },
+      {
+        "row_id": "r3",
+        "timestamp": "2026-11-12T10:00:00+05:00",
+        "account": "cash",
+        "debit_minor": 60000,
+        "credit_minor": 0,
+        "currency": "KZT",
+        "entity_id": "company-1",
+        "invoice_id": "invoice-1",
+        "payment_id": "payment-1"
+      },
+      {
+        "row_id": "r4",
+        "timestamp": "2026-11-12T10:00:00+05:00",
+        "account": "accounts_receivable",
+        "debit_minor": 0,
+        "credit_minor": 60000,
+        "currency": "KZT",
+        "entity_id": "company-1",
+        "invoice_id": "invoice-1",
+        "payment_id": "payment-1"
+      }
+    ],
+    "invoices": [
+      {
+        "doc_id": "invoice-doc-1",
+        "invoice_id": "invoice-1",
+        "entity_id": "company-1",
+        "issued_at": "2026-11-05T09:00:00+05:00",
+        "due_at": "2026-11-30T18:00:00+05:00",
+        "currency": "KZT",
+        "total_minor": 100000,
+        "line_items": [
+          {
+            "description": "Synthetic service",
+            "quantity": 1,
+            "unit_price_minor": 100000,
+            "total_minor": 100000
+          }
+        ]
+      }
+    ],
+    "payments": [
+      {
+        "doc_id": "payment-doc-1",
+        "payment_id": "payment-1",
+        "timestamp": "2026-11-12T10:00:00+05:00",
+        "currency": "KZT",
+        "amount_minor": 60000,
+        "invoice_refs": [
+          "invoice-1"
+        ]
+      }
+    ],
+    "fx": []
+  },
+  "truth": {
+    "schema_version": "1.0.0",
+    "episode_id": "ep_90713ba541734405bf80968291c9a102",
+    "issues": []
+  },
+  "provenance": {
+    "authored": "manual",
+    "baseline_ledger": [
+      {
+        "row_id": "r1",
+        "timestamp": "2026-11-05T09:00:00+05:00",
+        "account": "accounts_receivable",
+        "debit_minor": 100000,
+        "credit_minor": 0,
+        "currency": "KZT",
+        "entity_id": "company-1",
+        "invoice_id": "invoice-1",
+        "payment_id": null
+      },
+      {
+        "row_id": "r2",
+        "timestamp": "2026-11-05T09:00:00+05:00",
+        "account": "revenue",
+        "debit_minor": 0,
+        "credit_minor": 100000,
+        "currency": "KZT",
+        "entity_id": "company-1",
+        "invoice_id": "invoice-1",
+        "payment_id": null
+      },
+      {
+        "row_id": "r3",
+        "timestamp": "2026-11-12T10:00:00+05:00",
+        "account": "cash",
+        "debit_minor": 60000,
+        "credit_minor": 0,
+        "currency": "KZT",
+        "entity_id": "company-1",
+        "invoice_id": "invoice-1",
+        "payment_id": "payment-1"
+      },
+      {
+        "row_id": "r4",
+        "timestamp": "2026-11-12T10:00:00+05:00",
+        "account": "accounts_receivable",
+        "debit_minor": 0,
+        "credit_minor": 60000,
+        "currency": "KZT",
+        "entity_id": "company-1",
+        "invoice_id": "invoice-1",
+        "payment_id": "payment-1"
+      }
+    ],
+    "modifications": []
+  }
+}

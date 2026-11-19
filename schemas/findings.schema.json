@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "episode_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "findings": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "affected_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "claimed_amount_minor": {
+            "type": "integer",
+            "description": "Wire representation must be an integer, not bool or fractional JSON notation."
+          },
+          "currency": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "maxItems": 10
+          },
+          "explanation": {
+            "type": "string",
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "type",
+          "affected_ids",
+          "claimed_amount_minor",
+          "currency",
+          "evidence_ids",
+          "explanation"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "episode_id",
+    "findings"
+  ],
+  "additionalProperties": false
+}

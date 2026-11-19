@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "list_records"
+        },
+        "table": {
+          "enum": [
+            "ledger",
+            "invoices",
+            "payments",
+            "fx",
+            "policy"
+          ]
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        }
+      },
+      "required": [
+        "action",
+        "table"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "get_record"
+        },
+        "table": {
+          "enum": [
+            "ledger",
+            "invoices",
+            "payments",
+            "fx",
+            "policy"
+          ]
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "table",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "get_document"
+        },
+        "doc_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "doc_id"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "calculator"
+        },
+        "expression": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "action",
+        "expression"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "submit"
+        },
+        "findings": {
+          "$ref": "findings.schema.json"
+        }
+      },
+      "required": [
+        "action",
+        "findings"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}
