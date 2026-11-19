@@ -691,13 +691,24 @@ html.cinema-page {
 html.cinematic {
   scroll-behavior: smooth;
 }
+.viewport-reference {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100svh;
+  visibility: hidden;
+  pointer-events: none;
+}
 .cinematic .film {
-  height: calc(100svh + 720svh);
+  --stage-height: 100svh;
+  --scroll-travel: 720svh;
+  height: calc(var(--stage-height) + var(--scroll-travel));
 }
 .cinematic .film-stage {
   position: sticky;
   top: 0;
-  height: 100svh;
+  height: var(--stage-height);
   min-height: 620px;
   overflow: hidden;
   isolation: isolate;
@@ -724,6 +735,10 @@ html.cinematic {
 }
 .spatial-host > div {
   pointer-events: none;
+}
+.reading-layer {
+  position: absolute;
+  inset: 0;
 }
 .spatial-preview {
   max-width: none;
@@ -785,22 +800,22 @@ html.cinematic {
   top: 0;
 }
 .cinematic #detail {
-  top: calc((100% - 100svh) * 0.19);
+  top: calc(var(--scroll-travel) * 0.19);
 }
 .cinematic #system {
-  top: calc((100% - 100svh) * 0.29);
+  top: calc(var(--scroll-travel) * 0.29);
 }
 .cinematic #investigation {
-  top: calc((100% - 100svh) * 0.43);
+  top: calc(var(--scroll-travel) * 0.43);
 }
 .cinematic #duplicates {
-  top: calc((100% - 100svh) * 0.65);
+  top: calc(var(--scroll-travel) * 0.65);
 }
 .cinematic #verification {
-  top: calc((100% - 100svh) * 0.82);
+  top: calc(var(--scroll-travel) * 0.82);
 }
 .cinematic #contact {
-  top: calc((100% - 100svh) * 0.97);
+  top: calc(var(--scroll-travel) * 0.97);
 }
 .cinematic .scene-static {
   z-index: 1;
@@ -1361,7 +1376,8 @@ html.cinematic {
     font-size: 70px;
   }
   .cinematic .film {
-    height: calc(100svh + 680svh);
+    --stage-height: 100dvh;
+    --scroll-travel: 680svh;
   }
   .cinematic .film-stage {
     min-height: 0;
@@ -1672,7 +1688,7 @@ html.cinematic {
 @media (max-width: 900px) {
   .cinematic .world-host,
   .cinematic .spatial-host {
-    top: clamp(440px, 53svh, 470px);
+    top: clamp(440px, 56dvh, 510px);
   }
   .cinematic .shot-description {
     font-size: 16px;

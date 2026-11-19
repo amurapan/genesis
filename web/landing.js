@@ -27,6 +27,9 @@ const menu = document.querySelector("#site-menu"),
   menuButton = document.querySelector("#menu-toggle"),
   shade = document.querySelector("#menu-shade"),
   motionButton = document.querySelector("#motion-toggle");
+const viewportReference = document.querySelector("#viewport-reference");
+const compactViewport = () =>
+  viewportReference.getBoundingClientRect().height < 740;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 let stored;
 try {
@@ -43,7 +46,7 @@ let engine = null,
   progress = 0,
   lastState = sample(0),
   sizeDirty = true,
-  wasCompact = innerHeight < 740;
+  wasCompact = compactViewport();
 let renders = 0,
   restTimer = 0,
   moving = false;
@@ -70,7 +73,7 @@ const sceneLabels = [
 function wantsMotion() {
   return (
     !failed &&
-    innerHeight >= 740 &&
+    !wasCompact &&
     (stored === "on" || (stored !== "off" && !reduced.matches))
   );
 }
@@ -136,13 +139,12 @@ for (const preview of previews)
   });
 function setMotionButton() {
   motionButton.setAttribute("aria-pressed", String(!cinematic));
-  motionButton.disabled = innerHeight < 740;
-  motionButton.textContent =
-    innerHeight < 740
-      ? "3D доступно на более высоком экране"
-      : cinematic
-        ? "Уменьшить движение"
-        : "Включить 3D-историю";
+  motionButton.disabled = wasCompact;
+  motionButton.textContent = wasCompact
+    ? "3D доступно на более высоком экране"
+    : cinematic
+      ? "Уменьшить движение"
+      : "Включить 3D-историю";
 }
 function requestFrame() {
   if (!frame && cinematic && !document.hidden)
@@ -305,19 +307,23 @@ reduced.addEventListener("change", () => {
   if (!stored) syncMode();
 });
 window.addEventListener("scroll", onScroll, { passive: true });
-window.addEventListener(
-  "resize",
-  () => {
-    sizeDirty = true;
-    const compact = innerHeight < 740;
-    if (compact !== wasCompact) {
-      wasCompact = compact;
-      syncMode();
-    }
-    requestFrame();
-  },
-  { passive: true },
-);
+function resizeScene() {
+  sizeDirty = true;
+  const compact = compactViewport();
+  if (compact !== wasCompact) {
+    wasCompact = compact;
+    syncMode();
+  }
+  requestFrame();
+}
+window.addEventListener("resize", resizeScene, { passive: true });
+window.visualViewport?.addEventListener("resize", resizeScene, {
+  passive: true,
+});
+// Dynamic viewport units can update without a matching window resize event.
+const viewportObserver = new ResizeObserver(resizeScene);
+viewportObserver.observe(stage);
+viewportObserver.observe(viewportReference);
 window.addEventListener("hashchange", () => {
   if (redirectLegacy()) return;
   menuState(false, { focus: false });

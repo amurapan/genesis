@@ -135,7 +135,7 @@ function opacity(mesh, value) {
 export function createScene({ host, htmlHost, previews, onContextLost }) {
   const renderer = new T.WebGLRenderer({
     alpha: true,
-    antialias: false,
+    antialias: (devicePixelRatio || 1) > 1,
     powerPreference: "high-performance",
     stencil: false,
   });
@@ -159,6 +159,11 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
       : new T.MeshStandardMaterial({ ...options, metalness, roughness });
   }
 
+  function documentTexture(kind) {
+    const texture = labelTexture(kind);
+    texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+    return texture;
+  }
   renderer.outputColorSpace = T.SRGBColorSpace;
   renderer.toneMapping = T.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
@@ -176,6 +181,9 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
   const cssScene = new T.Scene(),
     cssRenderer = new CSS3DRenderer();
   htmlHost.append(cssRenderer.domElement);
+  const readingLayer = document.createElement("div");
+  readingLayer.className = "reading-layer";
+  htmlHost.append(readingLayer);
   let environmentTarget;
   if (!softwareRenderer) {
     const environment = studioTexture();
@@ -247,7 +255,7 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
       const face = new T.Mesh(
         faceGeometry,
         surface({
-          map: labelTexture(kinds[folios.indexOf(i)]),
+          map: documentTexture(kinds[folios.indexOf(i)]),
           metalness: 0.05,
           roughness: 0.65,
           transparent: true,
@@ -272,7 +280,7 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
   const coverFace = new T.Mesh(
     new T.PlaneGeometry(4.34, 3.1),
     surface({
-      map: labelTexture("cover"),
+      map: documentTexture("cover"),
       roughness: 0.38,
       metalness: 0.42,
       transparent: true,
@@ -426,7 +434,8 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
     lastState,
     highlight = 0,
     renderCount = 0,
-    moving = false;
+    moving = false,
+    readingBox = null;
   const raycaster = new T.Raycaster(),
     pointer = new T.Vector2();
   function resize() {
@@ -434,14 +443,17 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
     width = Math.max(1, r.width);
     height = Math.max(1, r.height);
     const mobile = matchMedia("(max-width: 900px)").matches;
+    const dpr = devicePixelRatio || 1;
+    // Phones need more than one physical pixel per CSS pixel. Keep the
+    // hardware path sharp while scrolling; reduce only software rendering.
     renderer.setPixelRatio(
       softwareRenderer
-        ? moving
-          ? 0.65
-          : mobile
-            ? 1
+        ? mobile
+          ? Math.min(dpr, moving ? 1 : 2)
+          : moving
+            ? 0.65
             : 1.5
-        : Math.min(devicePixelRatio || 1, mobile ? 1 : 1.5),
+        : Math.min(dpr, mobile ? 2.5 : 1.5),
     );
     renderer.setSize(width, height);
     cssRenderer.setSize(width, height);
@@ -463,12 +475,15 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
     cssRig.rotation.copy(rig.rotation);
     // Portrait framing changes projection only; all transforms still use the same timeline.
     const mobileScene = matchMedia("(max-width: 900px)").matches;
-    const minimumFov = mobileScene ? 37 : 34;
+    // A fixed horizontal field of view prevents the archive from changing
+    // scale when the phone's toolbar changes the available height.
     const baseFov = T.MathUtils.radToDeg(
       2 *
         Math.atan(
-          Math.tan(T.MathUtils.degToRad(minimumFov) / 2) *
-            Math.max(1, 0.8 / camera.aspect),
+          mobileScene
+            ? Math.tan(T.MathUtils.degToRad(40) / 2) / camera.aspect
+            : Math.tan(T.MathUtils.degToRad(34) / 2) *
+                Math.max(1, 0.8 / camera.aspect),
         ),
     );
     const distance = camera.position.distanceTo(new T.Vector3(...s.target));
@@ -543,7 +558,20 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
         obj = cssObjects[i];
       obj.position.set(0, 0, 0.2);
       obj.scale.setScalar(0.01 * frameScale);
-      obj.visible = a > 0.001;
+      const flat =
+        mobileScene && s.screen === 1 && a === 1 && CSS.supports("zoom", "1");
+      if (!flat && obj.userData.reading) {
+        obj.element.style.zoom = "";
+        obj.element.style.left = "";
+        obj.element.style.top = "";
+        obj.element.style.transform = obj.userData.spatialTransform;
+        obj.userData.reading = false;
+      }
+      if (flat && !obj.userData.reading) {
+        obj.userData.spatialTransform = obj.element.style.transform;
+        obj.userData.reading = true;
+      }
+      obj.visible = a > 0.001 && !flat;
       obj.element.style.opacity = a.toFixed(5);
       obj.element.style.pointerEvents = a > 0.98 ? "auto" : "none";
       obj.element.inert = a < 0.98;
@@ -560,6 +588,36 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
     cssScene.updateMatrixWorld(true);
     renderer.render(scene, camera);
     cssRenderer.render(cssScene, camera);
+    readingBox = null;
+    for (const obj of cssObjects) {
+      if (!obj.userData.reading) continue;
+      // In a stationary, front-facing shot, paint text in the normal DOM.
+      // Its box is projected from the very same 3D plane, so entering and
+      // leaving the reading pause does not move or resize the interface.
+      const upper = new T.Vector3(-210, 220, 0)
+        .applyMatrix4(obj.matrixWorld)
+        .project(camera);
+      const lower = new T.Vector3(210, -220, 0)
+        .applyMatrix4(obj.matrixWorld)
+        .project(camera);
+      const left = ((upper.x + 1) * width) / 2,
+        top = ((1 - upper.y) * height) / 2;
+      const projectedWidth = ((lower.x - upper.x) * width) / 2,
+        zoom = projectedWidth / 420;
+      const el = obj.element;
+      if (el.parentNode !== readingLayer) readingLayer.append(el);
+      el.style.display = "";
+      el.style.transform = "none";
+      el.style.zoom = String(zoom);
+      el.style.left = `${left / zoom}px`;
+      el.style.top = `${top / zoom}px`;
+      readingBox = {
+        left,
+        top,
+        width: projectedWidth,
+        height: ((upper.y - lower.y) * height) / 2,
+      };
+    }
     renderCount++;
   }
   function hover(x, y) {
@@ -581,11 +639,22 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
     return {
       webgl: true,
       quality: softwareRenderer ? "software" : "full",
+      readingBox,
       threeRevision: T.REVISION,
       renderCount,
       calls: renderer.info.render.calls,
       triangles: renderer.info.render.triangles,
       pixelRatio: renderer.getPixelRatio(),
+      devicePixelRatio: devicePixelRatio || 1,
+      antialias: gl.getContextAttributes()?.antialias ?? false,
+      bufferWidth: renderer.domElement.width,
+      bufferHeight: renderer.domElement.height,
+      horizontalFov: T.MathUtils.radToDeg(
+        2 *
+          Math.atan(
+            Math.tan(T.MathUtils.degToRad(camera.fov) / 2) * camera.aspect,
+          ),
+      ),
       width,
       height,
       progress: lastState?.p,
@@ -615,6 +684,7 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
     renderer.dispose();
     renderer.domElement.remove();
     cssRenderer.domElement.remove();
+    readingLayer.remove();
   }
   resize();
   return { resize, setMoving, update, hover, diagnostics, dispose };

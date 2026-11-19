@@ -31,15 +31,15 @@
     "graphics_quality": "software",
     "pixel_ratio": 0.65,
     "scroll_frames": 120,
-    "frame_interval_p50_ms": 37,
-    "frame_interval_p95_ms": 146.5,
-    "render_cpu_p50_ms": 0.900000000372529,
-    "render_cpu_p95_ms": 1.400000000372529,
+    "frame_interval_p50_ms": 37.899999998509884,
+    "frame_interval_p95_ms": 151.20000000298023,
+    "render_cpu_p50_ms": 0.7000000029802322,
+    "render_cpu_p95_ms": 1.2999999970197678,
     "max_draw_calls": 29,
     "max_triangles": 9690
   },
-  "tested_deployment_id": "dpl_HsibFZs4938zWheNUrUcS9rAcJhY",
-  "published_deployment_id": "dpl_HsibFZs4938zWheNUrUcS9rAcJhY",
+  "tested_deployment_id": "dpl_4eGt5Kg8PRwVtvj1vU4hWXxPyNw7",
+  "published_deployment_id": "dpl_4eGt5Kg8PRwVtvj1vU4hWXxPyNw7",
   "asset_sha256": {
     "app.js": "0f7bb9adbd98fd4b77a902594186ac55bc68542ca1f3f08ba160944980c17d67",
     "assets/demo.mp4": "40612665c7d3f09fbbb48ff2e0364b950b8405833289f57763173d49118cfa66",
@@ -55,15 +55,15 @@
     "assets/verification.html": "af6aed4e88f327ec642a4debf16d3b2bdab2a69299a3f8ee96342a40c940ef83",
     "assets/video-poster.png": "a61d879368321d0bcc1e970685a71e00fcd2fbf1854fc9d5a6d56159e22405ac",
     "base.css": "5dcc70ca6ec6fa833a6db7561d08ff6faa9600fba09dad6c57032b7646c6eb24",
-    "cinema/sled-scene.js": "7536622a87a411fc048fb97a92f05c86ce0a2637768c3b9ebd07cb83dbbaa441",
+    "cinema/sled-scene.js": "cae0bee11759ca298d78189facd60d3ce9165ef958ac07b21b5b213443c86543",
     "cinema/timeline.js": "a7c9415bc9adae75683cd3aa330756e2198d3859d64a20e6de3dd97b18813a2c",
     "data/checks.json": "ef397d38df68499d64dffb545e0de1049c9ac16234bed822c328bb863c4f99c8",
     "data/demo.json": "8141867cfe9b6b6cedc0077c42d9ed84946433ce3d74b5da537f4f162baa22c1",
     "data/verification.json": "0ab27479536bd828e0fd78cb2ffa8bf5c2b7f5b2a05064425d3f08bde524ebd3",
-    "index.html": "cbddd77d76d26d424409390799827100bedcbbd64672bf518c9930b13a74bd6c",
+    "index.html": "89a9a0c7b4756a339b8659823abd0b3f467dccc1a4a6adbabfb22b065caaed78",
     "lab.html": "d026751c529b3ebba0c1cb8ffabee9286cfbb6261f75ad585010dc9e02e110ae",
-    "landing.css": "d5e7b68428fdab32f6ab5766f64d526954fbf2df85fb6fad1867818287e5bd20",
-    "landing.js": "8275b27d27e8ff956da0bf02b92eede77e6fe3bbffd135eb71f2cccd4c7452ee",
+    "landing.css": "f0b999f8522d08ea6d8b21a486435bf09f0f42e9dfe2406304a63b7c8c0f541b",
+    "landing.js": "48176ef76a29971b17d775c634657a55c0a26f127bf714ee328b890b01ca074a",
     "styles.css": "fee7faa52c11a95dc440c5e9c894cae1717e78725a58e093e2034b56eb14be41",
     "ui/icons.js": "97e09efcb334b7513ef5bd0b611c3ca9816af5691deed8a31291118db03c6edd",
     "vendor/three/CSS3DRenderer.js": "5214ec6e9ffee5509a56371548890bb65adb3d8fd634356868c74fbc27fdfc40",
@@ -74,46 +74,5 @@
   },
   "verified_core_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
   "financial_core_unchanged": true,
-  "checked_at": "2026-11-19T17:40:00.638386+00:00",
-  "additional_viewport_review": {
-    "viewport_sizes": [
-      [
-        320,
-        740
-      ],
-      [
-        360,
-        780
-      ],
-      [
-        375,
-        812
-      ],
-      [
-        390,
-        844
-      ],
-      [
-        768,
-        800
-      ],
-      [
-        1024,
-        740
-      ],
-      [
-        1440,
-        800
-      ],
-      [
-        1920,
-        1080
-      ]
-    ],
-    "sampled_compositions": 56,
-    "page_overflow": false,
-    "clipped_copy": false,
-    "clipped_case_interfaces": false,
-    "mobile_copy_case_overlaps": false
-  }
+  "checked_at": "2026-11-19T18:14:41.593258+00:00"
 }
