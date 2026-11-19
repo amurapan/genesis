@@ -7,3 +7,6 @@ artifacts/
 .env
 dist/
 submission/
+.vercel/
+node_modules/
+.env*

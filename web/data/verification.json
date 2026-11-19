@@ -1,0 +1,1154 @@
+{
+  "project": "СЛЕД",
+  "version": "1.0.0",
+  "started_at": "2026-11-19T09:19:14.605331+00:00",
+  "seconds": 45.91593261202797,
+  "scope": "Local acceptance, not official jury grading",
+  "versions": {
+    "source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
+    "revision": "20cd5677ba06ffe14a333028d37caa84aed1b407",
+    "uncommitted_changes": false,
+    "python": "3.11.15",
+    "platform": "Linux-6.12.93-x86_64-with-glibc2.40",
+    "schema_version": "1.0.0",
+    "generator_version": "1.0.0",
+    "config_version": "1.0.0",
+    "images": [
+      {
+        "name": "sled-agent:1.0.0",
+        "id": "sha256:e573561071ac4eb82ff55cc7483c30d0e6412237b6f828bb67f7210cc1b910bd",
+        "size_bytes": 125093788,
+        "labels": {
+          "org.sled.agent-source": "a216ec2e79b233408debf5976246981ef481dd922fcbca5f22a7b0e9f162b549"
+        }
+      },
+      {
+        "name": "sled-core:1.0.0",
+        "id": "sha256:73357b1a2f7b8f77408e49dffad43e8e0773808e07daf59bbbb9739ddf573aa9",
+        "size_bytes": 125384025,
+        "labels": {
+          "org.sled.core-source": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959"
+        }
+      }
+    ]
+  },
+  "unit_tests": {
+    "source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
+    "run": 48,
+    "passed": 48,
+    "skipped": 0,
+    "failures": [],
+    "errors": [],
+    "seconds": 5.486130606965162
+  },
+  "acceptance": {
+    "matrix_sha256": "5b7f8d9ad3f825f3b1efeea1f9e8f8f2c984e079865b16cfa10fc7072920e1f9",
+    "cases": [
+      {
+        "id": "C01",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.038993
+      },
+      {
+        "id": "C02",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.082809
+      },
+      {
+        "id": "C03",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.017979
+      },
+      {
+        "id": "C04",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.017733
+      },
+      {
+        "id": "C05",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.045382
+      },
+      {
+        "id": "C06",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.043453
+      },
+      {
+        "id": "C07",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.055782
+      },
+      {
+        "id": "C08",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.018192
+      },
+      {
+        "id": "C09",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.019069
+      },
+      {
+        "id": "C10",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000108
+      },
+      {
+        "id": "C11",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.00017
+      },
+      {
+        "id": "C12",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.018523
+      },
+      {
+        "id": "C13",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.076574
+      },
+      {
+        "id": "C14",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.01833
+      },
+      {
+        "id": "C15",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.038508
+      },
+      {
+        "id": "C16",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.022592
+      },
+      {
+        "id": "C17",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.041699
+      },
+      {
+        "id": "C18",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.724123
+      },
+      {
+        "id": "C19",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.021833
+      },
+      {
+        "id": "C20",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.316474
+      },
+      {
+        "id": "D01",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.008731
+      },
+      {
+        "id": "D02",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.005341
+      },
+      {
+        "id": "D03",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.008765
+      },
+      {
+        "id": "D04",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.005747
+      },
+      {
+        "id": "D05",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.008944
+      },
+      {
+        "id": "D06",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.008065
+      },
+      {
+        "id": "D07",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.008067
+      },
+      {
+        "id": "D08",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.008369
+      },
+      {
+        "id": "D09",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.008737
+      },
+      {
+        "id": "D10",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.009223
+      },
+      {
+        "id": "D11",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.009229
+      },
+      {
+        "id": "D12",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.009425
+      },
+      {
+        "id": "D13",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.009702
+      },
+      {
+        "id": "D14",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.009795
+      },
+      {
+        "id": "D15",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.043503
+      },
+      {
+        "id": "D16",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.009553
+      },
+      {
+        "id": "D17",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.008988
+      },
+      {
+        "id": "D18",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.01053
+      },
+      {
+        "id": "D19",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.010594
+      },
+      {
+        "id": "D20",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.010307
+      },
+      {
+        "id": "R01",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000703
+      },
+      {
+        "id": "R02",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000478
+      },
+      {
+        "id": "R03",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000442
+      },
+      {
+        "id": "R04",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000338
+      },
+      {
+        "id": "R05",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000292
+      },
+      {
+        "id": "R06",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000252
+      },
+      {
+        "id": "R07",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000633
+      },
+      {
+        "id": "R08",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000265
+      },
+      {
+        "id": "R09",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000242
+      },
+      {
+        "id": "R10",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000238
+      },
+      {
+        "id": "R11",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000318
+      },
+      {
+        "id": "R12",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000429
+      },
+      {
+        "id": "R13",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000218
+      },
+      {
+        "id": "R14",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000296
+      },
+      {
+        "id": "R15",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000236
+      },
+      {
+        "id": "R16",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000607
+      },
+      {
+        "id": "R17",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000605
+      },
+      {
+        "id": "R18",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000731
+      },
+      {
+        "id": "R19",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000206
+      },
+      {
+        "id": "R20",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.000391
+      },
+      {
+        "id": "G01",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.005572
+      },
+      {
+        "id": "G02",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.038548
+      },
+      {
+        "id": "G03",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.028932
+      },
+      {
+        "id": "G04",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.070642
+      },
+      {
+        "id": "G05",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.038539
+      },
+      {
+        "id": "G06",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.051178
+      },
+      {
+        "id": "G07",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.010222
+      },
+      {
+        "id": "G08",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.048796
+      },
+      {
+        "id": "G09",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.021424
+      },
+      {
+        "id": "G10",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.022333
+      },
+      {
+        "id": "G11",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.020154
+      },
+      {
+        "id": "G12",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.019972
+      },
+      {
+        "id": "G13",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.019617
+      },
+      {
+        "id": "G14",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.019904
+      },
+      {
+        "id": "G15",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.020303
+      },
+      {
+        "id": "G16",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.020136
+      },
+      {
+        "id": "G17",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.020168
+      },
+      {
+        "id": "G18",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.019789
+      },
+      {
+        "id": "G19",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.019911
+      },
+      {
+        "id": "G20",
+        "status": "passed",
+        "error": null,
+        "seconds": 0.200265
+      }
+    ],
+    "groups": [
+      {
+        "id": "C",
+        "passed": 20,
+        "total": 20,
+        "score": 25.0
+      },
+      {
+        "id": "D",
+        "passed": 20,
+        "total": 20,
+        "score": 25.0
+      },
+      {
+        "id": "R",
+        "passed": 20,
+        "total": 20,
+        "score": 25.0
+      },
+      {
+        "id": "G",
+        "passed": 20,
+        "total": 20,
+        "score": 15.0
+      }
+    ],
+    "automatic_score": 90.0,
+    "automatic_max": 90,
+    "scope": "local_specification_not_official_jury_suite"
+  },
+  "engineering": [
+    {
+      "id": "I01",
+      "score": null,
+      "recommended_after_review": 2,
+      "status": "awaiting_human_review",
+      "evidence": [
+        "README.md: one command",
+        "versions.json",
+        "acceptance.json",
+        "cold run is recorded separately in the final archive"
+      ]
+    },
+    {
+      "id": "I02",
+      "score": null,
+      "recommended_after_review": 2,
+      "status": "awaiting_human_review",
+      "evidence": [
+        "versions.json",
+        "configs/train.json",
+        "configs/dev.json",
+        "requirements.lock"
+      ]
+    },
+    {
+      "id": "I03",
+      "score": null,
+      "recommended_after_review": 2,
+      "status": "awaiting_human_review",
+      "evidence": [
+        "trajectories.jsonl",
+        "replay_report.json",
+        "leak_scan.json"
+      ]
+    },
+    {
+      "id": "I04",
+      "score": null,
+      "recommended_after_review": 2,
+      "status": "awaiting_human_review",
+      "evidence": [
+        "mutation_report.json",
+        "docs/failures.md"
+      ]
+    },
+    {
+      "id": "I05",
+      "score": null,
+      "recommended_after_review": 2,
+      "status": "awaiting_human_review",
+      "evidence": [
+        "docs/limitations.md",
+        "docs/accounting.md",
+        "private/benchmark.json",
+        "private/sweep.json"
+      ]
+    }
+  ],
+  "verified_automatic_score": 90,
+  "automatic_max": 90,
+  "final_score": null,
+  "potential_total_after_human_review": 100,
+  "score_note": "The frozen matrix reserves I01–I05 for a human. Recommendations are not awarded points.",
+  "benchmark": [
+    {
+      "policy": "random",
+      "episodes": 20,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.25,
+      "reward": -0.506,
+      "mean_steps": 13,
+      "max_steps": 13,
+      "mean_seconds": 0.37732765,
+      "max_seconds": 0.416174,
+      "max_memory_bytes": 91058176
+    },
+    {
+      "policy": "reconciler",
+      "episodes": 20,
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 1.0,
+      "reward": 0.9716,
+      "mean_steps": 15.2,
+      "max_steps": 49,
+      "mean_seconds": 0.41355895,
+      "max_seconds": 0.48873,
+      "max_memory_bytes": 93462528
+    },
+    {
+      "policy": "flag_all",
+      "episodes": 20,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "reward": -1.0,
+      "mean_steps": 15.2,
+      "max_steps": 49,
+      "mean_seconds": 0.3907615,
+      "max_seconds": 0.453875,
+      "max_memory_bytes": 91254784
+    },
+    {
+      "policy": "oracle",
+      "episodes": 20,
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 1.0,
+      "reward": 1.0,
+      "mean_steps": 1,
+      "max_steps": 1,
+      "mean_seconds": 0.0215038,
+      "max_seconds": 0.032264,
+      "max_memory_bytes": 80384000
+    }
+  ],
+  "paired_passed": 20,
+  "sweep_passed": 200,
+  "selected_mutants": 10,
+  "mutants_killed": 10,
+  "train_episodes": 10,
+  "dev_episodes": 10,
+  "trajectory_records": 304,
+  "boundary_run": {
+    "episode_id": "ep_0099a4e8457f1ace731a3b3f4249723d",
+    "policy": "reconciler",
+    "mode": "evaluation",
+    "validation": {
+      "valid": true,
+      "issue_count": 12,
+      "findings": [
+        {
+          "type": "duplicate_invoice",
+          "affected_ids": [
+            "invoice:i_376172760f62ba414f4b75ff7332bfa9"
+          ],
+          "expected_amount_minor": 370405,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_2eb6448338cc07faf2beca4913834915",
+            "ledger:r_7d5907eba3f4eecd8b011fe740e98aa0",
+            "ledger:r_cb1b3b145a21ede8d83a1d9c3d54f8af",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "duplicate_invoice",
+          "affected_ids": [
+            "invoice:i_7b863197e4be3c8aff0e204e0050e0a8"
+          ],
+          "expected_amount_minor": 120689,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_7ce2694c4f16a0e9b07abc1e6df70f01",
+            "ledger:r_3efa48a70edb281414c320c833557623",
+            "ledger:r_85b179f57e72e8156970eed4c4c1e3d8",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "duplicate_invoice",
+          "affected_ids": [
+            "invoice:i_0b0ffa163d0257588a8c1079bf701e70"
+          ],
+          "expected_amount_minor": 161875,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_8229d26433897ba7bfae0f986c2cc40b",
+            "ledger:r_dbc65db70c826fde680f56754c002bd1",
+            "ledger:r_ee4c301a129aa0868995a88d9a197b30",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "payment_allocation",
+          "affected_ids": [
+            "invoice:i_0b0ffa163d0257588a8c1079bf701e70",
+            "payment:p_372fcf898576b3a2aaeffefc2e05a5da"
+          ],
+          "expected_amount_minor": 80937,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_2d3f016f61f443de3591a765c7d4d542",
+            "doc:d_8229d26433897ba7bfae0f986c2cc40b",
+            "ledger:r_2164b15ee0513f993e1cce990afdfa7d",
+            "ledger:r_6004c2b557aedcc8177290edebfa5b3c",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "payment_allocation",
+          "affected_ids": [
+            "invoice:i_376172760f62ba414f4b75ff7332bfa9",
+            "payment:p_8560b109e09e7a7b0853ffb0abeb986d"
+          ],
+          "expected_amount_minor": 185096,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_2eb6448338cc07faf2beca4913834915",
+            "doc:d_f7e583446f69254b275f017bd3919fdd",
+            "ledger:r_a6f5aa6065c9c27c50be614b1e52da27",
+            "ledger:r_bd0bfb7a4c4c38be8a765accbbdee74c",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "fx_conversion",
+          "affected_ids": [
+            "payment:p_01b8cfa0c5bbe8b301372e333152b67f"
+          ],
+          "expected_amount_minor": 5260,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_ed2f2038da717e2572780b69d02b9a0c",
+            "fx:2026-11-30:KWD:KZT",
+            "ledger:r_e23f63689b7965c8a931155f83a5ab27",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "period_cutoff",
+          "affected_ids": [
+            "payment:p_01b8cfa0c5bbe8b301372e333152b67f"
+          ],
+          "expected_amount_minor": 404610,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_ed2f2038da717e2572780b69d02b9a0c",
+            "fx:2026-11-30:KWD:KZT",
+            "ledger:r_e23f63689b7965c8a931155f83a5ab27",
+            "manifest:episode",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "fx_conversion",
+          "affected_ids": [
+            "payment:p_2b289b18a2e247f00167c2e48e71ea71"
+          ],
+          "expected_amount_minor": 4298,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_670166f4ee5a917a9cd9037e3c9f9688",
+            "fx:2026-11-30:EUR:KZT",
+            "ledger:r_5c2f38c9044b4bdf749b1ca202fc0869",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "period_cutoff",
+          "affected_ids": [
+            "payment:p_2b289b18a2e247f00167c2e48e71ea71"
+          ],
+          "expected_amount_minor": 330652,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_670166f4ee5a917a9cd9037e3c9f9688",
+            "fx:2026-11-30:EUR:KZT",
+            "ledger:r_5c2f38c9044b4bdf749b1ca202fc0869",
+            "manifest:episode",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "payment_allocation",
+          "affected_ids": [
+            "invoice:i_7b863197e4be3c8aff0e204e0050e0a8",
+            "payment:p_549dd39e08b0c9a11072bbc250f0f122"
+          ],
+          "expected_amount_minor": 60522,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_4d3f1423f43301c944c34996360638e3",
+            "doc:d_7ce2694c4f16a0e9b07abc1e6df70f01",
+            "ledger:r_3fa25cd4a918efb9f89e1b45e2f6216a",
+            "ledger:r_c72083c100be235a77e05a4904e20cc3",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "fx_conversion",
+          "affected_ids": [
+            "payment:p_ef4ca033eab4960049afd1c0e2dbe068"
+          ],
+          "expected_amount_minor": 4475,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_021ae8d58160bbbcb7aedcfa8afc6a68",
+            "fx:2026-11-30:JPY:KZT",
+            "ledger:r_3dfdac12190262e50d67ef71821318a1",
+            "policy:accounting"
+          ]
+        },
+        {
+          "type": "period_cutoff",
+          "affected_ids": [
+            "payment:p_ef4ca033eab4960049afd1c0e2dbe068"
+          ],
+          "expected_amount_minor": 344219,
+          "currency": "KZT",
+          "required_evidence": [
+            "doc:d_021ae8d58160bbbcb7aedcfa8afc6a68",
+            "fx:2026-11-30:JPY:KZT",
+            "ledger:r_3dfdac12190262e50d67ef71821318a1",
+            "manifest:episode",
+            "policy:accounting"
+          ]
+        }
+      ],
+      "baseline_valid": true,
+      "provenance_valid": true
+    },
+    "evaluation": {
+      "error": null,
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "inspection_steps": 48,
+      "matches": [
+        {
+          "finding_index": 10,
+          "issue_id": "issue_efd3155d60de54455db69e7c74c2fe25"
+        },
+        {
+          "finding_index": 7,
+          "issue_id": "issue_71470469315555d11ca2498ff39fa6d0"
+        },
+        {
+          "finding_index": 5,
+          "issue_id": "issue_8495ce7a61c50a621016361422f25cde"
+        },
+        {
+          "finding_index": 1,
+          "issue_id": "issue_7727d83473780ca06da532561651fa75"
+        },
+        {
+          "finding_index": 0,
+          "issue_id": "issue_fee5a01e2de6a3411f835ebb56d7f3ae"
+        },
+        {
+          "finding_index": 2,
+          "issue_id": "issue_5695171c709ff91cd04d7547745e6cc2"
+        },
+        {
+          "finding_index": 9,
+          "issue_id": "issue_71e3a8a38379d0bc249af793e9a71ebc"
+        },
+        {
+          "finding_index": 4,
+          "issue_id": "issue_883ceaa6330da6cce4f536c9a80db726"
+        },
+        {
+          "finding_index": 3,
+          "issue_id": "issue_b80182920341c1917814aeb7e90404a4"
+        },
+        {
+          "finding_index": 11,
+          "issue_id": "issue_2db9923af2e711a8914c156e4e176416"
+        },
+        {
+          "finding_index": 8,
+          "issue_id": "issue_10662a3ac37fbd05d8134bcc290e7688"
+        },
+        {
+          "finding_index": 6,
+          "issue_id": "issue_761607d20e6b9ad19f401b002a22b5da"
+        }
+      ],
+      "precision": 1.0,
+      "recall": 1.0,
+      "reward": 0.904,
+      "tp": 12,
+      "valid": true
+    },
+    "resources": {
+      "harness_peak_rss_bytes": 86867968,
+      "evaluator_peak_rss_bytes": 13398016,
+      "agent_cgroup_peak_bytes": 14536704,
+      "agent_memory_limit_bytes": 268435456,
+      "agent_cpu_limit": 1,
+      "method": "Linux VmHWM plus agent cgroup v2 memory.peak; shared Docker daemon excluded",
+      "observed_peak_upper_bound_bytes": 114802688
+    },
+    "submission": {
+      "episode_id": "ep_0099a4e8457f1ace731a3b3f4249723d",
+      "findings": [
+        {
+          "affected_ids": [
+            "invoice:i_376172760f62ba414f4b75ff7332bfa9"
+          ],
+          "claimed_amount_minor": 370405,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_2eb6448338cc07faf2beca4913834915",
+            "ledger:r_7d5907eba3f4eecd8b011fe740e98aa0",
+            "ledger:r_cb1b3b145a21ede8d83a1d9c3d54f8af",
+            "policy:accounting"
+          ],
+          "explanation": "Total recognition exceeds the primary invoice amount.",
+          "type": "duplicate_invoice"
+        },
+        {
+          "affected_ids": [
+            "invoice:i_7b863197e4be3c8aff0e204e0050e0a8"
+          ],
+          "claimed_amount_minor": 120689,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_7ce2694c4f16a0e9b07abc1e6df70f01",
+            "ledger:r_3efa48a70edb281414c320c833557623",
+            "ledger:r_85b179f57e72e8156970eed4c4c1e3d8",
+            "policy:accounting"
+          ],
+          "explanation": "Total recognition exceeds the primary invoice amount.",
+          "type": "duplicate_invoice"
+        },
+        {
+          "affected_ids": [
+            "invoice:i_0b0ffa163d0257588a8c1079bf701e70"
+          ],
+          "claimed_amount_minor": 161875,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_8229d26433897ba7bfae0f986c2cc40b",
+            "ledger:r_dbc65db70c826fde680f56754c002bd1",
+            "ledger:r_ee4c301a129aa0868995a88d9a197b30",
+            "policy:accounting"
+          ],
+          "explanation": "Total recognition exceeds the primary invoice amount.",
+          "type": "duplicate_invoice"
+        },
+        {
+          "affected_ids": [
+            "invoice:i_0b0ffa163d0257588a8c1079bf701e70",
+            "payment:p_372fcf898576b3a2aaeffefc2e05a5da"
+          ],
+          "claimed_amount_minor": 80937,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_2d3f016f61f443de3591a765c7d4d542",
+            "doc:d_8229d26433897ba7bfae0f986c2cc40b",
+            "ledger:r_2164b15ee0513f993e1cce990afdfa7d",
+            "ledger:r_6004c2b557aedcc8177290edebfa5b3c",
+            "policy:accounting"
+          ],
+          "explanation": "Received book cash was not fully applied to the original invoice outstanding balance.",
+          "type": "payment_allocation"
+        },
+        {
+          "affected_ids": [
+            "invoice:i_376172760f62ba414f4b75ff7332bfa9",
+            "payment:p_8560b109e09e7a7b0853ffb0abeb986d"
+          ],
+          "claimed_amount_minor": 185096,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_2eb6448338cc07faf2beca4913834915",
+            "doc:d_f7e583446f69254b275f017bd3919fdd",
+            "ledger:r_a6f5aa6065c9c27c50be614b1e52da27",
+            "ledger:r_bd0bfb7a4c4c38be8a765accbbdee74c",
+            "policy:accounting"
+          ],
+          "explanation": "Received book cash was not fully applied to the original invoice outstanding balance.",
+          "type": "payment_allocation"
+        },
+        {
+          "affected_ids": [
+            "payment:p_01b8cfa0c5bbe8b301372e333152b67f"
+          ],
+          "claimed_amount_minor": 5260,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_ed2f2038da717e2572780b69d02b9a0c",
+            "fx:2026-11-30:KWD:KZT",
+            "ledger:r_e23f63689b7965c8a931155f83a5ab27",
+            "policy:accounting"
+          ],
+          "explanation": "Booked base-currency cash differs from the source payment converted under the published policy.",
+          "type": "fx_conversion"
+        },
+        {
+          "affected_ids": [
+            "payment:p_01b8cfa0c5bbe8b301372e333152b67f"
+          ],
+          "claimed_amount_minor": 404610,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_ed2f2038da717e2572780b69d02b9a0c",
+            "fx:2026-11-30:KWD:KZT",
+            "ledger:r_e23f63689b7965c8a931155f83a5ab27",
+            "manifest:episode",
+            "policy:accounting"
+          ],
+          "explanation": "Source event and accounting journal belong to different reporting periods.",
+          "type": "period_cutoff"
+        },
+        {
+          "affected_ids": [
+            "payment:p_2b289b18a2e247f00167c2e48e71ea71"
+          ],
+          "claimed_amount_minor": 4298,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_670166f4ee5a917a9cd9037e3c9f9688",
+            "fx:2026-11-30:EUR:KZT",
+            "ledger:r_5c2f38c9044b4bdf749b1ca202fc0869",
+            "policy:accounting"
+          ],
+          "explanation": "Booked base-currency cash differs from the source payment converted under the published policy.",
+          "type": "fx_conversion"
+        },
+        {
+          "affected_ids": [
+            "payment:p_2b289b18a2e247f00167c2e48e71ea71"
+          ],
+          "claimed_amount_minor": 330652,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_670166f4ee5a917a9cd9037e3c9f9688",
+            "fx:2026-11-30:EUR:KZT",
+            "ledger:r_5c2f38c9044b4bdf749b1ca202fc0869",
+            "manifest:episode",
+            "policy:accounting"
+          ],
+          "explanation": "Source event and accounting journal belong to different reporting periods.",
+          "type": "period_cutoff"
+        },
+        {
+          "affected_ids": [
+            "invoice:i_7b863197e4be3c8aff0e204e0050e0a8",
+            "payment:p_549dd39e08b0c9a11072bbc250f0f122"
+          ],
+          "claimed_amount_minor": 60522,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_4d3f1423f43301c944c34996360638e3",
+            "doc:d_7ce2694c4f16a0e9b07abc1e6df70f01",
+            "ledger:r_3fa25cd4a918efb9f89e1b45e2f6216a",
+            "ledger:r_c72083c100be235a77e05a4904e20cc3",
+            "policy:accounting"
+          ],
+          "explanation": "Received book cash was not fully applied to the original invoice outstanding balance.",
+          "type": "payment_allocation"
+        },
+        {
+          "affected_ids": [
+            "payment:p_ef4ca033eab4960049afd1c0e2dbe068"
+          ],
+          "claimed_amount_minor": 4475,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_021ae8d58160bbbcb7aedcfa8afc6a68",
+            "fx:2026-11-30:JPY:KZT",
+            "ledger:r_3dfdac12190262e50d67ef71821318a1",
+            "policy:accounting"
+          ],
+          "explanation": "Booked base-currency cash differs from the source payment converted under the published policy.",
+          "type": "fx_conversion"
+        },
+        {
+          "affected_ids": [
+            "payment:p_ef4ca033eab4960049afd1c0e2dbe068"
+          ],
+          "claimed_amount_minor": 344219,
+          "currency": "KZT",
+          "evidence_ids": [
+            "doc:d_021ae8d58160bbbcb7aedcfa8afc6a68",
+            "fx:2026-11-30:JPY:KZT",
+            "ledger:r_3dfdac12190262e50d67ef71821318a1",
+            "manifest:episode",
+            "policy:accounting"
+          ],
+          "explanation": "Source event and accounting journal belong to different reporting periods.",
+          "type": "period_cutoff"
+        }
+      ]
+    },
+    "steps": 49,
+    "elapsed_seconds": 0.484813,
+    "terminated": true,
+    "truncated": false
+  },
+  "resource_bounds": {
+    "max_rows": 2000,
+    "max_documents": 200,
+    "max_issues": 12,
+    "host_cpu_affinity": [
+      0
+    ],
+    "agent_cpu_quota": 1,
+    "memory_measurement": "Sum of Linux process high water marks and agent cgroup peak; Docker daemon excluded"
+  },
+  "blockers": [],
+  "technical_gates_passed": true
+}

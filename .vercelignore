@@ -1,0 +1,4 @@
+# Only the public web application and deployment configuration are uploaded.
+/*
+!web
+!vercel.json
