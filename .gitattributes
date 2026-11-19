@@ -1,0 +1,2 @@
+# Preserve RFC 4180 CSV bytes: published manifests hash the exact exported files.
+*.csv -text whitespace=cr-at-eol

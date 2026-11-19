@@ -1,0 +1,8 @@
+{
+  "train": 10,
+  "dev": 10,
+  "holdout": 20,
+  "clean": 5,
+  "interaction": 5,
+  "holdout_config_sha256": "cbb8d2a21245d8ac7ff57d94a7db5d46068da46b880dd19538857959f0717e2b"
+}

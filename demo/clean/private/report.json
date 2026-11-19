@@ -1,0 +1,42 @@
+{
+  "episode_id": "ep_90713ba541734405bf80968291c9a102",
+  "policy": "reconciler",
+  "mode": "evaluation",
+  "validation": {
+    "valid": true,
+    "issue_count": 0,
+    "findings": [],
+    "baseline_valid": true,
+    "provenance_valid": true
+  },
+  "evaluation": {
+    "error": null,
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "inspection_steps": 4,
+    "matches": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "reward": 0.992,
+    "tp": 0,
+    "valid": true
+  },
+  "resources": {
+    "harness_peak_rss_bytes": 21078016,
+    "evaluator_peak_rss_bytes": 12922880,
+    "agent_cgroup_peak_bytes": 10493952,
+    "agent_memory_limit_bytes": 268435456,
+    "agent_cpu_limit": 1,
+    "method": "Linux VmHWM plus agent cgroup v2 memory.peak; shared Docker daemon excluded",
+    "observed_peak_upper_bound_bytes": 44494848
+  },
+  "submission": {
+    "episode_id": "ep_90713ba541734405bf80968291c9a102",
+    "findings": []
+  },
+  "steps": 5,
+  "elapsed_seconds": 0.334636,
+  "terminated": true,
+  "truncated": false
+}

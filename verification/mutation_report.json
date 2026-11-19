@@ -1,0 +1,65 @@
+{
+  "selected_mutants": 10,
+  "killed": 10,
+  "cases": [
+    {
+      "name": "fx_rate",
+      "killed": true,
+      "evidence": "InvalidData: Truth differs from independent public audit"
+    },
+    {
+      "name": "period_boundary",
+      "killed": true,
+      "evidence": "InvalidData: Truth differs from independent public audit"
+    },
+    {
+      "name": "truth_amount",
+      "killed": true,
+      "evidence": "InvalidData: Truth differs from independent public audit"
+    },
+    {
+      "name": "missing_issue",
+      "killed": true,
+      "evidence": "InvalidData: Requested error counts not implemented"
+    },
+    {
+      "name": "ghost_evidence",
+      "killed": true,
+      "evidence": "InvalidData: Unavailable evidence"
+    },
+    {
+      "name": "currency_exponent",
+      "killed": true,
+      "evidence": "InvalidData: Truth differs from independent public audit"
+    },
+    {
+      "name": "provenance_before",
+      "killed": true,
+      "evidence": "InvalidData: Provenance before state mismatch"
+    },
+    {
+      "name": "double_tp",
+      "killed": true,
+      "evidence": {
+        "expected_tp": 1,
+        "healthy_tp": 1,
+        "mutant_tp": 10
+      }
+    },
+    {
+      "name": "ignore_currency",
+      "killed": true,
+      "evidence": {
+        "expected_tp": 1,
+        "healthy_tp": 1,
+        "mutant_tp": 2
+      }
+    },
+    {
+      "name": "truth_in_observation",
+      "killed": true,
+      "evidence": "Observation whitelist rejects a private truth field; mutant contains expected_amount_minor."
+    }
+  ],
+  "scope": "Selected negative controls, not an exhaustive mutation-coverage claim"
+}

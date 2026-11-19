@@ -113,3 +113,8 @@ docker run --rm --network=none --read-only --cap-drop=ALL --security-opt=no-new-
 Исходники распространяются по MIT. Runtime: стандартная библиотека Python 3.11;
 образы закреплены digest. Инструменты подготовки видео/PDF перечислены отдельно
 в `docs/submission.md` и не нужны для официальной проверки среды.
+
+Сохранённые результаты выпуска находятся в [verification](verification/README.md).
+Готовые [видео](demo/demo.mp4) и [презентация](demo/presentation.pdf) доступны в
+репозитории. Полный офлайн-архив с Docker-образами создаётся отдельно и не
+включается в Git.

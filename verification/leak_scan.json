@@ -1,0 +1,6 @@
+{
+  "open_records": 304,
+  "closed_records": 888,
+  "passed": true,
+  "method": "Recursive forbidden private-field scan plus C20 Docker isolation; not a general information-flow proof"
+}

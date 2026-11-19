@@ -1,0 +1,9 @@
+{
+  "pymupdf": "1.26.6",
+  "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "image_id": "sha256:9872c5f1f36d4dc62906f6bbb1cfa5965e675fb46bf514ef8eccc650320a297e",
+  "seconds": 96,
+  "slides": 8,
+  "source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
+  "kind": "explanatory slides from actual results"
+}

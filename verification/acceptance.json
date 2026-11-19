@@ -1,0 +1,514 @@
+{
+  "matrix_sha256": "5b7f8d9ad3f825f3b1efeea1f9e8f8f2c984e079865b16cfa10fc7072920e1f9",
+  "cases": [
+    {
+      "id": "C01",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.135023
+    },
+    {
+      "id": "C02",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.286875
+    },
+    {
+      "id": "C03",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.06471
+    },
+    {
+      "id": "C04",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.064486
+    },
+    {
+      "id": "C05",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.160488
+    },
+    {
+      "id": "C06",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.143078
+    },
+    {
+      "id": "C07",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.190293
+    },
+    {
+      "id": "C08",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.063662
+    },
+    {
+      "id": "C09",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.064274
+    },
+    {
+      "id": "C10",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.00031
+    },
+    {
+      "id": "C11",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000528
+    },
+    {
+      "id": "C12",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.064258
+    },
+    {
+      "id": "C13",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.253447
+    },
+    {
+      "id": "C14",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.064661
+    },
+    {
+      "id": "C15",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.127432
+    },
+    {
+      "id": "C16",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.072529
+    },
+    {
+      "id": "C17",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.138029
+    },
+    {
+      "id": "C18",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.921287
+    },
+    {
+      "id": "C19",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.06752
+    },
+    {
+      "id": "C20",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.720647
+    },
+    {
+      "id": "D01",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.035882
+    },
+    {
+      "id": "D02",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.019344
+    },
+    {
+      "id": "D03",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.030194
+    },
+    {
+      "id": "D04",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.018359
+    },
+    {
+      "id": "D05",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.031125
+    },
+    {
+      "id": "D06",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.028134
+    },
+    {
+      "id": "D07",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.02812
+    },
+    {
+      "id": "D08",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.025979
+    },
+    {
+      "id": "D09",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.028062
+    },
+    {
+      "id": "D10",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.030249
+    },
+    {
+      "id": "D11",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.030287
+    },
+    {
+      "id": "D12",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.030544
+    },
+    {
+      "id": "D13",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.028556
+    },
+    {
+      "id": "D14",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.030642
+    },
+    {
+      "id": "D15",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.134314
+    },
+    {
+      "id": "D16",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.032332
+    },
+    {
+      "id": "D17",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.029196
+    },
+    {
+      "id": "D18",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.033593
+    },
+    {
+      "id": "D19",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.030837
+    },
+    {
+      "id": "D20",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.031209
+    },
+    {
+      "id": "R01",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.001657
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.001778
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.002147
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.001454
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000887
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000754
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.001778
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000693
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000722
+    },
+    {
+      "id": "R10",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000742
+    },
+    {
+      "id": "R11",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000932
+    },
+    {
+      "id": "R12",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.001238
+    },
+    {
+      "id": "R13",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000623
+    },
+    {
+      "id": "R14",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000838
+    },
+    {
+      "id": "R15",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.00074
+    },
+    {
+      "id": "R16",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.001817
+    },
+    {
+      "id": "R17",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.001857
+    },
+    {
+      "id": "R18",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.002167
+    },
+    {
+      "id": "R19",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.000652
+    },
+    {
+      "id": "R20",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.001146
+    },
+    {
+      "id": "G01",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.019214
+    },
+    {
+      "id": "G02",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.138609
+    },
+    {
+      "id": "G03",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.107223
+    },
+    {
+      "id": "G04",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.23749
+    },
+    {
+      "id": "G05",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.140085
+    },
+    {
+      "id": "G06",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.168859
+    },
+    {
+      "id": "G07",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.031501
+    },
+    {
+      "id": "G08",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.159139
+    },
+    {
+      "id": "G09",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.058962
+    },
+    {
+      "id": "G10",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.065501
+    },
+    {
+      "id": "G11",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.055766
+    },
+    {
+      "id": "G12",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.058258
+    },
+    {
+      "id": "G13",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.056087
+    },
+    {
+      "id": "G14",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.058844
+    },
+    {
+      "id": "G15",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.058421
+    },
+    {
+      "id": "G16",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.056367
+    },
+    {
+      "id": "G17",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.05856
+    },
+    {
+      "id": "G18",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.056877
+    },
+    {
+      "id": "G19",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.058533
+    },
+    {
+      "id": "G20",
+      "status": "passed",
+      "error": null,
+      "seconds": 0.569151
+    }
+  ],
+  "groups": [
+    {
+      "id": "C",
+      "passed": 20,
+      "total": 20,
+      "score": 25.0
+    },
+    {
+      "id": "D",
+      "passed": 20,
+      "total": 20,
+      "score": 25.0
+    },
+    {
+      "id": "R",
+      "passed": 20,
+      "total": 20,
+      "score": 25.0
+    },
+    {
+      "id": "G",
+      "passed": 20,
+      "total": 20,
+      "score": 15.0
+    }
+  ],
+  "automatic_score": 90.0,
+  "automatic_max": 90,
+  "scope": "local_specification_not_official_jury_suite"
+}

@@ -1,0 +1,113 @@
+{
+  "episode_id": "ep_8b18d205d95244869bd42fc228f3b487",
+  "policy": "reconciler",
+  "mode": "evaluation",
+  "validation": {
+    "valid": true,
+    "issue_count": 2,
+    "findings": [
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "payment:payment-1"
+        ],
+        "expected_amount_minor": 100000,
+        "currency": "KZT",
+        "required_evidence": [
+          "doc:payment-doc-1",
+          "fx:2026-11-30:USD:KZT",
+          "ledger:r3",
+          "policy:accounting"
+        ]
+      },
+      {
+        "type": "period_cutoff",
+        "affected_ids": [
+          "payment:payment-1"
+        ],
+        "expected_amount_minor": 4500000,
+        "currency": "KZT",
+        "required_evidence": [
+          "doc:payment-doc-1",
+          "fx:2026-11-30:USD:KZT",
+          "ledger:r3",
+          "manifest:episode",
+          "policy:accounting"
+        ]
+      }
+    ],
+    "baseline_valid": true,
+    "provenance_valid": true
+  },
+  "evaluation": {
+    "error": null,
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "inspection_steps": 5,
+    "matches": [
+      {
+        "finding_index": 0,
+        "issue_id": "issue-fx"
+      },
+      {
+        "finding_index": 1,
+        "issue_id": "issue-period"
+      }
+    ],
+    "precision": 1.0,
+    "recall": 1.0,
+    "reward": 0.99,
+    "tp": 2,
+    "valid": true
+  },
+  "resources": {
+    "harness_peak_rss_bytes": 22601728,
+    "evaluator_peak_rss_bytes": 13451264,
+    "agent_cgroup_peak_bytes": 12537856,
+    "agent_memory_limit_bytes": 268435456,
+    "agent_cpu_limit": 1,
+    "method": "Linux VmHWM plus agent cgroup v2 memory.peak; shared Docker daemon excluded",
+    "observed_peak_upper_bound_bytes": 48590848
+  },
+  "submission": {
+    "episode_id": "ep_8b18d205d95244869bd42fc228f3b487",
+    "findings": [
+      {
+        "affected_ids": [
+          "payment:payment-1"
+        ],
+        "claimed_amount_minor": 100000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "doc:payment-doc-1",
+          "fx:2026-11-30:USD:KZT",
+          "ledger:r3",
+          "policy:accounting"
+        ],
+        "explanation": "Booked base-currency cash differs from the source payment converted under the published policy.",
+        "type": "fx_conversion"
+      },
+      {
+        "affected_ids": [
+          "payment:payment-1"
+        ],
+        "claimed_amount_minor": 4500000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "doc:payment-doc-1",
+          "fx:2026-11-30:USD:KZT",
+          "ledger:r3",
+          "manifest:episode",
+          "policy:accounting"
+        ],
+        "explanation": "Source event and accounting journal belong to different reporting periods.",
+        "type": "period_cutoff"
+      }
+    ]
+  },
+  "steps": 6,
+  "elapsed_seconds": 0.358419,
+  "terminated": true,
+  "truncated": false
+}

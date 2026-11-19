@@ -1,0 +1,122 @@
+[
+  {
+    "split": "train",
+    "episode_id": "ep_775fdb7b26e2630e527a4eca188a5705",
+    "steps": 13,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_4031836de05dd280e9379e0e78bf4c0d",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_9edd0a1c2ac405d3ef302a69be20e8ff",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_b89cb6b82740963979b81443866646b4",
+    "steps": 13,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_bc3469c005181576eec8c2e8352369a0",
+    "steps": 13,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_b01464960ae56cb5221d2b10d4df9790",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_139b21a1fda38fc7ac7aa9b9b80e9a84",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_a271d34d724d5bee752b52e13da32685",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_b69a4c35163c050bcd41be5b6c125795",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "train",
+    "episode_id": "ep_540bb1d05dad1a8a71e83cb64e995d98",
+    "steps": 15,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_6382ab5d427d77dba90574b88a0fc381",
+    "steps": 11,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_ae81fde50fc0cb13f001104a276bd5c4",
+    "steps": 11,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_09e2024bd833a6c20e86377e853bbe81",
+    "steps": 13,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_e7346f4c089e715f6a6e56495046f37a",
+    "steps": 13,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_4a7c4f97479f20939fc915934da862c9",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_eb19588af425bd2a219d6b2eba2007dd",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_59c3af6a417f6b3d707eb8836a0ec2bf",
+    "steps": 49,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_fde70174d895574b32722e811186b3d1",
+    "steps": 13,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_f7f6fe6891de73909d38076dd88f5a26",
+    "steps": 14,
+    "passed": true
+  },
+  {
+    "split": "dev",
+    "episode_id": "ep_c6e6487dad5d8e5630a9d71dfae179dc",
+    "steps": 14,
+    "passed": true
+  }
+]

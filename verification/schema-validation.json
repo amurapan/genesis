@@ -1,0 +1,9 @@
+{
+  "source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
+  "schemas": 12,
+  "episodes": 23,
+  "submissions": 20,
+  "trajectory_records": 1192,
+  "passed": true,
+  "tool": "jsonschema 4.25.1 (optional development check, not runtime dependency)"
+}

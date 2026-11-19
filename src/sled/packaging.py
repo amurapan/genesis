@@ -25,7 +25,9 @@ def build(report_dir, output):
         directories=['src','tests','fixtures','data','configs','schemas','containers','planning','docs','scripts']
         for name in directories:
             shutil.copytree(ROOT/name,folder/'source'/name,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
-        for name in ['README.md','LICENSE','pyproject.toml','requirements.lock','verify.sh','.dockerignore','.gitignore']:
+        for name in ['demo','verification']:
+            if (ROOT/name).exists():shutil.copytree(ROOT/name,folder/'source'/name)
+        for name in ['README.md','LICENSE','pyproject.toml','requirements.lock','verify.sh','.dockerignore','.gitignore','.gitattributes']:
             shutil.copy2(ROOT/name,folder/'source'/name)
         shutil.copytree(report_dir,folder/'verification')
         shutil.copy2(ROOT/'artifacts/unit-tests.json',folder/'verification/unit-tests.json')

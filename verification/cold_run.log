@@ -1,0 +1,17 @@
+Artifact checksums verified
+Loaded image: sled-core:1.0.0
+Loaded image: sled-agent:1.0.0
+................................................
+----------------------------------------------------------------------
+Ran 48 tests in 4.800s
+
+OK
+Acceptance: 80 cases
+Public corpus: 10 train + 10 dev, checksums and regeneration match
+Policies: 20/80; paired episodes: 5/20
+Policies: 40/80; paired episodes: 10/20
+Policies: 60/80; paired episodes: 15/20
+Policies: 80/80; paired episodes: 20/20
+Trajectories: 20 public episodes replayed exactly; observation leak scan passed
+Stress: 200/200; negative controls: 10/10
+Completed: 90/90 automatic points; 5 engineering criteria prepared for human review. artifacts/release/report.html

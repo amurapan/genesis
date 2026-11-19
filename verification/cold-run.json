@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checked_at": "2026-11-19T09:18:52.872335+00:00",
+  "command": "bash run-offline.sh",
+  "extracted_source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
+  "unit_tests": 48,
+  "acceptance_cases": 80,
+  "sweep": 200,
+  "mutants": 10,
+  "network": "No package downloads; all policy containers --network=none",
+  "scope": "Fresh extracted directory on the same Linux host, not a new operating system installation"
+}
