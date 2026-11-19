@@ -6,12 +6,13 @@ export default async ({context})=>{
  const base=process.env.SLED_WEB_URL||'http://127.0.0.1:4173';
  const root=process.env.SLED_REPO||process.cwd();
  const page=await context.newPage();await page.setViewportSize({width:1440,height:1080});
+ await page.route('**/*',route=>route.continue());
  const errors=[],failures=[],checks=[];
  page.on('pageerror',e=>errors.push(e.message));
  page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)failures.push(`${r.status()} ${r.url()}`);});
  const pass=(name)=>checks.push(name);
  await mkdir(resolve(root,'docs/images'),{recursive:true});
- await page.goto(base,{waitUntil:'networkidle'});await page.locator('#app').waitFor({state:'visible'});
+ await page.goto(base+'/lab.html',{waitUntil:'networkidle'});await page.locator('#app').waitFor({state:'visible'});
  assert.match(await page.locator('#app h1').textContent(),/Финансовое расследование/);pass('Workspace loads');
  await page.screenshot({path:resolve(root,'docs/images/workspace.png'),fullPage:true});
  await page.locator('[data-action="next"]').click();assert.equal(await page.locator('.trace-step.current').getAttribute('data-step'),'1');pass('Single-step replay');
@@ -46,12 +47,12 @@ export default async ({context})=>{
  for(const width of [390,768,1440]){
   await page.setViewportSize({width,height:1000});
   for(const route of ['workspace','verification','architecture','guide']){
-   await page.goto(`${base}/#${route}`,{waitUntil:'networkidle'});await page.locator('#app').waitFor({state:'visible'});
+   await page.goto(`${base}/lab.html#${route}`,{waitUntil:'networkidle'});await page.locator('#app').waitFor({state:'visible'});
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Horizontal overflow ${width} ${route}`);
   }
  }
  pass('No horizontal overflow at 390, 768 and 1440 px');
- await page.setViewportSize({width:390,height:844});await page.goto(`${base}/#workspace`,{waitUntil:'networkidle'});await page.locator('#app').waitFor({state:'visible'});await page.locator('[data-action="finish"]').click();
+ await page.setViewportSize({width:390,height:844});await page.goto(`${base}/lab.html#workspace`,{waitUntil:'networkidle'});await page.locator('#app').waitFor({state:'visible'});await page.locator('[data-action="finish"]').click();
  await page.evaluate(()=>window.scrollTo(0,0));
  await page.screenshot({path:resolve(root,'docs/images/mobile.png'),fullPage:true});pass('Mobile result flow');
  const reportPage=await context.newPage();

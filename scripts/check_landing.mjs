@@ -1,0 +1,51 @@
+/** End-to-end checks for the public narrative and transitions into the lab. */
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+export default async({context})=>{
+ const base=process.env.SLED_WEB_URL||'http://127.0.0.1:4174',root=process.env.SLED_REPO||process.cwd();
+ const page=await context.newPage(),checks=[],errors=[],failed=[];
+ await page.route('**/*',route=>route.continue());
+ page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)failed.push(r.url());});
+ const pass=name=>checks.push(name);
+ await page.setViewportSize({width:1440,height:1000});await page.goto(base,{waitUntil:'networkidle'});
+ await page.evaluate(()=>localStorage.removeItem('sled-motion'));await page.reload({waitUntil:'networkidle'});
+ assert.match(await page.locator('h1').textContent(),/У каждой/);assert.equal(await page.locator('.scene-paper').count(),2);pass('Landing and 3D document scene render');
+ await mkdir(resolve(root,'docs/images'),{recursive:true});await page.screenshot({path:resolve(root,'docs/images/landing.png')});
+ const before=await page.locator('#scene-rig').evaluate(el=>getComputedStyle(el).transform);
+ await page.mouse.move(1180,410);await page.waitForTimeout(500);
+ const after=await page.locator('#scene-rig').evaluate(el=>getComputedStyle(el).transform);assert.notEqual(before,after);pass('Camera responds to pointer');
+ const top=await page.locator('#investigation').evaluate(el=>el.offsetTop);
+ const height=await page.locator('#investigation').evaluate(el=>el.offsetHeight);
+ await page.evaluate(y=>window.scrollTo({top:y,behavior:'instant'}),top+(height-1000)*.50);await page.waitForTimeout(1000);
+ assert.equal(await page.locator('#story-display').getAttribute('data-stage'),'1');pass('Scroll directs story to ledger discrepancy');
+ await page.locator('[data-story="2"]').click();await page.waitForFunction(()=>getComputedStyle(document.querySelector('.story-proof')).opacity==='1',{},{timeout:10000});
+ assert.equal(await page.locator('#story-display').getAttribute('data-stage'),'2');
+ assert.equal(await page.locator('.story-proof').evaluate(el=>getComputedStyle(el).opacity),'1');pass('Manual stage control reveals proof and exact amounts');
+ await page.screenshot({path:resolve(root,'docs/images/story.png')});
+ await page.keyboard.press('ArrowLeft');assert.equal(await page.locator('#story-display').getAttribute('data-stage'),'1');
+ await page.keyboard.press('Home');assert.equal(await page.locator('#story-display').getAttribute('data-stage'),'0');pass('Story tabs support keyboard navigation');
+ await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.locator('#motion-toggle').click();
+ assert.equal(await page.locator('html').evaluate(el=>el.classList.contains('motion-off')),true);
+ await page.reload({waitUntil:'networkidle'});assert.equal(await page.locator('#motion-toggle').getAttribute('aria-pressed'),'true');pass('Motion control persists across reloads');
+ await page.locator('#motion-toggle').click();
+ await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('html').evaluate(el=>el.classList.contains('motion-off')),true);pass('System reduced-motion preference is respected');
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ for(const width of [320,390,768,1440]){
+  await page.setViewportSize({width,height:1000});await page.goto(base,{waitUntil:'networkidle'});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Landing overflow at '+width);
+  if(width<=390)assert.equal(await page.locator('.scene-paper').evaluateAll(els=>els.every(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;})),true,'Mobile documents stay in frame at '+width);
+ }
+ pass('Landing fits 320, 390, 768 and 1440 px');
+ await page.setViewportSize({width:390,height:844});await page.goto(base,{waitUntil:'networkidle'});
+ await page.screenshot({path:resolve(root,'docs/images/landing-mobile.png')});
+ await page.locator('[data-story="2"]').click();await page.waitForTimeout(900);assert.equal(await page.locator('#story-display').getAttribute('data-stage'),'2');
+ await page.getByRole('link',{name:'Проверить этот эпизод'}).click();await page.locator('#app').waitFor({state:'visible'});
+ assert.equal(await page.locator('#episode-select').inputValue(),'0');pass('Mobile story opens exact recorded FX episode');
+ await page.goto(base+'/#workspace',{waitUntil:'networkidle'});await page.locator('#app').waitFor({state:'visible'});assert.match(page.url(),/lab(?:\.html)?#workspace/);pass('Previously shared workspace link remains usable');
+ await page.locator('[data-tab="documents"]').focus();await page.keyboard.press('ArrowRight');assert.equal(await page.locator('[data-tab="ledger"]').getAttribute('aria-selected'),'true');pass('Lab tabs support keyboard navigation');
+ await page.locator('[data-action="next"]').click();assert.equal(await page.evaluate(()=>document.activeElement.dataset.action),'next');pass('Replay preserves keyboard focus after rendering');
+ assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);pass('No browser errors or missing assets');
+ const result={url:base,passed:checks.length,checks,browser_errors:errors,failed_requests:failed};await mkdir(resolve(root,'artifacts'),{recursive:true});await writeFile(resolve(root,'artifacts/landing-check.json'),JSON.stringify(result,null,2)+'\n');
+ await page.close();return result;
+};

@@ -18,6 +18,9 @@ function stop(){if(timer)clearInterval(timer);timer=null;}
 function metrics(items){return `<div class="metrics-strip">${items.map(([value,label,i])=>`<div class="metric"><div class="metric-icon">${icon(i)}</div><div><strong>${esc(value)}</strong><p>${esc(label)}</p></div></div>`).join('')}</div>`;}
 function heading(kicker,title,description,button=''){return `<div class="heading-row"><div><span class="eyebrow">${esc(kicker)}</span><h1>${esc(title)}</h1><p>${esc(description)}</p></div>${button}</div>`;}
 function render(){
+  const focused=document.activeElement?.closest('[data-action], [data-tab], [data-step]');
+  const focusKey=focused?['action','tab','step'].find(k=>focused.dataset[k]!==undefined):null;
+  const focusValue=focusKey?focused.dataset[focusKey]:null;
   const route=['workspace','verification','architecture','guide'].includes(location.hash.slice(1))?location.hash.slice(1):'workspace';
   if(route!=='workspace')stop();
   const titles={workspace:'Расследование',verification:'Проверки',architecture:'Как устроено',guide:'Для жюри'};
@@ -25,13 +28,15 @@ function render(){
   document.querySelectorAll('[data-nav]').forEach(el=>{el.classList.toggle('active',el.dataset.nav===route);el.setAttribute('aria-current',el.dataset.nav===route?'page':'false');});
   app.innerHTML=({workspace:workspace,verification:verification,architecture:architecture,guide:guide})[route]();
   hydrate();
+  document.title='СЛЕД · '+titles[route];
+  if(focusKey)app.querySelector('[data-'+focusKey+'="'+CSS.escape(focusValue)+'"]')?.focus({preventScroll:true});
 }
 function workspace(){const c=current(),v=data.verification,m=c.public.manifest;
  return heading('ДОКУМЕНТЫ. ДЕЙСТВИЯ. ДОКАЗАТЕЛЬСТВА.','Финансовое расследование','У каждой ошибки есть след. Проследите его вместе с агентом.',`<a class="button" href="#guide">${icon('book')}Как проверить</a>`)+
  metrics([['4','типа финансовых ошибок','layers'],['100','шагов на расследование','clock'],[`${v.acceptance.cases.filter(x=>x.status==='passed').length}/80`,'локальных проверок','shield'],['0','внешних API в ядре','lock']])+
  `<div class="workbench"><section class="panel episode-panel" aria-label="Документы эпизода"><div class="panel-head"><div><span class="eyebrow">ОТКРЫТЫЙ ДЕМОЭПИЗОД</span><h2>Материалы расследования</h2></div><label class="episode-picker"><select id="episode-select" aria-label="Выбрать эпизод">${data.cases.map((x,i)=>`<option value="${i}" ${i===caseIndex?'selected':''}>${esc(x.title)}</option>`).join('')}</select><span>${icon('chevron')}</span></label></div>
  <div class="episode-info"><div class="episode-title"><h3>${esc(caseIndex===3?'Синтетическая компания':'Компания «Орион»')}</h3><span class="tag muted">${esc(m.base_currency)}</span></div><div class="episode-subline">${icon('clock')}<span>${date(m.period_start)} — ${date(m.period_end)}</span><span class="dot-separator">·</span><span>${m.document_count} ${m.document_count===2?'документа':'документов'}</span></div></div>
- <div class="tabs" role="tablist" aria-label="Материалы эпизода">${[['documents','Документы','file',m.document_count],['ledger','Проводки','layers',m.record_counts.ledger],['policy','Курсы и правила','bank',null]].map(([key,label,i,count])=>`<button class="tab ${tab===key?'active':''}" role="tab" aria-selected="${tab===key}" data-tab="${key}">${icon(i)}${key==='policy'?'<span class="desktop-label">Курсы и правила</span><span class="mobile-label">Правила</span>':label}${count!==null?`<span class="tab-count">${count}</span>`:''}</button>`).join('')}</div>
+ <div class="tabs" role="tablist" aria-label="Материалы эпизода">${[['documents','Документы','file',m.document_count],['ledger','Проводки','layers',m.record_counts.ledger],['policy','Курсы и правила','bank',null]].map(([key,label,i,count])=>`<button class="tab ${tab===key?'active':''}" role="tab" tabindex="${tab===key?0:-1}" aria-selected="${tab===key}" data-tab="${key}">${icon(i)}${key==='policy'?'<span class="desktop-label">Курсы и правила</span><span class="mobile-label">Правила</span>':label}${count!==null?`<span class="tab-count">${count}</span>`:''}</button>`).join('')}</div>
  <div id="material-content">${materials()}</div>
  <div class="context-note">${icon('info')}<span>Все операции вымышлены. Период включает начало и исключает конец. Суммы показаны в основных единицах валюты.</span></div>
  <div class="episode-bottom"><span>${icon('shield')}Доступ только к открытым записям</span><button class="button ghost small" data-action="download-episode">${icon('download')}JSON</button></div></section>
@@ -119,6 +124,11 @@ document.addEventListener('input',e=>{if(e.target.id==='ledger-search'){filter=e
 document.querySelector('#close-dialog').addEventListener('click',()=>document.querySelector('#detail-dialog').close());
 document.querySelector('#detail-dialog').addEventListener('click',e=>{const d=e.currentTarget;if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});
 window.addEventListener('hashchange',()=>{if(data){render();window.scrollTo(0,0);}});
+document.addEventListener('keydown',event=>{
+ const selected=event.target.closest('[data-tab]');if(!selected||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+ event.preventDefault();const tabs=[...document.querySelectorAll('[data-tab]')];const index=tabs.indexOf(selected);
+ const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:tabs.length-1))%tabs.length;tabs[next].click();
+});
 window.addEventListener('pagehide',stop);
 hydrate();
 try{const response=await fetch('data/demo.json');if(!response.ok)throw new Error(`HTTP ${response.status}`);data=await response.json();const chosen=new URL(location.href).searchParams.get('episode');caseIndex=Math.max(0,data.cases.findIndex(c=>c.id===chosen));document.querySelector('#loading').hidden=true;app.hidden=false;render();}catch(error){document.querySelector('#loading').innerHTML=`<h1>Не удалось загрузить эпизоды</h1><p>Обновите страницу или откройте <a href="https://github.com/amurapan/genesis">репозиторий проекта</a>.</p>`;console.error('Demo data unavailable:',error);}
