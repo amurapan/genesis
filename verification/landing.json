@@ -1,25 +1,45 @@
 {
   "url": "https://sled-genesis.vercel.app",
-  "passed": 13,
+  "passed": 21,
   "checks": [
-    "Landing and 3D document scene render",
-    "Camera responds to pointer",
-    "Scroll directs story to ledger discrepancy",
-    "Manual stage control reveals proof and exact amounts",
-    "Story tabs support keyboard navigation",
-    "Motion control persists across reloads",
-    "System reduced-motion preference is respected",
-    "Landing fits 320, 390, 768 and 1440 px",
-    "Mobile story opens exact recorded FX episode",
-    "Previously shared workspace link remains usable",
-    "Lab tabs support keyboard navigation",
-    "Replay preserves keyboard focus after rendering",
-    "No browser errors or missing assets"
+    "Landing renders a real Three.js archive with a readable first frame",
+    "Hover and menu interactions work, with Escape returning keyboard focus",
+    "Native anchors and browser Back return to the correct film composition",
+    "The camera approaches, unfolds, trucks to a second case and returns; WebGL shares the HTML timeline",
+    "Reverse scrolling reproduces exact camera matrices, CSS 3D transforms and text composition",
+    "Both case pauses are stationary, and the renderer stops requesting frames while idle",
+    "Both interfaces are interactive HTML, including keyboard tabs and real evidence values",
+    "Displayed financial examples agree with the recorded public episodes",
+    "The case opens in the laboratory, and browser Back restores the film position",
+    "PageDown uses the normal document scrollbar",
+    "Sticky entry and release are continuous at the beginning and end of the film",
+    "A 120-frame scroll trace records rendering cost and stays within the tested CPU budget",
+    "Seven scenes fit five viewport widths, with readable text separated from the project interface",
+    "Mobile retains the interactive project and a dedicated readable text area",
+    "Reduced motion becomes a normal readable page with both working examples and no WebGL",
+    "The motion choice persists and can restore the complete 3D film",
+    "Short landscape screens use the readable non-pinned layout",
+    "Legacy laboratory links remain usable",
+    "A real WebGL context loss restores readable content and working evidence tabs",
+    "Unavailable WebGL gracefully retains the complete content and case links",
+    "No JavaScript, console or resource errors in the supported path"
   ],
   "browser_errors": [],
   "failed_requests": [],
-  "tested_deployment_id": "dpl_GRz7uay7Wi1G8FFvnPnyKugmbN4j",
-  "published_deployment_id": "dpl_GRz7uay7Wi1G8FFvnPnyKugmbN4j",
+  "performance": {
+    "environment": "Headless Chromium on this workstation; not a hardware-wide FPS guarantee",
+    "graphics_quality": "software",
+    "pixel_ratio": 0.65,
+    "scroll_frames": 120,
+    "frame_interval_p50_ms": 37,
+    "frame_interval_p95_ms": 146.5,
+    "render_cpu_p50_ms": 0.900000000372529,
+    "render_cpu_p95_ms": 1.400000000372529,
+    "max_draw_calls": 29,
+    "max_triangles": 9690
+  },
+  "tested_deployment_id": "dpl_HsibFZs4938zWheNUrUcS9rAcJhY",
+  "published_deployment_id": "dpl_HsibFZs4938zWheNUrUcS9rAcJhY",
   "asset_sha256": {
     "app.js": "0f7bb9adbd98fd4b77a902594186ac55bc68542ca1f3f08ba160944980c17d67",
     "assets/demo.mp4": "40612665c7d3f09fbbb48ff2e0364b950b8405833289f57763173d49118cfa66",
@@ -35,17 +55,65 @@
     "assets/verification.html": "af6aed4e88f327ec642a4debf16d3b2bdab2a69299a3f8ee96342a40c940ef83",
     "assets/video-poster.png": "a61d879368321d0bcc1e970685a71e00fcd2fbf1854fc9d5a6d56159e22405ac",
     "base.css": "5dcc70ca6ec6fa833a6db7561d08ff6faa9600fba09dad6c57032b7646c6eb24",
+    "cinema/sled-scene.js": "7536622a87a411fc048fb97a92f05c86ce0a2637768c3b9ebd07cb83dbbaa441",
+    "cinema/timeline.js": "a7c9415bc9adae75683cd3aa330756e2198d3859d64a20e6de3dd97b18813a2c",
     "data/checks.json": "ef397d38df68499d64dffb545e0de1049c9ac16234bed822c328bb863c4f99c8",
     "data/demo.json": "8141867cfe9b6b6cedc0077c42d9ed84946433ce3d74b5da537f4f162baa22c1",
     "data/verification.json": "0ab27479536bd828e0fd78cb2ffa8bf5c2b7f5b2a05064425d3f08bde524ebd3",
-    "index.html": "f65a94d173e4d369277d878377595c82db9dcc1e6494e91c346242e49c9297d9",
+    "index.html": "cbddd77d76d26d424409390799827100bedcbbd64672bf518c9930b13a74bd6c",
     "lab.html": "d026751c529b3ebba0c1cb8ffabee9286cfbb6261f75ad585010dc9e02e110ae",
-    "landing.css": "45e821ef087c291c56be20c590d064de88168c1e5cd3e508dac8650e0f44c7af",
-    "landing.js": "fcff36ca417e52adeab990627840534569a5ffe9ef1a4f1582cc7758f2d14f56",
+    "landing.css": "d5e7b68428fdab32f6ab5766f64d526954fbf2df85fb6fad1867818287e5bd20",
+    "landing.js": "8275b27d27e8ff956da0bf02b92eede77e6fe3bbffd135eb71f2cccd4c7452ee",
     "styles.css": "fee7faa52c11a95dc440c5e9c894cae1717e78725a58e093e2034b56eb14be41",
-    "ui/icons.js": "97e09efcb334b7513ef5bd0b611c3ca9816af5691deed8a31291118db03c6edd"
+    "ui/icons.js": "97e09efcb334b7513ef5bd0b611c3ca9816af5691deed8a31291118db03c6edd",
+    "vendor/three/CSS3DRenderer.js": "5214ec6e9ffee5509a56371548890bb65adb3d8fd634356868c74fbc27fdfc40",
+    "vendor/three/LICENSE": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601",
+    "vendor/three/README.txt": "d6065908e902bd7aceeddf4e69d2779322f64bad51c8e2735b65fa2638a00bc7",
+    "vendor/three/three.core.min.js": "61ba0df005b05991361d040d8ff670e1aadfd0ce7aeebd1fdb0725957a8957de",
+    "vendor/three/three.module.min.js": "e2b5ee6bccd38fd6d8a2428546b83c5f2426d84b152ef82be8055556e3b40eb6"
   },
   "verified_core_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
   "financial_core_unchanged": true,
-  "checked_at": "2026-11-19T16:41:43.453039+00:00"
+  "checked_at": "2026-11-19T17:40:00.638386+00:00",
+  "additional_viewport_review": {
+    "viewport_sizes": [
+      [
+        320,
+        740
+      ],
+      [
+        360,
+        780
+      ],
+      [
+        375,
+        812
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        768,
+        800
+      ],
+      [
+        1024,
+        740
+      ],
+      [
+        1440,
+        800
+      ],
+      [
+        1920,
+        1080
+      ]
+    ],
+    "sampled_compositions": 56,
+    "page_overflow": false,
+    "clipped_copy": false,
+    "clipped_case_interfaces": false,
+    "mobile_copy_case_overlaps": false
+  }
 }

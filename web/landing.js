@@ -1,30 +1,362 @@
-const routes=['workspace','architecture','guide'];
-// Preserve links shared before the landing page existed. #verification now names the landing section.
-if(routes.includes(location.hash.slice(1))||new URLSearchParams(location.search).has('episode')){
- const target=new URL('lab.html',location.href);target.hash=location.hash;target.search=location.search;location.replace(target);
+import { sample, shotRanges, clamp } from "./cinema/timeline.js";
+// Keep previously shared laboratory links usable.
+function redirectLegacy() {
+  if (
+    ["workspace", "architecture", "guide"].includes(location.hash.slice(1)) ||
+    new URLSearchParams(location.search).has("episode")
+  ) {
+    const target = new URL("lab.html", location.href);
+    target.hash = location.hash;
+    target.search = location.search;
+    location.replace(target);
+    return true;
+  }
+  return false;
 }
-const root=document.documentElement,hero=document.querySelector('.hero'),visual=document.querySelector('.hero-visual'),rig=document.querySelector('#scene-rig');
-const motionQuery=matchMedia('(prefers-reduced-motion: reduce)'),compactQuery=matchMedia('(max-width: 650px)');
-let stored=false;try{stored=localStorage.getItem('sled-motion')==='off';}catch{}
-let motionOff=motionQuery.matches||stored,heroVisible=true,frame=0,targetX=0,targetZ=0,currentX=0,currentZ=0,scrollY=0;
-const toggle=document.querySelector('#motion-toggle'),story=document.querySelector('#investigation'),display=document.querySelector('#story-display');
-let stage=0,manualScroll=NaN;
-const texts=[
- '30 ноября компания получает 100 USD. Опубликованный курс — 450 KZT за доллар. В книге должно появиться 45 000 KZT.',
- 'В книге — 44 000 KZT и дата 1 декабря. Агент обнаруживает два расхождения: валютный курс и отнесение операции к отчётному периоду.',
- 'Каждый вывод связан с первичными записями. Оценщик проверяет тип, сумму, валюту и полный набор доказательств. Красивого объяснения недостаточно.'
-],states=['Первичные документы','Два расхождения','Доказательства собраны'];
-function setStage(next){if(next===stage&&display.dataset.stage===String(next))return;stage=next;display.dataset.stage=String(stage);display.setAttribute('aria-labelledby','story-tab-'+stage);document.querySelector('#story-description').textContent=texts[stage];document.querySelector('#story-state').textContent=states[stage];document.querySelectorAll('[data-story]').forEach(el=>{const active=Number(el.dataset.story)===stage;el.setAttribute('aria-selected',String(active));el.tabIndex=active?0:-1;});}
-function updateMotion(){root.classList.toggle('motion-off',motionOff);toggle.setAttribute('aria-pressed',String(motionOff));toggle.setAttribute('aria-label',motionOff?'Включить анимацию':'Отключить анимацию');toggle.querySelector('path').setAttribute('d',motionOff?'m8 5 10 7-10 7V5Z':'M9 5v14M15 5v14');if(motionOff){cancelAnimationFrame(frame);frame=0;}else requestFrame();}
-toggle.addEventListener('click',()=>{motionOff=!motionOff;stored=motionOff;try{localStorage.setItem('sled-motion',motionOff?'off':'on');}catch{}updateMotion();});
-motionQuery.addEventListener('change',e=>{motionOff=e.matches||stored;updateMotion();});
-function animate(){frame=0;if(motionOff||document.hidden)return;currentX+=(targetX-currentX)*.065;currentZ+=(targetZ-currentZ)*.065;if(heroVisible){rig.style.setProperty('--cam-x',currentX.toFixed(3)+'deg');rig.style.setProperty('--cam-z',(currentZ+scrollY*8).toFixed(3)+'deg');rig.style.setProperty('--cam-y',(-scrollY*55).toFixed(2)+'px');}if(Math.abs(targetX-currentX)>.02||Math.abs(targetZ-currentZ)>.02)requestFrame();}
-function requestFrame(){if(!frame&&!motionOff&&!document.hidden)frame=requestAnimationFrame(animate);}
-visual.addEventListener('pointermove',e=>{if(e.pointerType==='touch'||motionOff)return;const r=visual.getBoundingClientRect();targetX=-(e.clientY-r.top-r.height/2)/r.height*6;targetZ=(e.clientX-r.left-r.width/2)/r.width*6;requestFrame();});
-visual.addEventListener('pointerleave',()=>{targetX=targetZ=0;requestFrame();});
-function onScroll(){scrollY=Math.max(0,Math.min(1,window.scrollY/hero.offsetHeight));requestFrame();if(!compactQuery.matches&&!motionOff){const r=story.getBoundingClientRect();if(r.top<innerHeight*.25&&r.bottom>innerHeight*.5){const progress=Math.max(0,Math.min(.999,-r.top/Math.max(1,story.offsetHeight-innerHeight)));if(!Number.isFinite(manualScroll)||Math.abs(window.scrollY-manualScroll)>100){setStage(Math.min(2,Math.floor(progress*3)));manualScroll=NaN;}}}}
-window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});
-document.querySelectorAll('[data-story]').forEach(el=>{el.addEventListener('click',()=>{manualScroll=window.scrollY;setStage(Number(el.dataset.story));});el.addEventListener('keydown',e=>{const keys=['ArrowLeft','ArrowRight','Home','End'];if(!keys.includes(e.key))return;e.preventDefault();let next=e.key==='Home'?0:e.key==='End'?2:(stage+(e.key==='ArrowRight'?1:2))%3;manualScroll=window.scrollY;setStage(next);document.querySelector('[data-story="'+next+'"]').focus();});});
-document.addEventListener('visibilitychange',()=>{hero.classList.toggle('scene-paused',document.hidden||!heroVisible);if(document.hidden){cancelAnimationFrame(frame);frame=0;}else requestFrame();});
-if('IntersectionObserver'in window){new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;hero.classList.toggle('scene-paused',!heroVisible);if(heroVisible)requestFrame();}).observe(hero);const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting){e.target.classList.add('revealed');if(!motionOff)e.target.animate([{opacity:0,transform:'translateY(24px)'},{opacity:1,transform:'translateY(0)'}],{duration:700,easing:'cubic-bezier(.2,.7,.2,1)'});observer.unobserve(e.target);}},{threshold:.08});root.classList.add('reveal-ready');document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));}
-updateMotion();onScroll();
+const redirecting = redirectLegacy();
+const root = document.documentElement,
+  film = document.querySelector("#film"),
+  stage = document.querySelector("#film-stage"),
+  world = document.querySelector("#world"),
+  spatial = document.querySelector("#spatial-ui");
+const shots = [...document.querySelectorAll("[data-shot]")],
+  previews = [...document.querySelectorAll("[data-preview]")];
+const homes = previews.map((el) => el.parentElement),
+  anchors = shotRanges.map(({ anchor }) => document.getElementById(anchor));
+const menu = document.querySelector("#site-menu"),
+  menuButton = document.querySelector("#menu-toggle"),
+  shade = document.querySelector("#menu-shade"),
+  motionButton = document.querySelector("#motion-toggle");
+const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+let stored;
+try {
+  stored = localStorage.getItem("sled-cinema-mode");
+  if (!stored && localStorage.getItem("sled-motion") === "off") stored = "off";
+} catch {}
+let engine = null,
+  frame = 0,
+  epoch = 0,
+  cinematic = false,
+  loading = false,
+  failed = false,
+  menuOpen = false,
+  progress = 0,
+  lastState = sample(0),
+  sizeDirty = true,
+  wasCompact = innerHeight < 740;
+let renders = 0,
+  restTimer = 0,
+  moving = false;
+const renderTimes = [],
+  errors = [];
+const chapterLabels = [
+  "Откройте архив прокруткой",
+  "Приближение к источнику",
+  "От записей к связям",
+  "Валюта и граница периода",
+  "Повторное признание счёта",
+  "Проверка самой среды",
+  "Продолжите в лаборатории",
+];
+const sceneLabels = [
+  "THE EVIDENCE ARCHIVE",
+  "A CLOSER LOOK",
+  "CONNECTED BY EVIDENCE",
+  "CASE / FX-PERIOD",
+  "CASE / DUPLICATES",
+  "VERIFIED BY THE ENVIRONMENT",
+  "FOLLOW THE EVIDENCE",
+];
+function wantsMotion() {
+  return (
+    !failed &&
+    innerHeight >= 740 &&
+    (stored === "on" || (stored !== "off" && !reduced.matches))
+  );
+}
+function menuState(open, { focus = true } = {}) {
+  menuOpen = open;
+  menu.hidden = !open;
+  shade.hidden = !open;
+  menuButton.setAttribute("aria-expanded", String(open));
+  menuButton.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+  menuButton.querySelector("span").textContent = open ? "Закрыть" : "Меню";
+  if (focus) {
+    if (open) menu.querySelector("a").focus({ preventScroll: true });
+    else menuButton.focus({ preventScroll: true });
+  }
+}
+menuButton.addEventListener("click", () => menuState(!menuOpen));
+shade.addEventListener("click", () => menuState(false));
+menu.addEventListener("click", (e) => {
+  if (e.target.closest("a")) menuState(false, { focus: false });
+});
+document.addEventListener("keydown", (e) => {
+  if (menuOpen && e.key === "Escape") {
+    e.preventDefault();
+    menuState(false);
+  }
+  if (menuOpen && e.key === "Tab") {
+    const items = [menuButton, ...menu.querySelectorAll("a,button")],
+      i = items.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) {
+      e.preventDefault();
+      items.at(-1).focus();
+    } else if (!e.shiftKey && i === items.length - 1) {
+      e.preventDefault();
+      menuButton.focus();
+    }
+  }
+  const tab = e.target.closest("[data-screen-tab]");
+  if (tab && ["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) {
+    e.preventDefault();
+    const tabs = [...tab.parentElement.querySelectorAll("[role=tab]")];
+    const next =
+      e.key === "Home"
+        ? tabs[0]
+        : e.key === "End"
+          ? tabs.at(-1)
+          : tabs[(tabs.indexOf(tab) + 1) % tabs.length];
+    next.click();
+    next.focus({ preventScroll: true });
+  }
+});
+for (const preview of previews)
+  preview.addEventListener("click", (e) => {
+    const button = e.target.closest("[data-screen-tab]");
+    if (!button) return;
+    for (const tab of preview.querySelectorAll("[data-screen-tab]")) {
+      const on = tab === button;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+    }
+    for (const content of preview.querySelectorAll("[data-screen-content]"))
+      content.hidden =
+        content.dataset.screenContent !== button.dataset.screenTab;
+  });
+function setMotionButton() {
+  motionButton.setAttribute("aria-pressed", String(!cinematic));
+  motionButton.disabled = innerHeight < 740;
+  motionButton.textContent =
+    innerHeight < 740
+      ? "3D доступно на более высоком экране"
+      : cinematic
+        ? "Уменьшить движение"
+        : "Включить 3D-историю";
+}
+function requestFrame() {
+  if (!frame && cinematic && !document.hidden)
+    frame = requestAnimationFrame(draw);
+}
+function onScroll() {
+  moving = true;
+  if (engine?.setMoving(true)) sizeDirty = true;
+  requestFrame();
+  clearTimeout(restTimer);
+  // Refine the resting image once, without changing the shared animation clock.
+  restTimer = setTimeout(() => {
+    moving = false;
+    if (engine?.setMoving(false)) {
+      sizeDirty = true;
+      requestFrame();
+    }
+  }, 350);
+}
+function draw() {
+  frame = 0;
+  if (!cinematic || document.hidden) return;
+  const start = performance.now();
+  if (sizeDirty) {
+    engine?.resize();
+    sizeDirty = false;
+  }
+  const rect = film.getBoundingClientRect(),
+    travel = Math.max(1, film.offsetHeight - stage.offsetHeight);
+  progress = clamp(-rect.top / travel);
+  const s = sample(progress);
+  lastState = s;
+  for (let i = 0; i < shots.length; i++) {
+    const a = s.shots[i],
+      range = shotRanges[i].range;
+    shots[i].style.opacity = a.toFixed(5);
+    const direction = progress < (range[1] + range[2]) / 2 ? 1 : -1;
+    shots[i].style.transform =
+      `translate3d(0,${((1 - a) * direction * 22).toFixed(3)}px,0)`;
+    shots[i].inert = a < 0.98;
+    shots[i].setAttribute("aria-hidden", String(a < 0.01));
+  }
+  document.querySelector("#film-progress").style.transform =
+    `scaleX(${progress.toFixed(6)})`;
+  document.querySelector("#film-position").textContent =
+    Math.round(progress * 100) + "%";
+  document.querySelector("#chapter-label").textContent =
+    chapterLabels[s.active];
+  document.querySelector("#scene-label-text").textContent =
+    sceneLabels[s.active];
+  for (const a of document.querySelectorAll("[data-chapter]"))
+    a.setAttribute(
+      "aria-current",
+      String(Number(a.dataset.chapter) === s.active),
+    );
+  engine?.update(s);
+  renders++;
+  renderTimes.push(performance.now() - start);
+  if (renderTimes.length > 300) renderTimes.shift();
+}
+function restoreContent() {
+  previews.forEach((el, i) => {
+    homes[i].append(el);
+    el.classList.remove("spatial-preview");
+    el.removeAttribute("style");
+    el.inert = false;
+    el.removeAttribute("aria-hidden");
+  });
+  anchors.forEach((el, i) => shots[i].prepend(el));
+  for (const shot of shots) {
+    shot.removeAttribute("style");
+    shot.inert = false;
+    shot.removeAttribute("aria-hidden");
+  }
+}
+function jumpToCurrentHash(fallbackIndex) {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const anchor =
+    document.getElementById(id) ||
+    (fallbackIndex ? anchors[fallbackIndex] : null);
+  if (anchor) anchor.scrollIntoView({ block: "start", behavior: "instant" });
+}
+function disable({ reason, keepPlace = true } = {}) {
+  epoch++;
+  clearTimeout(restTimer);
+  moving = false;
+  const active = lastState.active,
+    hadMode = cinematic;
+  cinematic = false;
+  loading = false;
+  cancelAnimationFrame(frame);
+  frame = 0;
+  restoreContent();
+  engine?.dispose();
+  engine = null;
+  world.replaceChildren();
+  spatial.replaceChildren();
+  root.classList.remove("cinematic", "webgl-ready");
+  setMotionButton();
+  if (reason) {
+    failed = true;
+    errors.push(reason);
+    const note = document.querySelector("#fallback-message");
+    note.hidden = false;
+    note.textContent =
+      "3D недоступно. Документы и расследования можно изучить в обычном режиме.";
+  }
+  if (keepPlace && hadMode)
+    requestAnimationFrame(() =>
+      anchors[active].scrollIntoView({ block: "start", behavior: "instant" }),
+    );
+}
+async function enable() {
+  if (cinematic || loading) return;
+  const generation = ++epoch;
+  loading = true;
+  cinematic = true;
+  root.classList.add("cinematic");
+  anchors.forEach((anchor) => film.append(anchor));
+  setMotionButton();
+  sizeDirty = true;
+  requestFrame();
+  jumpToCurrentHash();
+  try {
+    const { createScene } = await import("./cinema/sled-scene.js");
+    if (generation !== epoch || !wantsMotion()) return;
+    engine = createScene({
+      host: world,
+      htmlHost: spatial,
+      previews,
+      onContextLost: () => disable({ reason: "WebGL context lost" }),
+    });
+    engine.setMoving(moving);
+    loading = false;
+    sizeDirty = true;
+    draw();
+    root.classList.add("webgl-ready");
+    jumpToCurrentHash();
+    requestFrame();
+  } catch (error) {
+    disable({ reason: String(error.message || error) });
+  }
+}
+function syncMode() {
+  if (wantsMotion()) enable();
+  else if (cinematic || loading) disable();
+  else setMotionButton();
+}
+motionButton.addEventListener("click", () => {
+  stored = cinematic ? "off" : "on";
+  failed = false;
+  document.querySelector("#fallback-message").hidden = true;
+  try {
+    localStorage.setItem("sled-cinema-mode", stored);
+  } catch {}
+  menuState(false);
+  syncMode();
+});
+reduced.addEventListener("change", () => {
+  if (!stored) syncMode();
+});
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener(
+  "resize",
+  () => {
+    sizeDirty = true;
+    const compact = innerHeight < 740;
+    if (compact !== wasCompact) {
+      wasCompact = compact;
+      syncMode();
+    }
+    requestFrame();
+  },
+  { passive: true },
+);
+window.addEventListener("hashchange", () => {
+  if (redirectLegacy()) return;
+  menuState(false, { focus: false });
+  requestFrame();
+});
+window.addEventListener("popstate", requestFrame);
+window.addEventListener("pageshow", requestFrame);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    cancelAnimationFrame(frame);
+    frame = 0;
+  } else requestFrame();
+});
+window.addEventListener("pagehide", () => {
+  cancelAnimationFrame(frame);
+  frame = 0;
+});
+stage.addEventListener(
+  "pointermove",
+  (e) => {
+    if (e.pointerType === "touch" || !engine || lastState.screen > 0.1) return;
+    if (engine.hover(e.clientX, e.clientY)) requestFrame();
+  },
+  { passive: true },
+);
+stage.addEventListener("pointerleave", () => {
+  if (engine?.hover(-100, -100)) requestFrame();
+});
+window.sledFilm = {
+  snapshot: () => ({
+    mode: cinematic ? "cinematic" : "static",
+    loading,
+    progress,
+    active: shotRanges[lastState.active].id,
+    renders,
+    renderMillis: renderTimes.slice(),
+    state: JSON.parse(JSON.stringify(lastState)),
+    graphics: engine?.diagnostics() || null,
+    errors: errors.slice(),
+  }),
+};
+if (!redirecting) syncMode();

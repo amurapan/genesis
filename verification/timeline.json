@@ -1,0 +1,15 @@
+{
+  "passed": 5,
+  "checks": [
+    "All timeline state is identical when sampled forward and backward",
+    "Camera stays outside the archive; all geometry and opacity values stay finite and bounded",
+    "10,000 adjacent samples have bounded camera, object and HTML transitions without keyframe jumps",
+    "Both investigation scenes contain exact stationary reading intervals",
+    "Chapter anchors resolve to the intended scene and scroll bounds are clamped"
+  ],
+  "max_camera_delta_per_0_0001": 0.017912984800557998,
+  "max_rig_delta_per_0_0001": 0.014142467495248535,
+  "max_opacity_delta_per_0_0001": 0.00535702624020884,
+  "checked_at": "2026-11-19T17:40:00.644230+00:00",
+  "source_sha256": "a7c9415bc9adae75683cd3aa330756e2198d3859d64a20e6de3dd97b18813a2c"
+}
