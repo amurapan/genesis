@@ -69,7 +69,7 @@ for index,(title,subtitle,lines) in enumerate(slides):
         y+=63
     page.insert_text((55,680),f'Actual local run | source {report["versions"]["source_sha256"][:16]} | {index+1:02}/{len(slides):02}',fontsize=13,color=(.55,.65,.74))
     page.get_pixmap().save(frames/f'{index:02}.png')
-pdf.save(DEST/'presentation.pdf')
+pdf.save(DEST/'video-slides.pdf')
 image_id=subprocess.check_output(['docker','image','inspect','--format','{{.Id}}','linuxserver/ffmpeg:latest'],text=True).strip()
 cmd=['docker','run','--rm','--network=none','-v',str(DEST)+':/work',image_id,
      '-y','-framerate','1/12','-i','/work/frames/%02d.png','-vf','fps=24,format=yuv420p',

@@ -1,0 +1,36 @@
+{
+  "title": "СЛЕД — среда финансовых расследований",
+  "language": "ru",
+  "slides": 12,
+  "template": {
+    "filename": "Purple and Yellow Gradient Marketing Plan Presentation.pdf",
+    "sha256": "819e7ceca260e5220133d47e97374a1631f4238bc783d4514e28efeb3139a466",
+    "source_pages": 13,
+    "used_pages": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      8,
+      9,
+      10,
+      11
+    ],
+    "treatment": "Original gradients and containers retained; template text, branding and example KPI charts removed.",
+    "typography": "Montserrat Regular / Bold, Cyrillic; SIL Open Font License 1.1."
+  },
+  "source_report": "verification/report.json",
+  "verified_core_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
+  "tools": {
+    "PyMuPDF": "1.26.6",
+    "python-pptx": "1.0.2",
+    "qrcode": "8.2",
+    "Pillow": "12.0.0"
+  },
+  "files": {
+    "presentation.pdf": "f59902c28c34a425a511947a5f6bd41362509c40621c8629bdc33e44d725664c",
+    "presentation.pptx": "ba675d0727bc3464f9bf5037269332a8b69610cc743037fd35f3ee04f1c64dc9"
+  },
+  "note": "PDF has embedded Cyrillic fonts. PPTX text, diagrams and tables are editable; template backgrounds are retained as images. Speaker notes are included."
+}
