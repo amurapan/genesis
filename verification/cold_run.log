@@ -1,9 +1,9 @@
 Artifact checksums verified
-Loaded image: sled-core:1.0.0
 Loaded image: sled-agent:1.0.0
+Loaded image: sled-core:1.0.0
 ................................................
 ----------------------------------------------------------------------
-Ran 48 tests in 4.800s
+Ran 48 tests in 4.947s
 
 OK
 Acceptance: 80 cases

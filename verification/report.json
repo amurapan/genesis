@@ -1,13 +1,13 @@
 {
   "project": "СЛЕД",
   "version": "1.0.0",
-  "started_at": "2026-11-19T09:15:03.927522+00:00",
-  "seconds": 52.82931786798872,
+  "started_at": "2026-11-19T09:19:14.605331+00:00",
+  "seconds": 45.91593261202797,
   "scope": "Local acceptance, not official jury grading",
   "versions": {
-    "source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
-    "revision": "184ba4558df05d9ea2c87debc20ff9194c254786",
-    "uncommitted_changes": true,
+    "source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
+    "revision": "20cd5677ba06ffe14a333028d37caa84aed1b407",
+    "uncommitted_changes": false,
     "python": "3.11.15",
     "platform": "Linux-6.12.93-x86_64-with-glibc2.40",
     "schema_version": "1.0.0",
@@ -24,22 +24,22 @@
       },
       {
         "name": "sled-core:1.0.0",
-        "id": "sha256:d972458c6ef0f5c14c7c54d5de996132b659f5f9bb77c505d513ca5364b632bd",
-        "size_bytes": 125381067,
+        "id": "sha256:73357b1a2f7b8f77408e49dffad43e8e0773808e07daf59bbbb9739ddf573aa9",
+        "size_bytes": 125384025,
         "labels": {
-          "org.sled.core-source": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310"
+          "org.sled.core-source": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959"
         }
       }
     ]
   },
   "unit_tests": {
-    "source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
+    "source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
     "run": 48,
     "passed": 48,
     "skipped": 0,
     "failures": [],
     "errors": [],
-    "seconds": 5.919134736061096
+    "seconds": 5.486130606965162
   },
   "acceptance": {
     "matrix_sha256": "5b7f8d9ad3f825f3b1efeea1f9e8f8f2c984e079865b16cfa10fc7072920e1f9",
@@ -48,481 +48,481 @@
         "id": "C01",
         "status": "passed",
         "error": null,
-        "seconds": 0.135023
+        "seconds": 0.038993
       },
       {
         "id": "C02",
         "status": "passed",
         "error": null,
-        "seconds": 0.286875
+        "seconds": 0.082809
       },
       {
         "id": "C03",
         "status": "passed",
         "error": null,
-        "seconds": 0.06471
+        "seconds": 0.017979
       },
       {
         "id": "C04",
         "status": "passed",
         "error": null,
-        "seconds": 0.064486
+        "seconds": 0.017733
       },
       {
         "id": "C05",
         "status": "passed",
         "error": null,
-        "seconds": 0.160488
+        "seconds": 0.045382
       },
       {
         "id": "C06",
         "status": "passed",
         "error": null,
-        "seconds": 0.143078
+        "seconds": 0.043453
       },
       {
         "id": "C07",
         "status": "passed",
         "error": null,
-        "seconds": 0.190293
+        "seconds": 0.055782
       },
       {
         "id": "C08",
         "status": "passed",
         "error": null,
-        "seconds": 0.063662
+        "seconds": 0.018192
       },
       {
         "id": "C09",
         "status": "passed",
         "error": null,
-        "seconds": 0.064274
+        "seconds": 0.019069
       },
       {
         "id": "C10",
         "status": "passed",
         "error": null,
-        "seconds": 0.00031
+        "seconds": 0.000108
       },
       {
         "id": "C11",
         "status": "passed",
         "error": null,
-        "seconds": 0.000528
+        "seconds": 0.00017
       },
       {
         "id": "C12",
         "status": "passed",
         "error": null,
-        "seconds": 0.064258
+        "seconds": 0.018523
       },
       {
         "id": "C13",
         "status": "passed",
         "error": null,
-        "seconds": 0.253447
+        "seconds": 0.076574
       },
       {
         "id": "C14",
         "status": "passed",
         "error": null,
-        "seconds": 0.064661
+        "seconds": 0.01833
       },
       {
         "id": "C15",
         "status": "passed",
         "error": null,
-        "seconds": 0.127432
+        "seconds": 0.038508
       },
       {
         "id": "C16",
         "status": "passed",
         "error": null,
-        "seconds": 0.072529
+        "seconds": 0.022592
       },
       {
         "id": "C17",
         "status": "passed",
         "error": null,
-        "seconds": 0.138029
+        "seconds": 0.041699
       },
       {
         "id": "C18",
         "status": "passed",
         "error": null,
-        "seconds": 0.921287
+        "seconds": 0.724123
       },
       {
         "id": "C19",
         "status": "passed",
         "error": null,
-        "seconds": 0.06752
+        "seconds": 0.021833
       },
       {
         "id": "C20",
         "status": "passed",
         "error": null,
-        "seconds": 0.720647
+        "seconds": 0.316474
       },
       {
         "id": "D01",
         "status": "passed",
         "error": null,
-        "seconds": 0.035882
+        "seconds": 0.008731
       },
       {
         "id": "D02",
         "status": "passed",
         "error": null,
-        "seconds": 0.019344
+        "seconds": 0.005341
       },
       {
         "id": "D03",
         "status": "passed",
         "error": null,
-        "seconds": 0.030194
+        "seconds": 0.008765
       },
       {
         "id": "D04",
         "status": "passed",
         "error": null,
-        "seconds": 0.018359
+        "seconds": 0.005747
       },
       {
         "id": "D05",
         "status": "passed",
         "error": null,
-        "seconds": 0.031125
+        "seconds": 0.008944
       },
       {
         "id": "D06",
         "status": "passed",
         "error": null,
-        "seconds": 0.028134
+        "seconds": 0.008065
       },
       {
         "id": "D07",
         "status": "passed",
         "error": null,
-        "seconds": 0.02812
+        "seconds": 0.008067
       },
       {
         "id": "D08",
         "status": "passed",
         "error": null,
-        "seconds": 0.025979
+        "seconds": 0.008369
       },
       {
         "id": "D09",
         "status": "passed",
         "error": null,
-        "seconds": 0.028062
+        "seconds": 0.008737
       },
       {
         "id": "D10",
         "status": "passed",
         "error": null,
-        "seconds": 0.030249
+        "seconds": 0.009223
       },
       {
         "id": "D11",
         "status": "passed",
         "error": null,
-        "seconds": 0.030287
+        "seconds": 0.009229
       },
       {
         "id": "D12",
         "status": "passed",
         "error": null,
-        "seconds": 0.030544
+        "seconds": 0.009425
       },
       {
         "id": "D13",
         "status": "passed",
         "error": null,
-        "seconds": 0.028556
+        "seconds": 0.009702
       },
       {
         "id": "D14",
         "status": "passed",
         "error": null,
-        "seconds": 0.030642
+        "seconds": 0.009795
       },
       {
         "id": "D15",
         "status": "passed",
         "error": null,
-        "seconds": 0.134314
+        "seconds": 0.043503
       },
       {
         "id": "D16",
         "status": "passed",
         "error": null,
-        "seconds": 0.032332
+        "seconds": 0.009553
       },
       {
         "id": "D17",
         "status": "passed",
         "error": null,
-        "seconds": 0.029196
+        "seconds": 0.008988
       },
       {
         "id": "D18",
         "status": "passed",
         "error": null,
-        "seconds": 0.033593
+        "seconds": 0.01053
       },
       {
         "id": "D19",
         "status": "passed",
         "error": null,
-        "seconds": 0.030837
+        "seconds": 0.010594
       },
       {
         "id": "D20",
         "status": "passed",
         "error": null,
-        "seconds": 0.031209
+        "seconds": 0.010307
       },
       {
         "id": "R01",
         "status": "passed",
         "error": null,
-        "seconds": 0.001657
+        "seconds": 0.000703
       },
       {
         "id": "R02",
         "status": "passed",
         "error": null,
-        "seconds": 0.001778
+        "seconds": 0.000478
       },
       {
         "id": "R03",
         "status": "passed",
         "error": null,
-        "seconds": 0.002147
+        "seconds": 0.000442
       },
       {
         "id": "R04",
         "status": "passed",
         "error": null,
-        "seconds": 0.001454
+        "seconds": 0.000338
       },
       {
         "id": "R05",
         "status": "passed",
         "error": null,
-        "seconds": 0.000887
+        "seconds": 0.000292
       },
       {
         "id": "R06",
         "status": "passed",
         "error": null,
-        "seconds": 0.000754
+        "seconds": 0.000252
       },
       {
         "id": "R07",
         "status": "passed",
         "error": null,
-        "seconds": 0.001778
+        "seconds": 0.000633
       },
       {
         "id": "R08",
         "status": "passed",
         "error": null,
-        "seconds": 0.000693
+        "seconds": 0.000265
       },
       {
         "id": "R09",
         "status": "passed",
         "error": null,
-        "seconds": 0.000722
+        "seconds": 0.000242
       },
       {
         "id": "R10",
         "status": "passed",
         "error": null,
-        "seconds": 0.000742
+        "seconds": 0.000238
       },
       {
         "id": "R11",
         "status": "passed",
         "error": null,
-        "seconds": 0.000932
+        "seconds": 0.000318
       },
       {
         "id": "R12",
         "status": "passed",
         "error": null,
-        "seconds": 0.001238
+        "seconds": 0.000429
       },
       {
         "id": "R13",
         "status": "passed",
         "error": null,
-        "seconds": 0.000623
+        "seconds": 0.000218
       },
       {
         "id": "R14",
         "status": "passed",
         "error": null,
-        "seconds": 0.000838
+        "seconds": 0.000296
       },
       {
         "id": "R15",
         "status": "passed",
         "error": null,
-        "seconds": 0.00074
+        "seconds": 0.000236
       },
       {
         "id": "R16",
         "status": "passed",
         "error": null,
-        "seconds": 0.001817
+        "seconds": 0.000607
       },
       {
         "id": "R17",
         "status": "passed",
         "error": null,
-        "seconds": 0.001857
+        "seconds": 0.000605
       },
       {
         "id": "R18",
         "status": "passed",
         "error": null,
-        "seconds": 0.002167
+        "seconds": 0.000731
       },
       {
         "id": "R19",
         "status": "passed",
         "error": null,
-        "seconds": 0.000652
+        "seconds": 0.000206
       },
       {
         "id": "R20",
         "status": "passed",
         "error": null,
-        "seconds": 0.001146
+        "seconds": 0.000391
       },
       {
         "id": "G01",
         "status": "passed",
         "error": null,
-        "seconds": 0.019214
+        "seconds": 0.005572
       },
       {
         "id": "G02",
         "status": "passed",
         "error": null,
-        "seconds": 0.138609
+        "seconds": 0.038548
       },
       {
         "id": "G03",
         "status": "passed",
         "error": null,
-        "seconds": 0.107223
+        "seconds": 0.028932
       },
       {
         "id": "G04",
         "status": "passed",
         "error": null,
-        "seconds": 0.23749
+        "seconds": 0.070642
       },
       {
         "id": "G05",
         "status": "passed",
         "error": null,
-        "seconds": 0.140085
+        "seconds": 0.038539
       },
       {
         "id": "G06",
         "status": "passed",
         "error": null,
-        "seconds": 0.168859
+        "seconds": 0.051178
       },
       {
         "id": "G07",
         "status": "passed",
         "error": null,
-        "seconds": 0.031501
+        "seconds": 0.010222
       },
       {
         "id": "G08",
         "status": "passed",
         "error": null,
-        "seconds": 0.159139
+        "seconds": 0.048796
       },
       {
         "id": "G09",
         "status": "passed",
         "error": null,
-        "seconds": 0.058962
+        "seconds": 0.021424
       },
       {
         "id": "G10",
         "status": "passed",
         "error": null,
-        "seconds": 0.065501
+        "seconds": 0.022333
       },
       {
         "id": "G11",
         "status": "passed",
         "error": null,
-        "seconds": 0.055766
+        "seconds": 0.020154
       },
       {
         "id": "G12",
         "status": "passed",
         "error": null,
-        "seconds": 0.058258
+        "seconds": 0.019972
       },
       {
         "id": "G13",
         "status": "passed",
         "error": null,
-        "seconds": 0.056087
+        "seconds": 0.019617
       },
       {
         "id": "G14",
         "status": "passed",
         "error": null,
-        "seconds": 0.058844
+        "seconds": 0.019904
       },
       {
         "id": "G15",
         "status": "passed",
         "error": null,
-        "seconds": 0.058421
+        "seconds": 0.020303
       },
       {
         "id": "G16",
         "status": "passed",
         "error": null,
-        "seconds": 0.056367
+        "seconds": 0.020136
       },
       {
         "id": "G17",
         "status": "passed",
         "error": null,
-        "seconds": 0.05856
+        "seconds": 0.020168
       },
       {
         "id": "G18",
         "status": "passed",
         "error": null,
-        "seconds": 0.056877
+        "seconds": 0.019789
       },
       {
         "id": "G19",
         "status": "passed",
         "error": null,
-        "seconds": 0.058533
+        "seconds": 0.019911
       },
       {
         "id": "G20",
         "status": "passed",
         "error": null,
-        "seconds": 0.569151
+        "seconds": 0.200265
       }
     ],
     "groups": [
@@ -629,9 +629,9 @@
       "reward": -0.506,
       "mean_steps": 13,
       "max_steps": 13,
-      "mean_seconds": 0.43083910000000003,
-      "max_seconds": 0.856949,
-      "max_memory_bytes": 91045888
+      "mean_seconds": 0.37732765,
+      "max_seconds": 0.416174,
+      "max_memory_bytes": 91058176
     },
     {
       "policy": "reconciler",
@@ -642,9 +642,9 @@
       "reward": 0.9716,
       "mean_steps": 15.2,
       "max_steps": 49,
-      "mean_seconds": 0.4539417,
-      "max_seconds": 0.888298,
-      "max_memory_bytes": 93560832
+      "mean_seconds": 0.41355895,
+      "max_seconds": 0.48873,
+      "max_memory_bytes": 93462528
     },
     {
       "policy": "flag_all",
@@ -655,9 +655,9 @@
       "reward": -1.0,
       "mean_steps": 15.2,
       "max_steps": 49,
-      "mean_seconds": 0.4195971,
-      "max_seconds": 0.796694,
-      "max_memory_bytes": 91385856
+      "mean_seconds": 0.3907615,
+      "max_seconds": 0.453875,
+      "max_memory_bytes": 91254784
     },
     {
       "policy": "oracle",
@@ -668,9 +668,9 @@
       "reward": 1.0,
       "mean_steps": 1,
       "max_steps": 1,
-      "mean_seconds": 0.0259696,
-      "max_seconds": 0.064884,
-      "max_memory_bytes": 80396288
+      "mean_seconds": 0.0215038,
+      "max_seconds": 0.032264,
+      "max_memory_bytes": 80384000
     }
   ],
   "paired_passed": 20,
@@ -932,13 +932,13 @@
       "valid": true
     },
     "resources": {
-      "harness_peak_rss_bytes": 86765568,
-      "evaluator_peak_rss_bytes": 13344768,
-      "agent_cgroup_peak_bytes": 14495744,
+      "harness_peak_rss_bytes": 86867968,
+      "evaluator_peak_rss_bytes": 13398016,
+      "agent_cgroup_peak_bytes": 14536704,
       "agent_memory_limit_bytes": 268435456,
       "agent_cpu_limit": 1,
       "method": "Linux VmHWM plus agent cgroup v2 memory.peak; shared Docker daemon excluded",
-      "observed_peak_upper_bound_bytes": 114606080
+      "observed_peak_upper_bound_bytes": 114802688
     },
     "submission": {
       "episode_id": "ep_0099a4e8457f1ace731a3b3f4249723d",
@@ -1135,7 +1135,7 @@
       ]
     },
     "steps": 49,
-    "elapsed_seconds": 0.430033,
+    "elapsed_seconds": 0.484813,
     "terminated": true,
     "truncated": false
   },
@@ -1150,7 +1150,5 @@
     "memory_measurement": "Sum of Linux process high water marks and agent cgroup peak; Docker daemon excluded"
   },
   "blockers": [],
-  "technical_gates_passed": true,
-  "verified_source_commit": "d2f380e1481cff477be9690b1785b12b58a5eaa2",
-  "source_commit_note": "Committed after the recorded verification; runtime/configuration fingerprint is identical. Original run revision and dirty state are retained in versions."
+  "technical_gates_passed": true
 }

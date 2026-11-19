@@ -1,17 +1,17 @@
 {
-  "milestone": "M5",
-  "status": "technical_gates_passed",
-  "source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
-  "verified_at": "2026-11-19T09:15:03.927522+00:00",
+  "milestone": "M6",
+  "status": "submission_materials_prepared",
+  "source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
+  "verified_at": "2026-11-19T09:19:14.605331+00:00",
   "verification_command": "bash verify.sh",
   "tests": {
-    "source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
+    "source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
     "run": 48,
     "passed": 48,
     "skipped": 0,
     "failures": [],
     "errors": [],
-    "seconds": 5.919134736061096
+    "seconds": 5.486130606965162
   },
   "acceptance_passed": 80,
   "automatic_score": 90,
@@ -39,9 +39,9 @@
       "reward": -0.506,
       "mean_steps": 13,
       "max_steps": 13,
-      "mean_seconds": 0.43083910000000003,
-      "max_seconds": 0.856949,
-      "max_memory_bytes": 91045888
+      "mean_seconds": 0.37732765,
+      "max_seconds": 0.416174,
+      "max_memory_bytes": 91058176
     },
     {
       "policy": "reconciler",
@@ -52,9 +52,9 @@
       "reward": 0.9716,
       "mean_steps": 15.2,
       "max_steps": 49,
-      "mean_seconds": 0.4539417,
-      "max_seconds": 0.888298,
-      "max_memory_bytes": 93560832
+      "mean_seconds": 0.41355895,
+      "max_seconds": 0.48873,
+      "max_memory_bytes": 93462528
     },
     {
       "policy": "flag_all",
@@ -65,9 +65,9 @@
       "reward": -1.0,
       "mean_steps": 15.2,
       "max_steps": 49,
-      "mean_seconds": 0.4195971,
-      "max_seconds": 0.796694,
-      "max_memory_bytes": 91385856
+      "mean_seconds": 0.3907615,
+      "max_seconds": 0.453875,
+      "max_memory_bytes": 91254784
     },
     {
       "policy": "oracle",
@@ -78,22 +78,22 @@
       "reward": 1.0,
       "mean_steps": 1,
       "max_steps": 1,
-      "mean_seconds": 0.0259696,
-      "max_seconds": 0.064884,
-      "max_memory_bytes": 80396288
+      "mean_seconds": 0.0215038,
+      "max_seconds": 0.032264,
+      "max_memory_bytes": 80384000
     }
   ],
   "boundary_run": {
     "steps": 49,
-    "elapsed_seconds": 0.430033,
+    "elapsed_seconds": 0.484813,
     "resources": {
-      "harness_peak_rss_bytes": 86765568,
-      "evaluator_peak_rss_bytes": 13344768,
-      "agent_cgroup_peak_bytes": 14495744,
+      "harness_peak_rss_bytes": 86867968,
+      "evaluator_peak_rss_bytes": 13398016,
+      "agent_cgroup_peak_bytes": 14536704,
       "agent_memory_limit_bytes": 268435456,
       "agent_cpu_limit": 1,
       "method": "Linux VmHWM plus agent cgroup v2 memory.peak; shared Docker daemon excluded",
-      "observed_peak_upper_bound_bytes": 114606080
+      "observed_peak_upper_bound_bytes": 114802688
     },
     "evaluation": {
       "error": null,
@@ -162,5 +162,18 @@
     "Human review of I01-I05",
     "Official adapter/specification confirmation when organizers publish it",
     "Team uploads folder and submits hackathon link"
-  ]
+  ],
+  "cold_offline_run": {
+    "passed": true,
+    "checked_at": "2026-11-19T09:22:28.950542+00:00",
+    "command": "bash run-offline.sh",
+    "extracted_source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
+    "tested_candidate_sha256": "484c04d0ebc873258e4c1029fc25fd5c904d24469401a44a65189ec8a1826fc4",
+    "unit_tests": 48,
+    "acceptance_cases": 80,
+    "sweep": 200,
+    "mutants": 10,
+    "network": "No package downloads; all policy containers --network=none",
+    "scope": "Fresh extracted directory on the same Linux host, not a new OS installation. Final package adds this record; executable source and image fingerprints remain identical."
+  }
 }

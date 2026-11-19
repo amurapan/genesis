@@ -1,12 +1,13 @@
 {
   "passed": true,
-  "checked_at": "2026-11-19T09:18:52.872335+00:00",
+  "checked_at": "2026-11-19T09:22:28.950542+00:00",
   "command": "bash run-offline.sh",
-  "extracted_source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
+  "extracted_source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
+  "tested_candidate_sha256": "484c04d0ebc873258e4c1029fc25fd5c904d24469401a44a65189ec8a1826fc4",
   "unit_tests": 48,
   "acceptance_cases": 80,
   "sweep": 200,
   "mutants": 10,
   "network": "No package downloads; all policy containers --network=none",
-  "scope": "Fresh extracted directory on the same Linux host, not a new operating system installation"
+  "scope": "Fresh extracted directory on the same Linux host, not a new OS installation. Final package adds this record; executable source and image fingerprints remain identical."
 }
