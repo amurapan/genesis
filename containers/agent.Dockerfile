@@ -3,6 +3,6 @@ ARG AGENT_SOURCE_HASH
 LABEL org.sled.agent-source=$AGENT_SOURCE_HASH
 ENV PYTHONPATH=/app/src PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /app
-COPY src/sled/__init__.py src/sled/agent.py src/sled/policies.py src/sled/protocol.py src/sled/probe.py /app/src/sled/
+COPY src/sled/__init__.py src/sled/agent.py src/sled/policies.py src/sled/policy_v2.py src/sled/protocol.py src/sled/probe.py /app/src/sled/
 USER 65532:65532
 CMD ["python", "-m", "sled.agent"]

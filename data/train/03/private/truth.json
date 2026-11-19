@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "episode_id": "ep_b89cb6b82740963979b81443866646b4",
+  "issues": [
+    {
+      "issue_id": "issue_ee1614b0f32eb3bfde2c75469309d19f",
+      "type": "duplicate_invoice",
+      "affected_ids": [
+        "invoice:i_81c1a87b3c7be1a07a2c2c9426c2cbde"
+      ],
+      "expected_amount_minor": 542858,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_2be3829891c41e2a843274add4f1a726",
+          "ledger:r_8adaa3e2fa892a1f7dd25a17dc253d75",
+          "ledger:r_f28c097d54ddb32efe309d692b4f25da",
+          "policy:accounting"
+        ]
+      ]
+    }
+  ]
+}

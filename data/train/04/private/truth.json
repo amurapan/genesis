@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "episode_id": "ep_bc3469c005181576eec8c2e8352369a0",
+  "issues": [
+    {
+      "issue_id": "issue_211c5ae8e53feaf842da8eec7b71ae85",
+      "type": "payment_allocation",
+      "affected_ids": [
+        "invoice:i_5607daca245de8ed3814d19a61e2b9f5",
+        "payment:p_f526d53a1daf70f7e962e09bf66c4e54"
+      ],
+      "expected_amount_minor": 147660,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_0b4a908a0df8ad203508f4cd5e21e644",
+          "doc:d_19def5d8b5dc120356ca169ee270a076",
+          "ledger:r_5500d4383fbcbccf9589640c232755c2",
+          "ledger:r_b2569802b47b7b574d619f6ade20ab92",
+          "policy:accounting"
+        ]
+      ]
+    }
+  ]
+}

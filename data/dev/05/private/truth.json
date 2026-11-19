@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "episode_id": "ep_eb19588af425bd2a219d6b2eba2007dd",
+  "issues": [
+    {
+      "issue_id": "issue_31aced85e8fca7039dae30391352e63f",
+      "type": "period_cutoff",
+      "affected_ids": [
+        "invoice:i_a0700bbfce07039d0588736abec2e4e9"
+      ],
+      "expected_amount_minor": 105874,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_f43ff36c3ef092c35cfc55766441ecb6",
+          "ledger:r_103ff416db1bae082ea12dd0db906e38",
+          "manifest:episode",
+          "policy:accounting"
+        ]
+      ]
+    }
+  ]
+}

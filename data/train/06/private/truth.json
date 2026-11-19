@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "episode_id": "ep_139b21a1fda38fc7ac7aa9b9b80e9a84",
+  "issues": [
+    {
+      "issue_id": "issue_33e63c8853c38798f1c6471b411a98b7",
+      "type": "period_cutoff",
+      "affected_ids": [
+        "payment:p_7ee2f250219febe110672b09915ccca1"
+      ],
+      "expected_amount_minor": 318447,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_5b321b1a66fd719f703dae1c1ce1a8b3",
+          "fx:2026-11-30:JPY:KZT",
+          "ledger:r_306cb28c18ba64b3825153918e5b0173",
+          "manifest:episode",
+          "policy:accounting"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "enum": [
+        "domestic_receivables_v1",
+        "receivables_v2"
+      ]
+    },
+    "supported_issue_types": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "duplicate_invoice",
+          "payment_allocation",
+          "fx_conversion",
+          "period_cutoff"
+        ]
+      }
+    },
+    "invoice_recognition": {
+      "type": "string"
+    },
+    "allocation": {
+      "type": "string"
+    },
+    "allocation_order": {
+      "type": "string"
+    },
+    "currency_scope": {
+      "type": "string"
+    },
+    "fx_date": {
+      "type": "string"
+    },
+    "refunds": {
+      "type": "string"
+    },
+    "missing_refs": {
+      "type": "string"
+    },
+    "cutoff": {
+      "type": "string"
+    },
+    "rounding": {
+      "enum": [
+        "ROUND_HALF_EVEN",
+        "ROUND_HALF_UP"
+      ]
+    },
+    "amount_tolerance_minor": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "period_bounds": {
+      "const": "start_inclusive_end_exclusive"
+    }
+  },
+  "required": [
+    "profile",
+    "supported_issue_types",
+    "invoice_recognition",
+    "allocation",
+    "allocation_order",
+    "currency_scope",
+    "rounding",
+    "amount_tolerance_minor",
+    "period_bounds"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "profile": {
+            "const": "receivables_v2"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "fx_date",
+          "refunds",
+          "missing_refs",
+          "cutoff"
+        ]
+      }
+    }
+  ]
+}

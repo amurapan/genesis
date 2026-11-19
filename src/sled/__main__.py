@@ -1,5 +1,4 @@
 import argparse
-import csv
 import json
 from pathlib import Path
 
@@ -7,30 +6,7 @@ from .generation import generate
 from .protocol import dumps
 from .runner import run_episode
 from .validation import verify_episode
-
-
-def write_json(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
-
-
-def export_episode(episode, destination):
-    public = destination / "public"
-    private = destination / "private"
-    for key in ("manifest", "policy"):
-        write_json(public / (key + ".json"), episode["public"][key])
-    for key in ("truth", "provenance"):
-        write_json(private / (key + ".json"), episode[key])
-    for table in ("invoices", "payments"):
-        (public / (table + ".jsonl")).write_text("".join(dumps(r)+"\n" for r in episode["public"][table]))
-    columns = {"ledger": ["row_id", "timestamp", "account", "debit_minor", "credit_minor", "currency", "entity_id", "invoice_id", "payment_id"],
-               "fx": ["date", "source_currency", "target_currency", "rate"]}
-    for table, fields in columns.items():
-        with (public / (table + ".csv")).open("w", newline="") as stream:
-            writer = csv.DictWriter(stream, fieldnames=fields)
-            writer.writeheader()
-            for row in episode["public"][table]:
-                writer.writerow({k: "null" if v is None else v for k, v in row.items()})
+from .storage import write_json, export_episode
 
 
 def main():
@@ -42,16 +18,31 @@ def main():
         p.add_argument("--invoices", type=int, default=50)
         p.add_argument("--clean", action="store_true")
         p.add_argument("--fixture", type=Path)
+        p.add_argument('--config',type=Path)
         p.add_argument("--output", type=Path, default=Path("artifacts")/command)
         if command == "demo":
             p.add_argument("--policy", choices=["reconciler", "random", "flag_all", "oracle"], default="reconciler")
             p.add_argument("--mode", choices=["train", "evaluation"], default="evaluation")
+    evaluate=sub.add_parser('evaluate')
+    evaluate.add_argument('--output',type=Path,default=Path('artifacts/release'))
+    package=sub.add_parser('package')
+    package.add_argument('--report',type=Path,default=Path('artifacts/release'))
+    package.add_argument('--output',type=Path,default=Path('dist/sled-submission.zip'))
     args = parser.parse_args()
+    if args.command=='evaluate':
+        from .release import run
+        run(args.output)
+        return
+    if args.command=='package':
+        from .packaging import build
+        build(args.report,args.output)
+        return
     if args.fixture:
         episode = json.loads(args.fixture.read_text())
     else:
-        episode = generate(args.seed, {"invoice_count": args.invoices, "duplicate_count": 0 if args.clean else 1,
-                                       "allocation_count": 0 if args.clean else 1})
+        config = json.loads(args.config.read_text()) if args.config else {'invoice_count':args.invoices}
+        if args.clean: config.update({k:0 for k in ['duplicate_count','allocation_count','fx_count','cutoff_count']})
+        episode = generate(args.seed, config)
     validation = verify_episode(episode)
     if args.command == "validate":
         print(json.dumps(validation, ensure_ascii=False, indent=2))

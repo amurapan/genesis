@@ -7,4 +7,10 @@
 !fixtures/**
 !containers/
 !containers/**
+!schemas/
+!schemas/**
+!configs/
+!configs/**
+!planning/
+!planning/**
 **/__pycache__/

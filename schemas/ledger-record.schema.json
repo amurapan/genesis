@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "row_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "account": {
+      "enum": [
+        "cash",
+        "accounts_receivable",
+        "revenue",
+        "unapplied_cash"
+      ]
+    },
+    "debit_minor": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "credit_minor": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "entity_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "invoice_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "payment_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    }
+  },
+  "required": [
+    "row_id",
+    "timestamp",
+    "account",
+    "debit_minor",
+    "credit_minor",
+    "currency",
+    "entity_id",
+    "invoice_id",
+    "payment_id"
+  ],
+  "additionalProperties": false
+}

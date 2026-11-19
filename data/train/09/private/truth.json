@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "episode_id": "ep_540bb1d05dad1a8a71e83cb64e995d98",
+  "issues": [
+    {
+      "issue_id": "issue_86af44b0fa6993f73601be304eeca07d",
+      "type": "fx_conversion",
+      "affected_ids": [
+        "payment:p_6dbb425eee26bad0939fa9e9fb4a63e3"
+      ],
+      "expected_amount_minor": 3296,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_1e970496b0d1989e92a98a4dcea5b0c3",
+          "fx:2026-11-30:KWD:KZT",
+          "ledger:r_1be451d1ee75a66d857e8db2c9574c38",
+          "policy:accounting"
+        ]
+      ]
+    },
+    {
+      "issue_id": "issue_2f21fc12428b07db7537c1c2e373e4a7",
+      "type": "period_cutoff",
+      "affected_ids": [
+        "payment:p_6dbb425eee26bad0939fa9e9fb4a63e3"
+      ],
+      "expected_amount_minor": 253547,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_1e970496b0d1989e92a98a4dcea5b0c3",
+          "fx:2026-11-30:KWD:KZT",
+          "ledger:r_1be451d1ee75a66d857e8db2c9574c38",
+          "manifest:episode",
+          "policy:accounting"
+        ]
+      ]
+    }
+  ]
+}

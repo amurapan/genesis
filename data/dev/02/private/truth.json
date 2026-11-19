@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "episode_id": "ep_09e2024bd833a6c20e86377e853bbe81",
+  "issues": [
+    {
+      "issue_id": "issue_a017242ef2457b84c41baabd45b8ac3b",
+      "type": "duplicate_invoice",
+      "affected_ids": [
+        "invoice:i_c2c8d1e3cc576f364e500d657768c728"
+      ],
+      "expected_amount_minor": 898556,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_b9cab2ea9e48acfb71470bcdf205c91e",
+          "ledger:r_4c502c818742f1d60875350c05129621",
+          "ledger:r_cb03bb0b886536999177c5b9c72695ea",
+          "policy:accounting"
+        ]
+      ]
+    },
+    {
+      "issue_id": "issue_1acf634358444ef12f6adab92f281c10",
+      "type": "duplicate_invoice",
+      "affected_ids": [
+        "invoice:i_207b7dc6c1d9e95def944b290d682fb7"
+      ],
+      "expected_amount_minor": 219090,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_43532a747fbb57f7993cd0a00d9f720c",
+          "ledger:r_4475d08ae699b415450c47f686061751",
+          "ledger:r_ab5c48402766721eb5258b8e0b9d320b",
+          "policy:accounting"
+        ]
+      ]
+    },
+    {
+      "issue_id": "issue_6b87da5ae0a1ce1821833e43bcd0ae53",
+      "type": "duplicate_invoice",
+      "affected_ids": [
+        "invoice:i_501dd41bac2bb0639069a7f694e15ec9"
+      ],
+      "expected_amount_minor": 223844,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_3e1a4a5bb3a4407a4a938b1f9639b0ab",
+          "ledger:r_2b94612ee6048ac456b8471cd163697d",
+          "ledger:r_e3c3828dda6395af1de7b86625a34bfb",
+          "policy:accounting"
+        ]
+      ]
+    },
+    {
+      "issue_id": "issue_801064c5df6a8cec2285512bb28ee2be",
+      "type": "duplicate_invoice",
+      "affected_ids": [
+        "invoice:i_1482b78c62a4830c0cc046950f5ab8c7"
+      ],
+      "expected_amount_minor": 557154,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "doc:d_5b795d4d4d449e0ba96ef4a8a0ba9a6c",
+          "ledger:r_8824e090e32d1d83bff38628fa96bf77",
+          "ledger:r_c0401bedec063dd061ac2caa4d5a2977",
+          "policy:accounting"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "generator_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "config": {
+      "type": "object"
+    },
+    "authored": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseline_ledger": {
+      "type": "array",
+      "items": {
+        "$ref": "ledger-record.schema.json"
+      }
+    },
+    "modifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "enum": [
+              "add",
+              "update",
+              "delete"
+            ]
+          },
+          "table": {
+            "const": "ledger"
+          },
+          "before": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "ledger-record.schema.json"
+              }
+            ]
+          },
+          "after": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "ledger-record.schema.json"
+              }
+            ]
+          },
+          "cause": {
+            "enum": [
+              "duplicate_invoice",
+              "payment_allocation",
+              "fx_conversion",
+              "period_cutoff"
+            ]
+          }
+        },
+        "required": [
+          "operation",
+          "table",
+          "before",
+          "after",
+          "cause"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "baseline_ledger",
+    "modifications"
+  ],
+  "additionalProperties": false
+}

@@ -1,6 +1,7 @@
 """Independent public-data audit. Does not import generator, policies or matcher."""
 
 from collections import Counter
+import copy
 from datetime import datetime
 
 
@@ -24,6 +25,9 @@ def timestamp(value):
 
 def audit_public(public):
     """Derive discrepancies before any access to truth."""
+    if public['policy']['profile'] == 'receivables_v2':
+        from .validation_v2 import audit
+        return audit(public)
     manifest, policy = public["manifest"], public["policy"]
     require(policy["profile"] == "domestic_receivables_v1", "Unsupported accounting profile")
     require(type(policy["amount_tolerance_minor"]) is int and policy["amount_tolerance_minor"] == 0, "Profile requires exact amounts")
@@ -127,6 +131,11 @@ def verify_episode(episode):
     require(truth["episode_id"] == episode["public"]["manifest"]["episode_id"], "Truth belongs to another episode")
     require(len(truth["issues"]) <= 12, "Too many issues")
     require(len({i["issue_id"] for i in truth["issues"]}) == len(truth["issues"]), "Duplicate issue ID")
+    if episode['public']['policy']['profile']=='receivables_v2':
+        cfg=episode['provenance']['config']
+        requested={kind:cfg[key] for kind,key in [('duplicate_invoice','duplicate_count'),('payment_allocation','allocation_count'),('fx_conversion','fx_count'),('period_cutoff','cutoff_count')]}
+        actual=Counter(x['type'] for x in truth['issues'])
+        require(all(actual[k]==v for k,v in requested.items()), 'Requested error counts not implemented')
 
     def signature(issue):
         return (issue["type"], tuple(sorted(set(issue["affected_ids"]))), issue["expected_amount_minor"], issue["currency"])
@@ -135,11 +144,33 @@ def verify_episode(episode):
     known = {"policy:accounting", "manifest:episode"}
     known.update("ledger:" + r["row_id"] for r in episode["public"]["ledger"])
     known.update("doc:" + d["doc_id"] for d in episode["public"]["invoices"] + episode["public"]["payments"])
+    known.update('fx:'+r['date']+':'+r['source_currency']+':'+r['target_currency'] for r in episode['public']['fx'])
     expected = {signature(x): set(x["required_evidence"]) for x in derived}
     for issue in truth["issues"]:
         require(type(issue["expected_amount_minor"]) is int and issue["expected_amount_minor"] > 0, "Invalid truth money")
         require(bool(issue["evidence_sets"]), "Missing evidence")
         for proof in issue["evidence_sets"]:
             require(0 < len(proof) <= 10 and set(proof) <= known, "Unavailable evidence")
-            require(expected[signature(issue)] <= set(proof), "Insufficient evidence")
-    return {"valid": True, "issue_count": len(derived), "findings": derived}
+            required = expected[signature(issue)]
+            if issue['type'] == 'period_cutoff' and issue['affected_ids'][0].startswith('invoice:'):
+                # Any same-date AR row is an equivalent period witness, independent of ID/order.
+                iid = issue['affected_ids'][0].split(':',1)[1]
+                witnesses = {'ledger:'+r['row_id'] for r in episode['public']['ledger'] if r['invoice_id']==iid and r['payment_id'] is None and r['account']=='accounts_receivable'}
+                require((required-witnesses)<=set(proof) and bool(set(proof)&witnesses), 'Insufficient period evidence')
+            else:
+                require(required <= set(proof), "Insufficient evidence")
+    provenance = episode['provenance']
+    baseline = copy.deepcopy(episode['public'])
+    baseline['ledger'] = copy.deepcopy(provenance['baseline_ledger'])
+    baseline['manifest']['record_counts']['ledger'] = len(baseline['ledger'])
+    require(not audit_public(baseline), 'Baseline contains discrepancies')
+    replay = {r['row_id']: r for r in baseline['ledger']}
+    for change in provenance['modifications']:
+        require(change['table']=='ledger' and change['operation'] in ('add','update','delete'), 'Invalid causal change')
+        before, after = change['before'], change['after']
+        rid = (after or before)['row_id']
+        require(replay.get(rid)==before, 'Provenance before state mismatch')
+        if after is None: del replay[rid]
+        else: replay[rid] = copy.deepcopy(after)
+    require(replay=={r['row_id']:r for r in episode['public']['ledger']}, 'Provenance does not reproduce final ledger')
+    return {"valid": True, "issue_count": len(derived), "findings": derived, 'baseline_valid':True, 'provenance_valid':True}

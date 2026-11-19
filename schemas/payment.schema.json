@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "doc_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "payment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "amount_minor": {
+      "type": "integer",
+      "not": {
+        "const": 0
+      }
+    },
+    "invoice_refs": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "doc_id",
+    "payment_id",
+    "timestamp",
+    "currency",
+    "amount_minor",
+    "invoice_refs"
+  ],
+  "additionalProperties": false
+}

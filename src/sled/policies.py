@@ -45,9 +45,12 @@ def reconcile(data, episode_id, currency):
 
 class Scanner:
     def __init__(self, initial, flag_all=False):
+        self.manifest = initial['manifest']
+        self.profile = initial['policy_summary']['profile']
         self.episode_id = initial["manifest"]["episode_id"]
         self.currency = initial["manifest"]["base_currency"]
         self.data = {t: [] for t in ("ledger", "invoices", "payments")}
+        if self.profile == 'receivables_v2': self.data['fx'] = []
         self.tables = list(self.data)
         self.index = 0
         self.cursor = None
@@ -78,7 +81,11 @@ class Scanner:
                                     "evidence_ids": ["doc:" + invoice["doc_id"]], "explanation": "Flagged for review."})
             submission = {"episode_id": self.episode_id, "findings": guesses[:30]}
         else:
-            submission = reconcile(self.data, self.episode_id, self.currency)
+            if self.profile == 'receivables_v2':
+                from .policy_v2 import reconcile as reconcile_v2
+                submission = reconcile_v2(self.data, self.manifest, observation['result'])
+            else:
+                submission = reconcile(self.data, self.episode_id, self.currency)
         return {"action": "submit", "findings": submission}
 
 

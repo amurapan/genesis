@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "episode_id": "ep_c6e6487dad5d8e5630a9d71dfae179dc",
+  "issues": [
+    {
+      "issue_id": "issue_0fc58c58691a3bc2416445cbc263910f",
+      "type": "fx_conversion",
+      "affected_ids": [
+        "payment:p_6cd5d35b308274b910b87733822a3d43"
+      ],
+      "expected_amount_minor": 116,
+      "currency": "KWD",
+      "evidence_sets": [
+        [
+          "doc:d_a85e02badacfa653b36b29717114d1ff",
+          "fx:2026-12-30:JPY:KWD",
+          "ledger:r_ac1d45ebbfb03128de800529164bf9e6",
+          "policy:accounting"
+        ]
+      ]
+    },
+    {
+      "issue_id": "issue_b8b26a47b31a140ba375a97a37352b3a",
+      "type": "duplicate_invoice",
+      "affected_ids": [
+        "invoice:i_ff0b1bc7e1c8d4be20efd28b646ade7e"
+      ],
+      "expected_amount_minor": 290476,
+      "currency": "KWD",
+      "evidence_sets": [
+        [
+          "doc:d_c0d437f858a09daf5469b8b159b47fac",
+          "ledger:r_7e7f89424b482249235ebf4c2c34ecc5",
+          "ledger:r_c153ab524eead637433569e39b1734f8",
+          "policy:accounting"
+        ]
+      ]
+    },
+    {
+      "issue_id": "issue_d7796239600538253cb21c61b2dfcb7e",
+      "type": "payment_allocation",
+      "affected_ids": [
+        "invoice:i_ff0b1bc7e1c8d4be20efd28b646ade7e",
+        "payment:p_7dcd97c071e670d6b11b00b42674f55e"
+      ],
+      "expected_amount_minor": 1842,
+      "currency": "KWD",
+      "evidence_sets": [
+        [
+          "doc:d_4352300c1d173e7ff9a008315fc6aa6d",
+          "doc:d_c0d437f858a09daf5469b8b159b47fac",
+          "doc:d_f4ea52ada1cd552da5b8f55aa0d53628",
+          "ledger:r_9d56276dd51a815516c69f356f7bde47",
+          "ledger:r_d0f152434e421875cb2784d699c781ac",
+          "ledger:r_e7dee03e63232c818292205b8c64c416",
+          "ledger:r_f164a3b381e5a94546d405ebba6c57ce",
+          "policy:accounting"
+        ]
+      ]
+    },
+    {
+      "issue_id": "issue_8e976f744ba12c449fa1e080979b508a",
+      "type": "period_cutoff",
+      "affected_ids": [
+        "payment:p_6cd5d35b308274b910b87733822a3d43"
+      ],
+      "expected_amount_minor": 394596,
+      "currency": "KWD",
+      "evidence_sets": [
+        [
+          "doc:d_a85e02badacfa653b36b29717114d1ff",
+          "fx:2026-12-30:JPY:KWD",
+          "ledger:r_ac1d45ebbfb03128de800529164bf9e6",
+          "manifest:episode",
+          "policy:accounting"
+        ]
+      ]
+    }
+  ]
+}

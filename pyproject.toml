@@ -1,6 +1,6 @@
 [project]
 name = "sled"
-version = "0.1.0"
+version = "1.0.0"
 description = "Reproducible financial investigation environment"
 requires-python = ">=3.11,<3.12"
 dependencies = []

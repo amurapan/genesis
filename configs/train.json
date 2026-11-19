@@ -1,0 +1,237 @@
+{
+  "schema_version": "1.0.0",
+  "generator_version": "1.0.0",
+  "split": "train",
+  "episodes": [
+    {
+      "seed": 11000,
+      "config": {
+        "duplicate_count": 0,
+        "allocation_count": 0,
+        "fx_count": 0,
+        "cutoff_count": 0,
+        "foreign_payments": false,
+        "split_count": 0,
+        "refund_count": 0,
+        "null_count": 0
+      },
+      "episode_id": "ep_775fdb7b26e2630e527a4eca188a5705",
+      "path": "data/train/00",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "4f1c0dffcbca50ba3f03eb411b3ce889b91a0cbe5bd7e99f5204ca197e88d138",
+        "public/manifest.json": "ba4843e430663f0d6b0dc5c22743a864184b5ceb2ca847ada72258e156b903fa",
+        "public/fx.csv": "b39ddea6a5bbc5e30db64ab941c428550b8b037f8eed9de06d80300f4a26086c",
+        "public/payments.jsonl": "a2ec7b5cfa5a0567095c3f9d8e27ba3ef0b551bbe5a54b5ae55f2494a2e61643",
+        "public/ledger.csv": "bab12c23a2df74c75c1f23385c9fc7d9694c4e20cca5621a7a0f39c24b8d021a",
+        "private/provenance.json": "57ce4131a528afcf6e10baf828e2970df6ed16e3589bf694a037c1b52cf988cc",
+        "private/truth.json": "af5d15cd2656a72fe947348a445f14b2831b089462c4ebd18d3a38a4b651e7cf"
+      }
+    },
+    {
+      "seed": 11001,
+      "config": {
+        "duplicate_count": 0,
+        "allocation_count": 0,
+        "fx_count": 0,
+        "cutoff_count": 0,
+        "foreign_payments": false,
+        "split_count": 4,
+        "refund_count": 0,
+        "null_count": 0
+      },
+      "episode_id": "ep_4031836de05dd280e9379e0e78bf4c0d",
+      "path": "data/train/01",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "6cdeed76d63b632245d454d915dec047782cd88287895e680bda1dc56e4201de",
+        "public/manifest.json": "414253cbcaba581559754fb601c43ce307bd1a5a886e727698f1206e3d33b032",
+        "public/fx.csv": "090de8bd4b2aef0ec73c46f6a7856803b1f6f5ec1b7d8eba94b6c5732e874d09",
+        "public/payments.jsonl": "8a8ac06945e1c966772c62216f84eb9df3b7ddfd8a90ec6caf576cfa5d660b43",
+        "public/ledger.csv": "fadf9ba723535cb3c6d379c4d3e3ed8e03ad3d703242dacf666296da9764e13e",
+        "private/provenance.json": "3d5c3c254fb1a76804995575697e4980169852046164f4d3590001265937c4e1",
+        "private/truth.json": "215789d3423c04e0d10625d684ce94016e70689b341c9dc4889ddcd84b643058"
+      }
+    },
+    {
+      "seed": 11002,
+      "config": {
+        "duplicate_count": 0,
+        "allocation_count": 0,
+        "fx_count": 0,
+        "cutoff_count": 0,
+        "split_count": 3,
+        "refund_count": 3,
+        "null_count": 2
+      },
+      "episode_id": "ep_9edd0a1c2ac405d3ef302a69be20e8ff",
+      "path": "data/train/02",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "3c567dc1e67be0017a0fa293a7a26661dc1c771d41af2dd1de39e5454d1ea292",
+        "public/manifest.json": "5a5dcd5521cf511a01b2a3351d5ac947a74834a81d49d9fb6b75746e4b71192b",
+        "public/fx.csv": "32e21a7de3f4807e4dc3cc797d25bc4c248e83cee4727c3d728efd80e6d64dad",
+        "public/payments.jsonl": "11dbe3a8fcbe3d2a115493a36734d3904b332e6428ef430ee91068e2c4274573",
+        "public/ledger.csv": "02da5292e17caed37761561a3e02a37d7ce12d48542065ae4d2e9a07cfaa9644",
+        "private/provenance.json": "a63ff8aec1de09acbba0ebaeed049aacdf9d4b4f2be8c7f6f87144dc4b49cc70",
+        "private/truth.json": "522d51d2b795cd8d8cdd2c84534e3995d9a785fa1856401c2d053256c94eb7ae"
+      }
+    },
+    {
+      "seed": 11003,
+      "config": {
+        "duplicate_count": 1,
+        "allocation_count": 0,
+        "fx_count": 0,
+        "cutoff_count": 0,
+        "foreign_payments": false,
+        "split_count": 0,
+        "refund_count": 0,
+        "null_count": 0
+      },
+      "episode_id": "ep_b89cb6b82740963979b81443866646b4",
+      "path": "data/train/03",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "fafd51e099a89974a0b78b4cdac7f50f236ba144e775322d5bb2d770218f5b39",
+        "public/manifest.json": "4bc1d74044998eda8ab43f67984e1e6b6f0fb8a1c06da2172f91fded16238e54",
+        "public/fx.csv": "16819b14b9262725b1ac1b203f22e787de6c0a062312aa6233310d7f83324744",
+        "public/payments.jsonl": "a7b3c3b5c695eb7a8c30e828fb13bd4454a033f29c3012fe074f2129eec4a00c",
+        "public/ledger.csv": "53255b417f1d272faaf53d7d5c634940e3c19a06a381c72fb8b7f96a00674390",
+        "private/provenance.json": "f7bf90c8aba08256ccfec16b231600df301fd56e844064398dfc3f8844252c58",
+        "private/truth.json": "f0a22bc655cf8698753b9ac61ec12f2ac6eb277c91fc6e27657717f77e0b40d5"
+      }
+    },
+    {
+      "seed": 11004,
+      "config": {
+        "duplicate_count": 0,
+        "allocation_count": 1,
+        "fx_count": 0,
+        "cutoff_count": 0,
+        "foreign_payments": false,
+        "split_count": 0,
+        "refund_count": 0,
+        "null_count": 0,
+        "allocation_mode": "missing"
+      },
+      "episode_id": "ep_bc3469c005181576eec8c2e8352369a0",
+      "path": "data/train/04",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "3aa5bf27136da022cceb98764eeb9255b0ca207128d1ebdd2f03060b6032a017",
+        "public/manifest.json": "e7613f0e6568b887c410f61eb3ab126bc43203ce2979ca834c90f515043384c9",
+        "public/fx.csv": "d80c6d5a66de03b6e205d3ffa7b7e2d1a273df3e9954d362ff4e8de6653240a7",
+        "public/payments.jsonl": "821ae0f73ad88d77068c21ac4f875f4bacac1db9d5991be2466afcf9d31aeb4e",
+        "public/ledger.csv": "c9a9c853dabf319ce7e8a91dda4053359f9fe084476a31ca19a0450cd5045d9a",
+        "private/provenance.json": "149b000cd4d160e09c9ad34290e36cf763b4a34f03643018f62371e9833c2ee0",
+        "private/truth.json": "f64349c7a03190525864edc18fe622d37a979290521b484906c1a47130faf50b"
+      }
+    },
+    {
+      "seed": 11005,
+      "config": {
+        "duplicate_count": 0,
+        "allocation_count": 0,
+        "fx_count": 1,
+        "cutoff_count": 0,
+        "fx_mode": "rate"
+      },
+      "episode_id": "ep_b01464960ae56cb5221d2b10d4df9790",
+      "path": "data/train/05",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "2b70e8a2ee50ffd7e8cd3784a3c7b2dc4881c5ce2a8c8fe831f821217872938a",
+        "public/manifest.json": "ecdb97d253b35b6b2a1dea5a42d006c0f8bd04c1a0f9c230c4ebba25d2c99448",
+        "public/fx.csv": "923fa383c162f74e87ec9d91a11255e9bbeef5d67f94e7c2fb1532b2681c2832",
+        "public/payments.jsonl": "cbb6b58d74ae4471c8367a85e505d468ff5c4a53c4c6ce67c50559b70f88cd3a",
+        "public/ledger.csv": "e796b0494581a34ec730dad2c3b119f76a190e0e75f1d32bbf22606c755a792b",
+        "private/provenance.json": "d0679b9d3e6ca7674555f0870204c0169221e1cf0e1149aa388acb0f4895a3df",
+        "private/truth.json": "945004786fb8afd0829745f9d381da347eba86d0d35f23a165272829ef521b97"
+      }
+    },
+    {
+      "seed": 11006,
+      "config": {
+        "duplicate_count": 0,
+        "allocation_count": 0,
+        "fx_count": 0,
+        "cutoff_count": 1,
+        "cutoff_direction": "early"
+      },
+      "episode_id": "ep_139b21a1fda38fc7ac7aa9b9b80e9a84",
+      "path": "data/train/06",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "854aaec1695b588c21ae5a6689e6b8f7acd7eb26bbe71d411dd760df2660d5a3",
+        "public/manifest.json": "5e4ecbd8b20394be630f9645a8b89698d273cc2987f4b2c44a8c1317cf09afba",
+        "public/fx.csv": "99d268cf0cc942f71e2df1859f484945295a146fc268556b30e9b241b6109559",
+        "public/payments.jsonl": "4c4cb640b0f948da536464e71c3c801bdde7c27d83fbab974ca053f6af32ef40",
+        "public/ledger.csv": "ce09f783c5cbf870e7c689f71ac4ab1e605387acf342a50557aa5c853c3d6361",
+        "private/provenance.json": "a95e257a2e01af8da0b6dab743b175fafaefe214169fe94fe8aa4ab98afa6843",
+        "private/truth.json": "d4524135cf166aaeaf72a07c46f63c6f238bce236f925638afe7740668422780"
+      }
+    },
+    {
+      "seed": 11007,
+      "config": {
+        "interaction": false
+      },
+      "episode_id": "ep_a271d34d724d5bee752b52e13da32685",
+      "path": "data/train/07",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "feefb4cbe41898616f47162e2218e3a7315834de3f52705e8582b86a385f2578",
+        "public/manifest.json": "82c37a3865d555863079f71cc3d8564f8a3533a7b50c36fb696cc96e4282fa5a",
+        "public/fx.csv": "11bf5138cba6825be26ba469060e4d4bad94279d0fb37ea42a9374ed1140a7a8",
+        "public/payments.jsonl": "72b23b9fe48d37eed132316cba851be58e9eb24bbf9c0417d5560b76f3a3958f",
+        "public/ledger.csv": "2ae54f1c3dca1b55fe5551d8b966efba8c5ae75962cc5fdbe81fd56eb1936f37",
+        "private/provenance.json": "c7ecb09830992532517811af871f5186c4b5572c406ffc56b0663674763abd93",
+        "private/truth.json": "4397677f861e50f2f4b52e9a7c0c1f040c81babd5a43e650fe42e5088d5883c7"
+      }
+    },
+    {
+      "seed": 11008,
+      "config": {
+        "duplicate_count": 0,
+        "allocation_count": 0,
+        "fx_count": 1,
+        "cutoff_count": 1
+      },
+      "episode_id": "ep_b69a4c35163c050bcd41be5b6c125795",
+      "path": "data/train/08",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "0ab6578b9d3ef26e96cdd3f1b7fd54757f629baf2de38200e31b6477f92e592a",
+        "public/manifest.json": "e2fe44c4bee4948c1fcbcf361cb247b633276b6e74c4342aeeb828537679939d",
+        "public/fx.csv": "242cf9d8f71d32985aee23df7333b715a9b29d13ea5e711836fe08483dbf3cfa",
+        "public/payments.jsonl": "126fa43f4db678f0b0a3197d612820a9bc6e0b6953fa0a6d7a17e609fcfb057b",
+        "public/ledger.csv": "74c1162f4bddd0fb557b4f41cde73a22718448f52964de03de4a22dc92f72a65",
+        "private/provenance.json": "d60a442322ee5e44b563fb04c2537700b854b9d0539168895d9d83e7029eb67d",
+        "private/truth.json": "721421d343c6aa47ad5bd022eb06d0b341f03353368a2ed15740642d4d381b90"
+      }
+    },
+    {
+      "seed": 11009,
+      "config": {
+        "duplicate_count": 0,
+        "allocation_count": 0,
+        "fx_count": 1,
+        "cutoff_count": 1,
+        "split_count": 8
+      },
+      "episode_id": "ep_540bb1d05dad1a8a71e83cb64e995d98",
+      "path": "data/train/09",
+      "files": {
+        "public/policy.json": "f85e3fed8a0b6b28ad5456cab5cee102f6009e5c276bd0e8ac476bd0ca541840",
+        "public/invoices.jsonl": "921b4a4052b355df0f3a925f5f4174a09ea774aaea7f3578687738886c4358b1",
+        "public/manifest.json": "6942b5f4ff1473b92af71e91ef6325687dabf9d7dd96e3b1e240428c2a577a86",
+        "public/fx.csv": "b9ed075c9f45844d990dd45f494e38832a759220fe6379099b41518a76c5b7c7",
+        "public/payments.jsonl": "ce6454267c8ed57ba7844d1eb512b5ef8963e6d193ce479f81e7856fb430c428",
+        "public/ledger.csv": "d9b023b2c4380182502528dc38e850d7dd5e82b81f773bbd18172522ae6702a7",
+        "private/provenance.json": "45db541554ab48b1a4f41d3cc0db18b6a17f5a513e26e04ac43af26653485fcd",
+        "private/truth.json": "daa5196b8edc9b62e2b5238756db3dfd2dbf6515d87f6e36ac7d07d2caa5c567"
+      }
+    }
+  ]
+}

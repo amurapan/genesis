@@ -5,3 +5,5 @@ artifacts/
 .coverage
 .pytest_cache/
 .env
+dist/
+submission/

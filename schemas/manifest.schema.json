@@ -37,14 +37,18 @@
       "type": "string"
     },
     "rounding": {
-      "const": "ROUND_HALF_EVEN"
+      "enum": [
+        "ROUND_HALF_EVEN",
+        "ROUND_HALF_UP"
+      ]
     },
     "record_counts": {
       "type": "object",
       "properties": {
         "ledger": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 2000
         },
         "invoices": {
           "type": "integer",
@@ -69,7 +73,8 @@
     },
     "document_count": {
       "type": "integer",
-      "minimum": 0
+      "minimum": 0,
+      "maximum": 200
     }
   },
   "required": [

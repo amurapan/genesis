@@ -1,66 +1,166 @@
 {
-  "milestone": "M1",
-  "status": "implemented_and_verified",
-  "verified_at": "2026-11-19T08:33:48.049695+00:00",
-  "source_sha256": "c0784f9d48b9e72c69b3a48b66cf8d2808a386ffe7e3506825ad687089e11923",
-  "verification_command": "./verify.sh",
+  "milestone": "M5",
+  "status": "technical_gates_passed",
+  "source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
+  "verified_at": "2026-11-19T09:15:03.927522+00:00",
+  "verification_command": "bash verify.sh",
   "tests": {
-    "run": 41,
-    "passed": 41,
+    "source_sha256": "ec3dd5f919a8a764c0c6ffa68dfe07cd29012a3db1227cba61529679262ad310",
+    "run": 48,
+    "passed": 48,
     "skipped": 0,
-    "duration_seconds": 5.271
+    "failures": [],
+    "errors": [],
+    "seconds": 5.919134736061096
   },
-  "generator_cases": 100,
-  "demos": [
-    {
-      "scenario": "manual-errors",
-      "episode_id": "ep_e03ca7d82281459c8e6ab195afda6320",
-      "policy": "reconciler",
-      "tp": 2,
-      "fp": 0,
-      "fn": 0,
-      "f1": 1.0,
-      "reward": 0.992,
-      "steps": 5,
-      "elapsed_seconds": 0.357066
-    },
-    {
-      "scenario": "manual-clean",
-      "episode_id": "ep_90713ba541734405bf80968291c9a102",
-      "policy": "reconciler",
-      "tp": 0,
-      "fp": 0,
-      "fn": 0,
-      "f1": 1.0,
-      "reward": 0.992,
-      "steps": 5,
-      "elapsed_seconds": 0.416533
-    },
-    {
-      "scenario": "generated",
-      "episode_id": "ep_db1a990d92e0eaeed3a5c2ee8e7f0b8a",
-      "policy": "reconciler",
-      "tp": 2,
-      "fp": 0,
-      "fn": 0,
-      "f1": 1.0,
-      "reward": 0.984,
-      "steps": 9,
-      "elapsed_seconds": 0.390639
-    }
-  ],
+  "acceptance_passed": 80,
+  "automatic_score": 90,
+  "automatic_max": 90,
+  "final_score": null,
+  "engineering_status": "I01-I05 prepared for human review; no automatic points awarded",
+  "paired": 20,
+  "sweep": 200,
+  "negative_controls": 10,
   "implemented_types": [
     "duplicate_invoice",
-    "payment_allocation"
-  ],
-  "full_acceptance_score": null,
-  "remaining": [
+    "payment_allocation",
     "fx_conversion",
-    "period_cutoff",
-    "second interaction scenario",
-    "refund scenarios",
-    "full 80-case acceptance suite",
-    "train/dev package",
-    "official adapter confirmation"
+    "period_cutoff"
+  ],
+  "train": 10,
+  "dev": 10,
+  "benchmark": [
+    {
+      "policy": "random",
+      "episodes": 20,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.25,
+      "reward": -0.506,
+      "mean_steps": 13,
+      "max_steps": 13,
+      "mean_seconds": 0.43083910000000003,
+      "max_seconds": 0.856949,
+      "max_memory_bytes": 91045888
+    },
+    {
+      "policy": "reconciler",
+      "episodes": 20,
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 1.0,
+      "reward": 0.9716,
+      "mean_steps": 15.2,
+      "max_steps": 49,
+      "mean_seconds": 0.4539417,
+      "max_seconds": 0.888298,
+      "max_memory_bytes": 93560832
+    },
+    {
+      "policy": "flag_all",
+      "episodes": 20,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "reward": -1.0,
+      "mean_steps": 15.2,
+      "max_steps": 49,
+      "mean_seconds": 0.4195971,
+      "max_seconds": 0.796694,
+      "max_memory_bytes": 91385856
+    },
+    {
+      "policy": "oracle",
+      "episodes": 20,
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 1.0,
+      "reward": 1.0,
+      "mean_steps": 1,
+      "max_steps": 1,
+      "mean_seconds": 0.0259696,
+      "max_seconds": 0.064884,
+      "max_memory_bytes": 80396288
+    }
+  ],
+  "boundary_run": {
+    "steps": 49,
+    "elapsed_seconds": 0.430033,
+    "resources": {
+      "harness_peak_rss_bytes": 86765568,
+      "evaluator_peak_rss_bytes": 13344768,
+      "agent_cgroup_peak_bytes": 14495744,
+      "agent_memory_limit_bytes": 268435456,
+      "agent_cpu_limit": 1,
+      "method": "Linux VmHWM plus agent cgroup v2 memory.peak; shared Docker daemon excluded",
+      "observed_peak_upper_bound_bytes": 114606080
+    },
+    "evaluation": {
+      "error": null,
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "inspection_steps": 48,
+      "matches": [
+        {
+          "finding_index": 10,
+          "issue_id": "issue_efd3155d60de54455db69e7c74c2fe25"
+        },
+        {
+          "finding_index": 7,
+          "issue_id": "issue_71470469315555d11ca2498ff39fa6d0"
+        },
+        {
+          "finding_index": 5,
+          "issue_id": "issue_8495ce7a61c50a621016361422f25cde"
+        },
+        {
+          "finding_index": 1,
+          "issue_id": "issue_7727d83473780ca06da532561651fa75"
+        },
+        {
+          "finding_index": 0,
+          "issue_id": "issue_fee5a01e2de6a3411f835ebb56d7f3ae"
+        },
+        {
+          "finding_index": 2,
+          "issue_id": "issue_5695171c709ff91cd04d7547745e6cc2"
+        },
+        {
+          "finding_index": 9,
+          "issue_id": "issue_71e3a8a38379d0bc249af793e9a71ebc"
+        },
+        {
+          "finding_index": 4,
+          "issue_id": "issue_883ceaa6330da6cce4f536c9a80db726"
+        },
+        {
+          "finding_index": 3,
+          "issue_id": "issue_b80182920341c1917814aeb7e90404a4"
+        },
+        {
+          "finding_index": 11,
+          "issue_id": "issue_2db9923af2e711a8914c156e4e176416"
+        },
+        {
+          "finding_index": 8,
+          "issue_id": "issue_10662a3ac37fbd05d8134bcc290e7688"
+        },
+        {
+          "finding_index": 6,
+          "issue_id": "issue_761607d20e6b9ad19f401b002a22b5da"
+        }
+      ],
+      "precision": 1.0,
+      "recall": 1.0,
+      "reward": 0.904,
+      "tp": 12,
+      "valid": true
+    }
+  },
+  "remaining_external": [
+    "Human review of I01-I05",
+    "Official adapter/specification confirmation when organizers publish it",
+    "Team uploads folder and submits hackathon link"
   ]
 }

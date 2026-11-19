@@ -1,0 +1,20 @@
+{
+  "profile": "receivables_v2",
+  "supported_issue_types": [
+    "duplicate_invoice",
+    "payment_allocation",
+    "fx_conversion",
+    "period_cutoff"
+  ],
+  "invoice_recognition": "Recognize each original base-currency invoice once at issued_at",
+  "allocation": "Allocate booked base-currency cash up to the original invoice outstanding balance; previous receipts reduce that balance before allocation faults",
+  "allocation_order": "Chronological source payment timestamps, unique per invoice",
+  "currency_scope": "Invoices are base-denominated; receipts may use any declared currency",
+  "fx_date": "Source payment timestamp converted to the fixed business offset of period_start",
+  "refunds": "Negative base-currency payments refund previously unapplied surplus only",
+  "missing_refs": "Null invoice_refs means unapplied cash, not an inferred invoice link",
+  "cutoff": "Compare membership in [period_start, period_end) of the source document and journal timestamp",
+  "rounding": "ROUND_HALF_UP",
+  "amount_tolerance_minor": 0,
+  "period_bounds": "start_inclusive_end_exclusive"
+}

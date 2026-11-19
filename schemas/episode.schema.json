@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "public": {
+      "type": "object",
+      "properties": {
+        "manifest": {
+          "$ref": "manifest.schema.json"
+        },
+        "policy": {
+          "$ref": "policy.schema.json"
+        },
+        "ledger": {
+          "type": "array",
+          "items": {
+            "$ref": "ledger-record.schema.json"
+          }
+        },
+        "invoices": {
+          "type": "array",
+          "items": {
+            "$ref": "invoice.schema.json"
+          }
+        },
+        "payments": {
+          "type": "array",
+          "items": {
+            "$ref": "payment.schema.json"
+          }
+        },
+        "fx": {
+          "type": "array",
+          "items": {
+            "$ref": "fx-record.schema.json"
+          }
+        }
+      },
+      "required": [
+        "manifest",
+        "policy",
+        "ledger",
+        "invoices",
+        "payments",
+        "fx"
+      ],
+      "additionalProperties": false
+    },
+    "truth": {
+      "$ref": "truth.schema.json"
+    },
+    "provenance": {
+      "$ref": "provenance.schema.json"
+    }
+  },
+  "required": [
+    "public",
+    "truth",
+    "provenance"
+  ],
+  "additionalProperties": false
+}

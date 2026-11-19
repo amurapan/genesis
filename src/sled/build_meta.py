@@ -7,7 +7,7 @@ from pathlib import Path
 def agent_source_hash():
     root = Path(__file__).resolve().parents[2]
     names = ["containers/agent.Dockerfile"] + ["src/sled/" + name for name in
-             ("__init__.py", "agent.py", "policies.py", "protocol.py", "probe.py")]
+             ("__init__.py", "agent.py", "policies.py", "policy_v2.py", "protocol.py", "probe.py")]
     digest = hashlib.sha256()
     for name in sorted(names):
         digest.update(name.encode() + b"\0")

@@ -25,7 +25,7 @@ class DataTests(unittest.TestCase):
         for seed in range(20):
             for dup, alloc in [(0, 0), (1, 0), (0, 1), (1, 1), (3, 2)]:
                 with self.subTest(seed=seed, duplicate=dup, allocation=alloc):
-                    cfg = {"invoice_count": 10, "duplicate_count": dup, "allocation_count": alloc}
+                    cfg = {"invoice_count": 10, "duplicate_count": dup, "allocation_count": alloc, 'fx_count':0, 'cutoff_count':0}
                     episode = generate(seed, cfg)
                     self.assertEqual(episode, generate(seed, cfg))
                     self.assertEqual(verify_episode(episode)["issue_count"], dup+alloc)
@@ -33,7 +33,7 @@ class DataTests(unittest.TestCase):
     def test_default_size_and_clean_repeated_amounts(self):
         episode = generate(19)
         self.assertGreaterEqual(len(episode["public"]["ledger"]), 200)
-        clean = generate(19, {"duplicate_count": 0, "allocation_count": 0})
+        clean = generate(19, {"duplicate_count": 0, "allocation_count": 0, 'fx_count':0, 'cutoff_count':0})
         amounts = [i["total_minor"] for i in clean["public"]["invoices"]]
         self.assertLess(len(set(amounts)), len(amounts))
         self.assertEqual(verify_episode(clean)["issue_count"], 0)
@@ -93,6 +93,6 @@ class DataTests(unittest.TestCase):
         self.assertEqual(verify_episode(episode)["issue_count"], 2)
 
     def test_config_fails_explicitly(self):
-        for config in [{"invoice_count": True}, {"duplicate_count": -1}, {"allocation_count": 13}, {"fx_count": 1}]:
+        for config in [{"invoice_count": True}, {"duplicate_count": -1}, {"allocation_count": 13}, {"fx_count": -1}, {'unknown':1}]:
             with self.subTest(config=config), self.assertRaises(ValueError):
                 generate(19, config)
