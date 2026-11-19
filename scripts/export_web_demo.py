@@ -35,12 +35,16 @@ def main():
                  verification={k:report[k] for k in ['started_at','versions','unit_tests','acceptance','benchmark','paired_passed','sweep_passed','selected_mutants','mutants_killed','resource_bounds','boundary_run']})
     write_json(ROOT/'web/data/demo.json',payload)
     write_json(ROOT/'web/data/verification.json',report)
+    matrix=json.loads((ROOT/'planning/acceptance-matrix.json').read_text())
+    definitions={case['id']:{key:case[key] for key in ('title','procedure','expected')}
+                 for group in matrix['groups'] for case in group['cases']}
+    write_json(ROOT/'web/data/checks.json',definitions)
     html=(ROOT/'verification/report.html').read_text()
     match=re.search(r'<style>(.*?)</style>',html,re.S)
     if not match:raise ValueError('Report stylesheet not found')
     (ROOT/'web/assets/verification.css').write_text(match.group(1)+'\n')
     (ROOT/'web/assets/verification.html').write_text(html[:match.start()]+'<link rel="stylesheet" href="verification.css">'+html[match.end():])
-    for name in ['demo.mp4','presentation.pdf']:
+    for name in ['demo.mp4','presentation.pdf','presentation.pptx']:
         shutil.copy2(ROOT/'demo'/name,ROOT/'web/assets'/name)
     print('Exported four public episodes and release assets; no truth/provenance/seed files included.')
 if __name__=='__main__':main()

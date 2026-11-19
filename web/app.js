@@ -1,134 +1,786 @@
-const PATHS={layers:'M12 3 2 8l10 5 10-5-10-5Zm-10 9 10 5 10-5M2 16l10 5 10-5',shield:'M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Zm-4 9 3 3 5-6',nodes:'M5 6h4v4H5V6Zm10 8h4v4h-4v-4ZM9 8h7v6M5 16h4M7 10v6',book:'M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4V4Zm9 3a3 3 0 0 1 3-3h5v15h-5a4 4 0 0 0-3 2',external:'M13 4h7v7M20 4 10 14M10 4H4v16h16v-6',code:'m8 6-6 6 6 6m8-12 6 6-6 6m-3-14-2 16',grid:'M3 3h7v7H3V3Zm11 0h7v7h-7V3ZM3 14h7v7H3v-7Zm11 0h7v7h-7v-7',github:'M9 19c-5 1-5-3-7-3m14 6v-4a3.5 3.5 0 0 0-1-3c4-.5 7-2 7-6a4.5 4.5 0 0 0-1-3 4 4 0 0 0 0-3s-2-.5-4 1a14 14 0 0 0-7 0C8 2.5 6 3 6 3a4 4 0 0 0 0 3 4.5 4.5 0 0 0-1 3c0 4 3 5.5 7 6a3.5 3.5 0 0 0-1 3v4',close:'m6 6 12 12M6 18 18 6',check:'m5 12 4 4L19 6',file:'M14 2H5v20h14V7l-5-5Zm0 0v6h5M8 12h8M8 16h6',bank:'m3 7 9-4 9 4H3Zm2 3v8m7-8v8m7-8v8M3 21h18',chevron:'m8 10 4 4 4-4',right:'m9 5 7 7-7 7',left:'m15 5-7 7 7 7',play:'m8 4 12 8-12 8V4Z',pause:'M8 4v16M16 4v16',next:'m5 5 10 7-10 7V5Zm14 0v14',reset:'M3 10a9 9 0 1 1 1 8M3 4v6h6',clock:'M12 8v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',terminal:'m4 6 6 6-6 6m9 0h7',download:'M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5',info:'M12 11v6m0-11v1m9 5a9 9 0 1 1-18 0 9 9 0 0 1 18 0',search:'M21 21l-5-5m2-6a8 8 0 1 1-16 0 8 8 0 0 1 16 0',receipt:'M5 3h14v19l-3-2-4 2-4-2-3 2V3Zm3 5h8m-8 4h8m-8 4h5',database:'M20 6c0 2-4 3-8 3s-8-1-8-3 4-3 8-3 8 1 8 3Zm-16 0v12c0 2 4 3 8 3s8-1 8-3V6M4 12c0 2 4 3 8 3s8-1 8-3',lock:'M6 10h12v11H6V10Zm2 0V6a4 4 0 0 1 8 0v4m-4 5v2',wallet:'M3 6h17v14H3V6Zm0 0V3h14v3m3 5h-6v5h6m-3-3.5v1',arrow:'M4 12h16m-6-6 6 6-6 6',spark:'m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3',copy:'M8 8h13v13H8V8Zm-4 8H2V2h14v2',eye:'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Zm13 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0',chart:'M4 20V10m6 10V4m6 16v-7m6 7V7',cpu:'M7 7h10v10H7V7ZM9 2v5m6-5v5M9 17v5m6-5v5M2 9h5m-5 6h5m10-6h5m-5 6h5'};
-const icon=(name)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${PATHS[name]||PATHS.file}"/></svg>`;
-const esc=(s)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const num=(value,digits=0)=>new Intl.NumberFormat('ru-RU',{minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
-const date=(s)=>{const m=String(s).match(/^(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}.${m[2]}.${m[1]}`:s;};
-const short=(id)=>String(id).length>18?String(id).slice(0,8)+'…'+String(id).slice(-4):String(id);
-const names={duplicate_invoice:'Повторное признание счёта',payment_allocation:'Недораспределение платежа',fx_conversion:'Неверный валютный курс',period_cutoff:'Ошибка отчётного периода'};
-const accounts={accounts_receivable:'Дебиторская задолженность',revenue:'Выручка',cash:'Денежные средства',unapplied_cash:'Нераспределённый платёж'};
-const explanations={duplicate_invoice:'Сумма признанной дебиторской задолженности превышает первичный счёт. Повторные проводки подтверждают расхождение.',payment_allocation:'Часть уже полученных средств не направлена на погашение исходного счёта. Законная частичная оплата проверяется отдельно.',fx_conversion:'Учтённое поступление отличается от суммы первичного платежа, пересчитанной по опубликованной дате и курсу.',period_cutoff:'Дата первичного события и дата проводки относятся к разным отчётным периодам. Сумма показывает объём неверно отнесённого события.'};
-let data,caseIndex=0,step=0,tab='documents',page=0,filter='',timer=null,toastTimer;
-const app=document.querySelector('#app');
-const current=()=>data.cases[caseIndex];
-const done=()=>step>=current().trajectory.length;
-const money=(amount,currency)=>num(amount/10**current().public.manifest.currency_exponents[currency],2);
-function hydrate(){document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));}
-function toast(text){const el=document.querySelector('#toast');el.textContent=text;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,2600);}
-function stop(){if(timer)clearInterval(timer);timer=null;}
-function metrics(items){return `<div class="metrics-strip">${items.map(([value,label,i])=>`<div class="metric"><div class="metric-icon">${icon(i)}</div><div><strong>${esc(value)}</strong><p>${esc(label)}</p></div></div>`).join('')}</div>`;}
-function heading(kicker,title,description,button=''){return `<div class="heading-row"><div><span class="eyebrow">${esc(kicker)}</span><h1>${esc(title)}</h1><p>${esc(description)}</p></div>${button}</div>`;}
-function render(){
-  const focused=document.activeElement?.closest('[data-action], [data-tab], [data-step]');
-  const focusKey=focused?['action','tab','step'].find(k=>focused.dataset[k]!==undefined):null;
-  const focusValue=focusKey?focused.dataset[focusKey]:null;
-  const route=['workspace','verification','architecture','guide'].includes(location.hash.slice(1))?location.hash.slice(1):'workspace';
-  if(route!=='workspace')stop();
-  const titles={workspace:'Расследование',verification:'Проверки',architecture:'Как устроено',guide:'Для жюри'};
-  document.querySelector('#breadcrumb-current').textContent=titles[route];
-  document.querySelectorAll('[data-nav]').forEach(el=>{el.classList.toggle('active',el.dataset.nav===route);el.setAttribute('aria-current',el.dataset.nav===route?'page':'false');});
-  app.innerHTML=({workspace:workspace,verification:verification,architecture:architecture,guide:guide})[route]();
+import { icon } from "./ui/icons.js";
+const $ = (s) => document.querySelector(s);
+const esc = (s) =>
+  String(s ?? "").replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
+const num = (n, d = 0) =>
+  new Intl.NumberFormat("ru-RU", {
+    minimumFractionDigits: d,
+    maximumFractionDigits: d,
+  }).format(n);
+const date = (s) => String(s).slice(0, 10).split("-").reverse().join(".");
+const short = (s) =>
+  String(s).length > 22
+    ? String(s).slice(0, 10) + "…" + String(s).slice(-5)
+    : s;
+const names = {
+  duplicate_invoice: "Повторное признание счёта",
+  payment_allocation: "Недораспределение платежа",
+  fx_conversion: "Неверный валютный курс",
+  period_cutoff: "Ошибка отчётного периода",
+};
+const accounts = {
+  accounts_receivable: "Дебиторская задолженность",
+  revenue: "Выручка",
+  cash: "Денежные средства",
+  unapplied_cash: "Нераспределённый платёж",
+};
+const explanations = {
+  duplicate_invoice:
+    "Дебиторская задолженность признана на сумму больше первичного счёта. Повторные проводки подтверждают расхождение.",
+  payment_allocation:
+    "Часть уже полученного платежа не направлена на погашение счёта. Законная частичная оплата проверяется отдельно.",
+  fx_conversion:
+    "Сумма в книге отличается от первичного платежа, пересчитанного по опубликованной дате и курсу.",
+  period_cutoff:
+    "Дата первичного события и дата проводки относятся к разным отчётным периодам. Сумма — объём неверно отнесённого события.",
+};
+const caseIcons = ["bank", "layers", "shield", "database"];
+const caseLabels = [
+  "Валюта и период",
+  "Дубль и распределение",
+  "Чистая компания",
+  "Синтетическая компания",
+];
+const groupNames = {
+  C: "Контракт и изоляция",
+  D: "Данные и эталон",
+  R: "Надёжность награды",
+  G: "Воспроизводимость",
+};
+let data,
+  checkDefinitions = {},
+  caseIndex = 0,
+  step = 0,
+  tab = "documents",
+  docIndex = 0,
+  page = 0,
+  filter = "",
+  selectedSource = "",
+  raw = false,
+  inspector = "results",
+  findingIndex = 0,
+  mobilePane = "sources",
+  timer = null,
+  toastTimer,
+  checkGroup = "C",
+  selectedCheck = "C01";
+const savedCases = new Map();
+const current = () => data.cases[caseIndex];
+const finished = () => step === current().trajectory.length;
+const route = () =>
+  ["workspace", "verification", "architecture", "guide"].includes(
+    location.hash.slice(1),
+  )
+    ? location.hash.slice(1)
+    : "workspace";
+const docs = () => [...current().public.invoices, ...current().public.payments];
+const money = (minor, currency) => {
+  const e = current().public.manifest.currency_exponents[currency];
+  return num(minor / 10 ** e, e);
+};
+const json = (value) =>
+  `<pre class='json-view'>${esc(JSON.stringify(value, null, 2))}</pre>`;
+const status = (text) =>
+  `<span class='status-pill'>${icon("check")}${esc(text)}</span>`;
+function hydrate() {
+  document
+    .querySelectorAll("[data-icon]")
+    .forEach((el) => (el.innerHTML = icon(el.dataset.icon)));
+}
+function stop() {
+  clearInterval(timer);
+  timer = null;
+}
+function toast(message) {
+  $("#toast").textContent = message;
+  $("#toast").hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => ($("#toast").hidden = true), 2800);
+}
+function snapshot() {
+  return {
+    step,
+    tab,
+    docIndex,
+    page,
+    filter,
+    selectedSource,
+    raw,
+    inspector,
+    findingIndex,
+    mobilePane,
+  };
+}
+function selectCase(index, { reset = false } = {}) {
+  stop();
+  savedCases.set(current().id, snapshot());
+  caseIndex = index;
+  const s = reset ? {} : savedCases.get(current().id) || {};
+  step = s.step || 0;
+  tab = s.tab || "documents";
+  docIndex = s.docIndex || 0;
+  page = s.page || 0;
+  filter = s.filter || "";
+  selectedSource = s.selectedSource || "";
+  raw = !!s.raw;
+  inspector = s.inspector || "results";
+  findingIndex = s.findingIndex || 0;
+  mobilePane = s.mobilePane || "sources";
+  const url = new URL(location.href);
+  url.searchParams.set("episode", current().id);
+  history.replaceState(null, "", url);
+  render();
+}
+function render() {
+  const active = document.activeElement;
+  const focusId = active?.id;
+  const focusKey = [
+    "action",
+    "tab",
+    "step",
+    "finding",
+    "inspector",
+    "group",
+    "check",
+    "case",
+    "mobile",
+  ].find((k) => active?.dataset?.[k] !== undefined);
+  const focusValue = focusKey ? active.dataset[focusKey] : null;
+  const scrolls = [...document.querySelectorAll("[data-scroll]")].map((el) => [
+    el.dataset.scroll,
+    el.scrollTop,
+    el.scrollLeft,
+  ]);
+  const r = route();
+  if (r !== "workspace") stop();
+  document.body.dataset.route = r;
+  document.querySelectorAll("[data-nav]").forEach((el) => {
+    const on = el.dataset.nav === r;
+    el.classList.toggle("active", on);
+    el.setAttribute("aria-current", on ? "page" : "false");
+  });
+  $("#app").innerHTML = { workspace, verification, architecture, guide }[r]();
   hydrate();
-  document.title='СЛЕД · '+titles[route];
-  if(focusKey)app.querySelector('[data-'+focusKey+'="'+CSS.escape(focusValue)+'"]')?.focus({preventScroll:true});
+  document.title =
+    "СЛЕД · " +
+    {
+      workspace: current().title,
+      verification: "Проверки среды",
+      architecture: "Устройство среды",
+      guide: "Быстрый старт",
+    }[r];
+  for (const [key, y, x] of scrolls) {
+    const el = document.querySelector(`[data-scroll='${key}']`);
+    if (el) {
+      el.scrollTop = y;
+      el.scrollLeft = x;
+    }
+  }
+  const target = focusId
+    ? document.getElementById(focusId)
+    : focusKey
+      ? document.querySelector(`[data-${focusKey}='${CSS.escape(focusValue)}']`)
+      : null;
+  target?.focus({ preventScroll: true });
 }
-function workspace(){const c=current(),v=data.verification,m=c.public.manifest;
- return heading('ДОКУМЕНТЫ. ДЕЙСТВИЯ. ДОКАЗАТЕЛЬСТВА.','Финансовое расследование','У каждой ошибки есть след. Проследите его вместе с агентом.',`<a class="button" href="#guide">${icon('book')}Как проверить</a>`)+
- metrics([['4','типа финансовых ошибок','layers'],['100','шагов на расследование','clock'],[`${v.acceptance.cases.filter(x=>x.status==='passed').length}/80`,'локальных проверок','shield'],['0','внешних API в ядре','lock']])+
- `<div class="workbench"><section class="panel episode-panel" aria-label="Документы эпизода"><div class="panel-head"><div><span class="eyebrow">ОТКРЫТЫЙ ДЕМОЭПИЗОД</span><h2>Материалы расследования</h2></div><label class="episode-picker"><select id="episode-select" aria-label="Выбрать эпизод">${data.cases.map((x,i)=>`<option value="${i}" ${i===caseIndex?'selected':''}>${esc(x.title)}</option>`).join('')}</select><span>${icon('chevron')}</span></label></div>
- <div class="episode-info"><div class="episode-title"><h3>${esc(caseIndex===3?'Синтетическая компания':'Компания «Орион»')}</h3><span class="tag muted">${esc(m.base_currency)}</span></div><div class="episode-subline">${icon('clock')}<span>${date(m.period_start)} — ${date(m.period_end)}</span><span class="dot-separator">·</span><span>${m.document_count} ${m.document_count===2?'документа':'документов'}</span></div></div>
- <div class="tabs" role="tablist" aria-label="Материалы эпизода">${[['documents','Документы','file',m.document_count],['ledger','Проводки','layers',m.record_counts.ledger],['policy','Курсы и правила','bank',null]].map(([key,label,i,count])=>`<button class="tab ${tab===key?'active':''}" role="tab" tabindex="${tab===key?0:-1}" aria-selected="${tab===key}" data-tab="${key}">${icon(i)}${key==='policy'?'<span class="desktop-label">Курсы и правила</span><span class="mobile-label">Правила</span>':label}${count!==null?`<span class="tab-count">${count}</span>`:''}</button>`).join('')}</div>
- <div id="material-content">${materials()}</div>
- <div class="context-note">${icon('info')}<span>Все операции вымышлены. Период включает начало и исключает конец. Суммы показаны в основных единицах валюты.</span></div>
- <div class="episode-bottom"><span>${icon('shield')}Доступ только к открытым записям</span><button class="button ghost small" data-action="download-episode">${icon('download')}JSON</button></div></section>
- <aside class="panel trajectory" aria-label="Траектория агента"><div class="panel-head"><div><h2>Траектория агента</h2><p>Скриптовая сверка · reconciler</p></div><span class="tag green">${done()?'Завершено':step?'Разбор':'Готово'}</span></div><div class="trace-list">${c.trajectory.map((t,i)=>`<button class="trace-step ${step>i?'done':''} ${step===i+1?'current':''}" data-step="${i+1}" aria-label="Шаг ${i+1}: ${esc(t.action.action)}"><span class="step-num">${step>i?icon('check'):String(i+1).padStart(2,'0')}</span><span><strong>${esc(t.action.action)}${t.action.table?` <span class="trace-table">${esc(t.action.table)}</span>`:''}</strong><small>${stepLabel(t)}</small></span><span class="step-arrow">${icon('right')}</span></button>`).join('')}</div>
- <div class="trajectory-controls"><div class="budget"><span>Бюджет расследования</span><strong>${100-step} / 100 шагов</strong></div><div class="progress-track"><progress max="100" value="${100-step}" aria-label="Остаток шагов"></progress></div><div class="play-controls"><button class="button primary" data-action="play">${icon(timer?'pause':'play')}${timer?'Пауза':done()?'Повторить':'Воспроизвести'}</button><button class="icon-button" data-action="next" aria-label="Следующий шаг" ${done()?'disabled':''}>${icon('next')}</button><button class="icon-button" data-action="reset" aria-label="Сбросить воспроизведение">${icon('reset')}</button></div><p class="trace-foot">Запись реального прогона в Docker. Клик по шагу открывает запрос и наблюдение.</p></div></aside></div>
- <div class="section-heading"><h2>Выводы и доказательства</h2><span class="tag ${done()?'green':'muted'}">${done()?`${c.submission.findings.length} ${c.submission.findings.length===0?'нарушений':'подтверждено'}`:'После завершения эпизода'}</span></div>
- <section id="results" aria-live="polite">${findings()}</section>
- <div class="bottom-banner"><div><strong>Результат можно проверить, а не только посмотреть.</strong><p>Полная среда, независимый валидатор и проверка изоляции запускаются локально.</p><code>bash verify.sh --offline</code></div><a class="button" href="#verification">${icon('chart')}Открыть проверки</a></div>`;
+function sourceTabs() {
+  return `<div class='source-tabs' role='tablist' aria-label='Источники дела'>${[
+    ["documents", "Документы", current().public.manifest.document_count],
+    ["ledger", "Проводки", current().public.ledger.length],
+    ["policy", "Правила", null],
+  ]
+    .map(
+      ([key, label, count]) =>
+        `<button role='tab' tabindex='${tab === key ? 0 : -1}' aria-selected='${tab === key}' data-tab='${key}'>${label}${count === null ? "" : `<span>${count}</span>`}</button>`,
+    )
+    .join("")}</div>`;
 }
-function stepLabel(t){if(t.action.action==='submit')return 'Отправка структурированных выводов';if(t.action.action==='get_document')return 'Чтение финансовых правил';const records=t.observation.result?.records;return records?`${records.length} записей · награда ${num(t.reward,0)}`:'Запрос через ограниченный интерфейс';}
-function materials(){const c=current(),p=c.public;
- if(tab==='documents'){
-  const docs=[...p.invoices.map(x=>({...x,kind:'invoice'})),...p.payments.map(x=>({...x,kind:'payment'}))];
-  const shown=docs.slice(page*6,page*6+6);
-  return `<div class="documents">${shown.map(x=>`<button class="document" data-proof="doc:${esc(x.doc_id)}"><div class="document-top"><span class="document-type">${icon(x.kind==='invoice'?'receipt':'wallet')}${x.kind==='invoice'?'Счёт на оплату':'Платёж'}</span><span class="document-id">${esc(short(x.invoice_id||x.payment_id))}</span></div><strong>${money(x.total_minor??x.amount_minor,x.currency)}<small>${esc(x.currency)}</small></strong><div class="document-description">${x.kind==='invoice'?'Сумма первичного документа':'Фактически полученные средства'}</div><div class="document-bottom"><span>${date(x.issued_at||x.timestamp)}</span><span>Документ ${icon('external')}</span></div></button>`).join('')}</div>${docs.length>6?pagination(docs.length,6):''}`;
- }
- if(tab==='ledger'){
-  const rows=p.ledger.filter(x=>Object.values(x).join(' ').toLowerCase().includes(filter.toLowerCase()));
-  return `<div class="table-toolbar"><label class="search">${icon('search')}<input id="ledger-search" placeholder="Поиск по ID, счёту или валюте" aria-label="Поиск проводок" value="${esc(filter)}"></label></div><div class="table-wrap"><table class="data-table"><thead><tr><th>ID</th><th>Счёт</th><th>Дата</th><th>Дебет</th><th>Кредит</th></tr></thead><tbody>${rows.slice(page*8,page*8+8).map(x=>`<tr><td><button class="proof mono" data-proof="ledger:${esc(x.row_id)}">${esc(short(x.row_id))}</button></td><td>${esc(accounts[x.account]||x.account)}</td><td>${date(x.timestamp)}</td><td class="amount">${x.debit_minor?money(x.debit_minor,x.currency):'—'}</td><td class="amount">${x.credit_minor?money(x.credit_minor,x.currency):'—'}</td></tr>`).join('')||'<tr><td colspan="5">Совпадений нет.</td></tr>'}</tbody></table></div>${pagination(rows.length,8)}`;
- }
- return `<div class="policy-section"><p>Счета — в базовой валюте <strong>${esc(p.manifest.base_currency)}</strong>. Валютный платёж пересчитывается по дате исходного документа. Период: <strong>[${date(p.manifest.period_start)}, ${date(p.manifest.period_end)})</strong>.</p><div class="formula">base_minor = round(payment_minor × rate<br>× 10^base_exponent / 10^payment_exponent)</div><p class="footnote">Округление: ${esc(p.policy.rounding)}. Допуск суммы: ${p.policy.amount_tolerance_minor} минимальных единиц.</p><div class="proofs"><button class="proof" data-proof="policy:accounting">${icon('book')}Полная политика</button><button class="proof" data-proof="manifest:episode">${icon('file')}Manifest</button></div></div>${p.fx.length?`<div class="table-wrap"><table class="data-table"><thead><tr><th>Дата</th><th>Валютная пара</th><th>Курс</th></tr></thead><tbody>${p.fx.slice(page*5,page*5+5).map(x=>`<tr><td>${date(x.date)}</td><td>${esc(x.source_currency)} / ${esc(x.target_currency)}</td><td><button class="proof" data-proof="fx:${esc(x.date)}:${esc(x.source_currency)}:${esc(x.target_currency)}">${esc(x.rate)}</button></td></tr>`).join('')}</tbody></table></div>${p.fx.length>5?pagination(p.fx.length,5):''}`:''}`;
+function workspace() {
+  const c = current(),
+    m = c.public.manifest;
+  return `<section class='case-header'><div><div class='case-breadcrumb'><span>Открытое расследование</span><span>/</span><code>${esc(c.id)}</code></div><h1>${esc(c.title)}</h1><p>${caseIndex === 3 ? "Синтетическая компания" : "Компания «Орион»"}<span>·</span>${date(m.period_start)} — ${date(m.period_end)}<span>·</span>${esc(m.base_currency)}</p></div><div class='case-header-actions'><label class='case-select'><span class='sr-only'>Выбрать дело</span><select id='episode-select' aria-label='Выбрать эпизод'>${data.cases.map((x, i) => `<option value='${i}' ${i === caseIndex ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select>${icon("chevron")}</label><button class='tool-button' data-action='share' aria-label='Скопировать ссылку на дело'>${icon("copy")}</button><button class='tool-button' data-action='download-episode' aria-label='Скачать документы дела'>${icon("download")}</button></div></section>
+ <div class='mobile-workspace-tabs' role='tablist' aria-label='Панели расследования'><button data-mobile='sources' role='tab' tabindex='${mobilePane === "sources" ? 0 : -1}' aria-selected='${mobilePane === "sources"}'>${icon("file")}Источники</button><button data-mobile='analysis' role='tab' tabindex='${mobilePane === "analysis" ? 0 : -1}' aria-selected='${mobilePane === "analysis"}'>${icon("eye")}Разбор${finished() ? `<span>${c.submission.findings.length}</span>` : ""}</button></div>
+ <div class='investigation-desk' data-mobile-pane='${mobilePane}'><aside class='case-library'><div class='rail-label'>Библиотека дел <span>4</span></div><div class='case-list'>${data.cases.map((x, i) => `<button class='case-item ${i === caseIndex ? "selected" : ""}' data-case='${i}' aria-pressed='${i === caseIndex}'><span class='case-symbol'>${icon(caseIcons[i])}</span><span><strong>${caseLabels[i]}</strong><small>${x.public.manifest.document_count} док. · ${x.steps} шагов</small></span>${(i === caseIndex ? step : savedCases.get(x.id)?.step) === x.trajectory.length ? `<span class='case-complete'>${icon("check")}</span>` : ""}</button>`).join("")}</div><div class='rail-note'><span class='rail-mark'>${icon("lock")}</span><strong>Вы исследуете<br>открытую запись.</strong><p>Все операции вымышлены. Здесь воспроизводится уже выполненный прогон агента.</p><a href='#guide'>Как пройти расследование</a></div><a class='rail-bottom' href='#verification'>${icon("shield")}Надёжность среды<span>${data.verification.acceptance.cases.filter((c) => c.status === "passed").length}/${data.verification.acceptance.cases.length}</span></a></aside>
+ <section class='source-workspace' aria-label='Просмотр источника'><div class='source-toolbar'>${sourceTabs()}<button class='tool-button raw-toggle ${raw ? "selected" : ""}' data-action='raw' aria-label='${raw ? "Показать читаемый вид" : "Показать исходный JSON"}' aria-pressed='${raw}'>${icon("code")}</button></div><div class='source-content' data-scroll='sources' id='source-content'>${sourceContent()}</div><div class='source-footer'>${icon("shield")}Первичный источник<span>Только чтение</span></div></section>
+ <aside class='analysis-workspace' aria-label='Разбор расследования'><div class='analysis-tabs' role='tablist' aria-label='Результат или журнал'><button data-inspector='results' role='tab' tabindex='${inspector === "results" ? 0 : -1}' aria-selected='${inspector === "results"}'>Выводы${finished() ? `<span>${c.submission.findings.length}</span>` : ""}</button><button data-inspector='trace' role='tab' tabindex='${inspector === "trace" ? 0 : -1}' aria-selected='${inspector === "trace"}'>Журнал <span>${step}/${c.trajectory.length}</span></button></div><div class='analysis-content' data-scroll='analysis' id='results'>${inspector === "results" ? findings() : trace()}</div></aside></div>${transport()}`;
 }
-function pagination(total,size){return `<div class="table-footer"><span>${total?`${page*size+1}–${Math.min((page+1)*size,total)}`:'0'} из ${total}</span><div class="table-actions"><button class="icon-button" data-action="page-prev" aria-label="Предыдущая страница" ${page===0?'disabled':''}>${icon('left')}</button><button class="icon-button" data-action="page-next" aria-label="Следующая страница" ${((page+1)*size>=total)?'disabled':''}>${icon('right')}</button></div></div>`;}
-function findings(){const c=current();
- if(!done())return `<div class="results-empty"><div class="empty-icon">${icon('lock')}</div><div><h3>Сначала — документы. Затем — выводы.</h3><p>Воспроизведите шаги агента или перейдите к итогам записи.</p></div><button class="button small" data-action="finish">Перейти к выводам</button></div>`;
- const m=c.evaluation;
- const summary=`<div class="result-summary"><span>${icon('check')}</span><span>Точность <strong>${num(m.precision,2)}</strong></span><span>Полнота <strong>${num(m.recall,2)}</strong></span><span>F1 <strong>${num(m.f1,2)}</strong></span><span>Возврат <strong>${num(m.reward,3)}</strong></span><span><strong>${c.steps}</strong> шагов · <strong>${num(c.elapsed_seconds,3)} с</strong></span><button class="button ghost small" data-action="download-findings">${icon('download')}Выводы</button></div>`;
- if(!c.submission.findings.length)return summary+`<div class="panel clean-result"><div class="empty-icon">${icon('shield')}</div><div><h3>Нарушений не обнаружено</h3><p>Счёт на 1 000 KZT оплачен на 600 KZT. Остаток 400 KZT — законная задолженность. Для чистого эпизода с пустым ответом F1 = 1, P = R = 0.</p></div></div>`;
- return summary+`<div class="finding-grid">${c.submission.findings.map(f=>`<article class="panel finding"><div class="finding-top"><div><h3>${esc(names[f.type]||f.type)}</h3><div class="finding-category">${esc(f.type)}</div></div><span class="tag green">${icon('check')}TP</span></div><div class="finding-amount">${money(f.claimed_amount_minor,f.currency)} <small>${esc(f.currency)}</small></div><p class="finding-desc">${esc(explanations[f.type])}</p><div class="proof-label">ПОЛНЫЙ НАБОР ДОКАЗАТЕЛЬСТВ</div><div class="proofs">${f.evidence_ids.map(id=>`<button class="proof" data-proof="${esc(id)}">${icon(proofIcon(id))}${esc(proofName(id))}</button>`).join('')}</div></article>`).join('')}</div><p class="footnote">Суммы разных типов имеют разный смысл и не складываются в общий ущерб. В закрытом прогоне награда агента остаётся нулевой; здесь показана диагностика оценщика после завершения.</p>`;
+function sourceContent() {
+  if (tab === "documents") {
+    const all = docs();
+    docIndex = Math.min(docIndex, all.length - 1);
+    const d = all[docIndex];
+    return `<div class='document-switcher'><label for='document-select'>Открытый документ</label><div><select id='document-select'>${all.map((x, i) => `<option value='${i}' ${i === docIndex ? "selected" : ""}>${x.invoice_id ? "Счёт" : "Платёж"} · ${short(x.invoice_id || x.payment_id)} · ${money(x.total_minor ?? x.amount_minor, x.currency)} ${x.currency}</option>`).join("")}</select>${icon("chevron")}</div></div>${selectedSource ? sourceContext(selectedSource) : ""}${raw ? json(d) : documentSheet(d)}`;
+  }
+  if (tab === "ledger") return ledgerView();
+  return policyView();
 }
-function proofIcon(id){return id.startsWith('ledger:')?'layers':id.startsWith('fx:')?'bank':id.startsWith('policy:')?'book':'file';}
-function proofName(id){if(id.startsWith('policy:'))return 'Правила';if(id.startsWith('manifest:'))return 'Период';if(id.startsWith('fx:'))return 'Курс '+id.split(':').slice(-2).join('/');if(id.startsWith('ledger:'))return 'Проводка '+short(id.slice(7));const p=current().public;return p.invoices.some(x=>'doc:'+x.doc_id===id)?'Счёт':'Платёж';}
-function resolveProof(id){const p=current().public;
- if(id==='policy:accounting')return p.policy;if(id==='manifest:episode')return p.manifest;
- if(id.startsWith('ledger:'))return p.ledger.find(x=>'ledger:'+x.row_id===id);
- if(id.startsWith('doc:'))return [...p.invoices,...p.payments].find(x=>'doc:'+x.doc_id===id);
- if(id.startsWith('fx:'))return p.fx.find(x=>`fx:${x.date}:${x.source_currency}:${x.target_currency}`===id);
+function sourceContext(id) {
+  return `<div class='source-context'>${icon("eye")}<span>Открыто доказательство <strong>${esc(proofName(id))}</strong></span><button data-action='clear-source' aria-label='Снять выделение доказательства'>${icon("close")}</button></div>`;
 }
-function showDialog(kind,title,body){document.querySelector('#detail-kind').textContent=kind;document.querySelector('#detail-title').textContent=title;document.querySelector('#detail-content').innerHTML=body;document.querySelector('#detail-dialog').showModal();hydrate();}
-function proofDialog(id){const record=resolveProof(id);if(!record)return toast('Запись не найдена');let facts='';
- if('total_minor'in record||'amount_minor'in record)facts=`<div class="dialog-facts"><div><small>Сумма документа</small><strong>${money(record.total_minor??record.amount_minor,record.currency)} ${esc(record.currency)}</strong></div><div><small>Дата первичного события</small><strong>${date(record.issued_at||record.timestamp)}</strong></div></div>`;
- if('account'in record)facts=`<div class="dialog-facts"><div><small>Бухгалтерский счёт</small><strong>${esc(accounts[record.account]||record.account)}</strong></div><div><small>Дата проводки</small><strong>${date(record.timestamp)}</strong></div></div>`;
- showDialog('ОТКРЫТАЯ ЗАПИСЬ',proofName(id),facts+`<p class="dialog-note mono">${esc(id)}</p><pre class="json-view">${esc(JSON.stringify(record,null,2))}</pre>`);
+function documentSheet(d) {
+  const invoice = "invoice_id" in d;
+  const amount = d.total_minor ?? d.amount_minor;
+  const linked = invoice
+    ? current().public.payments.filter((p) =>
+        p.invoice_refs?.includes(d.invoice_id),
+      )
+    : current().public.invoices.filter((i) =>
+        d.invoice_refs?.includes(i.invoice_id),
+      );
+  return `<article class='document-sheet'><div class='paper-letterhead'><span>СЛЕД<span class='paper-slash'>/</span>ОТКРЫТЫЕ ДАННЫЕ</span><span>${invoice ? "INVOICE" : "PAYMENT"}</span></div><div class='paper-title'><div><span>${invoice ? "Первичный счёт" : "Платёжный документ"}</span><h2>${invoice ? "Счёт на оплату" : "Поступление средств"}</h2></div>${icon(invoice ? "receipt" : "bank")}</div><div class='paper-reference'>${esc(d.invoice_id || d.payment_id)}</div><div class='paper-facts'><div><span>${invoice ? "Дата выставления" : "Дата события"}</span><strong>${date(d.issued_at || d.timestamp)}</strong></div><div><span>${invoice ? "Срок оплаты" : "Валюта платежа"}</span><strong>${invoice ? date(d.due_at) : esc(d.currency)}</strong></div></div>
+ ${invoice ? `<div class='paper-table-wrap'><table class='paper-table'><thead><tr><th>Наименование</th><th>Кол-во</th><th>Сумма, ${esc(d.currency)}</th></tr></thead><tbody>${d.line_items.map((l) => `<tr><td>${esc(l.description)}</td><td>${esc(l.quantity)}</td><td>${money(l.total_minor, d.currency)}</td></tr>`).join("")}</tbody></table></div>` : `<div class='payment-statement'>${icon("wallet")}<p>Сумма первичного платежа в валюте поступления. Конвертация определяется опубликованной политикой учёта.</p></div>`}
+ <div class='paper-total'><span>${invoice ? "Итого к оплате" : "Получено"}</span><strong>${money(amount, d.currency)} <small>${esc(d.currency)}</small></strong></div><div class='paper-bottom'><span>Синтетический документ</span><span title='${esc(d.doc_id)}'>${esc(short(d.doc_id))}</span></div></article>
+ ${linked.length ? `<div class='related-documents'><h3>Связанные ${invoice ? "платежи" : "счета"}</h3>${linked.map((x) => `<button data-proof='doc:${esc(x.doc_id)}'>${icon(invoice ? "wallet" : "receipt")}<span>${esc(short(x.payment_id || x.invoice_id))}</span><strong>${money(x.amount_minor ?? x.total_minor, x.currency)} ${esc(x.currency)}</strong></button>`).join("")}</div>` : `<p class='source-note'>У документа нет явных связанных ${invoice ? "платежей" : "счетов"} в этом эпизоде.</p>`}`;
 }
-function verification(){const v=data.verification;const groupNames={C:['Контракт и изоляция','reset/step, лимиты, ошибки и отсутствие утечек'],D:['Данные и эталон','Баланс, причинные изменения и доказательства'],R:['Надёжность награды','Matching, ложные выводы, дубли и атаки'],G:['Воспроизводимость','Повтор seed, перестановка и смена ID']};
- return heading('ИЗМЕРЕННЫЕ РЕЗУЛЬТАТЫ','Проверка самой среды','Пройденные тесты — с результатами, версиями и контрольной суммой.',`<a class="button" href="assets/verification.html" target="_blank" rel="noreferrer">${icon('external')}Полный отчёт</a>`)+metrics([[`${v.unit_tests.passed}/${v.unit_tests.run}`,'регрессионных тестов','code'],[`${v.acceptance.automatic_score}/90`,'автоматических баллов','shield'],[`${v.sweep_passed}`,'дополнительных эпизодов','layers'],[`${v.mutants_killed}/${v.selected_mutants}`,'дефектов обнаружено','search']])+`<div class="scope-note"><strong>Локальная приёмка по ТЗ.</strong> 80 проверок дают максимум 90 баллов. Ещё 10 инженерных баллов требуют просмотра человеком. Эти результаты не являются оценкой жюри.</div><div class="verification-groups">${v.acceptance.groups.map(g=>`<section class="panel case-group"><h3>${groupNames[g.id][0]}<span>${g.passed}/${g.total}</span></h3><p>${groupNames[g.id][1]}</p><div class="case-grid">${v.acceptance.cases.filter(c=>c.id.startsWith(g.id)).map(c=>`<button class="case ${c.status}" data-check="${esc(c.id)}" aria-label="Проверка ${esc(c.id)}: ${c.status==='passed'?'пройдена':'ошибка'}">${esc(c.id)}</button>`).join('')}</div></section>`).join('')}</div><div class="section-heading"><h2>Четыре политики. Одни и те же 20 эпизодов.</h2><span class="tag muted">5 чистых · 5 с взаимодействиями</span></div><div class="panel table-wrap"><table class="data-table benchmark-table"><thead><tr><th>Политика</th><th>Precision</th><th>Recall</th><th>F1</th><th>Возврат</th><th>Шаги</th></tr></thead><tbody>${v.benchmark.map(r=>`<tr><td>${esc(r.policy)} ${r.policy==='reconciler'?'<span class="tag green">сверка</span>':''}</td>${['precision','recall','f1','reward','mean_steps'].map(k=>`<td class="mono">${num(r[k],k==='mean_steps'?1:3)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="section-caption">Средние значения по эпизодам. На корректном чистом ответе P = R = 0, F1 = 1. Oracle работает только у оценщика; высокая награда oracle не доказывает сложность среды.</p><div class="bottom-banner"><div><strong>Проверены предельные размеры</strong><p>2 000 проводок · 200 документов · 12 ошибок · ${v.boundary_run.steps} шагов · ${num(v.boundary_run.elapsed_seconds,3)} с в измеренном прогоне.</p><code>Source SHA-256: ${esc(v.versions.source_sha256.slice(0,24))}…</code></div><a class="button" href="data/verification.json" download="sled-verification.json">${icon('download')}Отчёт JSON</a></div>`;
+function ledgerView() {
+  const rows = current().public.ledger.filter((x) =>
+    Object.values(x).join(" ").toLowerCase().includes(filter.toLowerCase()),
+  );
+  const selected = resolveProof(selectedSource);
+  return `<div class='ledger-toolbar'><label class='search-field'>${icon("search")}<input id='ledger-search' type='search' value='${esc(filter)}' placeholder='ID, счёт или валюта' aria-label='Поиск проводок'></label><span>${rows.length} записей</span></div>${selectedSource ? sourceContext(selectedSource) : ""}${
+    raw
+      ? json(selected || rows)
+      : `${selected ? recordSheet(selected) : ""}<div class='ledger-table-wrap'><table class='data-table'><thead><tr><th>Запись / счёт</th><th>Дата</th><th>Дебет</th><th>Кредит</th></tr></thead><tbody>${
+          rows
+            .slice(page * 8, page * 8 + 8)
+            .map(
+              (x) =>
+                `<tr class='${selectedSource === "ledger:" + x.row_id ? "selected-row" : ""}'><td><button data-proof='ledger:${esc(x.row_id)}' title='${esc(x.row_id)}'>${esc(short(x.row_id))}</button><small>${esc(accounts[x.account] || x.account)}</small></td><td>${date(x.timestamp)}<small>${esc(x.currency)}</small></td><td class='amount'>${x.debit_minor ? money(x.debit_minor, x.currency) : "—"}</td><td class='amount'>${x.credit_minor ? money(x.credit_minor, x.currency) : "—"}</td></tr>`,
+            )
+            .join("") ||
+          `<tr><td colspan='4' class='search-empty'>Совпадений нет. Попробуйте другой ID или валюту.</td></tr>`
+        }</tbody></table></div>${pagination(rows.length, 8)}${selected ? "" : `<div class='table-hint'>${icon("eye")}Выберите запись, чтобы посмотреть реквизиты.</div>`}`
+  }`;
 }
-function architecture(){return heading('ПРОЗРАЧНЫЕ ГРАНИЦЫ','Среда, которой можно доверять','Генерация, расследование и оценка разделены по ответственности.')+`<div class="architecture-flow">${[
- ['database','Генератор','Создаёт согласованную историю компании. Затем вносит ошибки с записанными причинными изменениями.','Seed + config'],
- ['layers','Среда','Предоставляет документы и пять инструментов. Контролирует бюджет, время и траекторию действий.','reset / step'],
- ['cpu','Агент','Исследует открытые записи в отдельном контейнере. Отправляет структурированные выводы с доказательствами.','Docker · без сети'],
- ['shield','Оценщик','Сопоставляет выводы с закрытым эталоном. Рассчитывает TP, FP, FN, F1 и терминальную награду.','Отдельный процесс']
- ].map(([i,h,p,t])=>`<article class="panel flow-card"><div class="metric-icon">${icon(i)}</div><h3>${h}</h3><p>${p}</p><span class="tag green">${t}</span></article>`).join('')}</div><div class="architecture-detail"><article class="panel prose-panel"><h2>Доказательства важнее формулировок</h2><p>Правильный вывод требует точного типа ошибки, суммы, валюты, затронутых ID и полного допустимого набора доказательств. Убедительный текст не добавляет баллов.</p><div class="code-block">reward = clip(2 × F1 − 1 − 0.002 × inspection_steps, −1, 1)</div><ul><li>Исследовательская награда всегда равна нулю.</li><li>Повторный вывод считается ложноположительным.</li><li>В закрытом режиме награду видит только оценщик.</li><li>Неверный submit завершает эпизод с наградой −1.</li></ul></article><article class="panel prose-panel"><h2>Независимая проверка данных</h2><p>Валидатор сначала выводит расхождения из открытых документов. Затем сравнивает результат с эталоном и проверяет историю изменений.</p><ul><li>Генератор считает через Decimal.</li><li>Валидатор — через точные дроби Fraction.</li><li>Скриптовая сверка имеет отдельную реализацию.</li><li>Ручные примеры и мутации проверяют саму среду.</li></ul><div class="guide-links"><a class="button small" href="https://github.com/amurapan/genesis/blob/main/docs/accounting.md" target="_blank" rel="noreferrer">${icon('book')}Финансовые правила</a><a class="button small" href="https://github.com/amurapan/genesis/blob/main/docs/contract.md" target="_blank" rel="noreferrer">${icon('code')}Контракт API</a></div></article></div><div class="scope-note"><strong>Граница веб-демо.</strong> Этот сайт воспроизводит сохранённые прогоны публичных эпизодов. Docker, генератор и изолированный оценщик запускаются в локальной среде. Сайт не обучает модель и не заменяет официальную офлайн-проверку.</div>`;}
-function guide(){return heading('GENESIS 2026 · FINTECH','Проверить за несколько минут','Короткий путь от исходных документов до воспроизводимого результата.')+`<div class="guide-grid"><section class="panel prose-panel"><span class="tag green">В браузере · без установки</span><h2 class="section-heading">Пройдите одно расследование</h2><div class="check-list">${[
- ['Выберите «Валюта и граница периода»','Счёт: 100 000 KZT. Платёж: 100 USD от 30 ноября. Правильный курс: 450 KZT/USD.'],
- ['Откройте проводки и правила','В книге отражено 44 000 KZT датой 1 декабря. Правильное поступление — 45 000 KZT, период заканчивается 1 декабря.'],
- ['Воспроизведите шесть шагов','Посмотрите запросы агента и полученные записи. В конце он отправит два вывода.'],
- ['Проверьте доказательства','FX-расхождение: 1 000 KZT. Сумма ошибки периода: 45 000 KZT. Нажмите на каждое доказательство, чтобы открыть источник.']
- ].map(([h,p],i)=>`<div class="check-row"><span class="step-num">${i+1}</span><div><strong>${h}</strong><p>${p}</p></div></div>`).join('')}</div><div class="guide-links"><button class="button primary" data-action="start-guide">${icon('play')}Открыть эпизод</button></div></section><section class="panel prose-panel"><span class="tag muted">Локально · полная проверка</span><h2 class="section-heading">Запустите среду из исходников</h2><p>Нужны Linux, Python 3.11, Bash, Docker и cgroup v2. Runtime использует стандартную библиотеку Python.</p><div class="code-block">git clone https://github.com/amurapan/genesis.git
-cd genesis
-bash verify.sh</div><p class="footnote">Первое получение базового образа может потребовать сеть. Повтор с подготовленными образами: <code>bash verify.sh --offline</code>.</p><div class="guide-links"><button class="button small" data-action="copy-command">${icon('copy')}Скопировать команды</button><a class="button small" href="https://github.com/amurapan/genesis#установка-и-запуск" target="_blank" rel="noreferrer">${icon('book')}README</a></div><div class="scope-note">Счета в базовой валюте; валютные поступления; один счёт на платёж; возврат только переплаты. Налоги, комиссии, переоценка валютных счетов и обучение весов не реализованы.</div></section></div><section class="panel prose-panel guide-video"><div class="section-heading"><div><h2>Демонстрация проекта</h2><p>96 секунд · реальные результаты и объясняющие слайды</p></div><a class="button small" href="assets/presentation.pdf" target="_blank" rel="noreferrer">${icon('download')}Презентация PDF</a></div><video controls preload="none" poster="assets/video-poster.png"><source src="assets/demo.mp4" type="video/mp4">Ваш браузер не поддерживает видео. <a href="assets/demo.mp4">Скачать MP4</a></video><p class="footnote">Слайды на английском, без аудиодорожки. Это визуальный разбор выполненных прогонов; подробные инструкции и финансовые правила в репозитории — на русском.</p></section>`;}
-function download(name,value){const blob=new Blob([JSON.stringify(value,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-function advance(){step=Math.min(step+1,current().trajectory.length);if(done())stop();render();}
-document.addEventListener('click',async(event)=>{
- const proof=event.target.closest('[data-proof]');if(proof){proofDialog(proof.dataset.proof);return;}
- const chosen=event.target.closest('[data-tab]');if(chosen){tab=chosen.dataset.tab;page=0;filter='';render();document.querySelector(`[data-tab="${tab}"]`)?.focus();return;}
- const trace=event.target.closest('[data-step]');if(trace){stop();step=Number(trace.dataset.step);render();const t=current().trajectory[step-1];showDialog('ШАГ '+step, t.action.action,`<p class="dialog-note">Фактический запрос и наблюдение из записанного прогона. Награда, которую видел агент: ${t.reward}.</p><pre class="json-view">${esc(JSON.stringify(t,null,2))}</pre>`);return;}
- const check=event.target.closest('[data-check]');if(check){const item=data.verification.acceptance.cases.find(x=>x.id===check.dataset.check);showDialog('ЛОКАЛЬНАЯ ПРИЁМКА',`${item.id} · ${item.status==='passed'?'пройдена':'ошибка'}`,`<p class="dialog-note">Определение проверки опубликовано в <a href="https://github.com/amurapan/genesis/blob/main/planning/acceptance-matrix.json" target="_blank" rel="noreferrer">матрице приёмки</a>. Это авторский набор по ТЗ, а не скрытые тесты жюри.</p><pre class="json-view">${esc(JSON.stringify(item,null,2))}</pre>`);return;}
- const target=event.target.closest('[data-action]');if(!target)return;
- switch(target.dataset.action){
-  case'play':if(timer){stop();render();break;}if(done())step=0;timer=setInterval(advance,850);render();break;
-  case'next':stop();advance();break;
-  case'reset':stop();step=0;render();break;
-  case'finish':stop();step=current().trajectory.length;render();break;
-  case'page-next':page++;render();break;
-  case'page-prev':page=Math.max(page-1,0);render();break;
-  case'download-episode':download(`sled-${current().id}-public.json`,current().public);break;
-  case'download-findings':download(`sled-${current().id}-findings.json`,current().submission);break;
-  case'start-guide':stop();caseIndex=0;step=0;tab='documents';page=0;filter='';location.hash='workspace';render();window.scrollTo(0,0);break;
-  case'copy-command':try{await navigator.clipboard.writeText('git clone https://github.com/amurapan/genesis.git\ncd genesis\nbash verify.sh');toast('Команды скопированы');}catch{toast('Выделите команды и скопируйте их вручную.');}break;
- }
+function recordSheet(r) {
+  return `<article class='record-sheet'><div class='record-title'>${icon("layers")}<h3>Проводка <span>${esc(short(r.row_id))}</span></h3></div><dl><div><dt>Бухгалтерский счёт</dt><dd>${esc(accounts[r.account] || r.account)}</dd></div><div><dt>Время записи</dt><dd>${esc(r.timestamp)}</dd></div><div><dt>Дебет</dt><dd>${money(r.debit_minor, r.currency)} ${esc(r.currency)}</dd></div><div><dt>Кредит</dt><dd>${money(r.credit_minor, r.currency)} ${esc(r.currency)}</dd></div><div><dt>Связанный счёт</dt><dd>${esc(r.invoice_id ?? "Нет явной связи")}</dd></div><div><dt>Связанный платёж</dt><dd>${esc(r.payment_id ?? "Нет явной связи")}</dd></div></dl><details><summary>Исходная запись JSON</summary>${json(r)}</details></article>`;
+}
+function policyView() {
+  const p = current().public;
+  const selected = resolveProof(selectedSource);
+  return `${selectedSource ? sourceContext(selectedSource) : ""}${
+    raw
+      ? json(selected || p.policy)
+      : `<article class='policy-sheet'><span class='section-kicker'>ПОЛИТИКА УЧЁТА</span><h2>Правила этой компании</h2><div class='rule-row'><span>Базовая валюта</span><strong>${esc(p.manifest.base_currency)}</strong></div><div class='rule-row'><span>Отчётный период</span><strong>${date(p.manifest.period_start)} — ${date(p.manifest.period_end)}</strong></div><p>Начало периода включено, конец исключён. Курс выбирается по дате исходного платёжного документа.</p><div class='rule-row'><span>Округление</span><code>${esc(p.policy.rounding)}</code></div><div class='rule-row'><span>Допуск суммы</span><strong>${p.policy.amount_tolerance_minor} мин. ед.</strong></div><div class='formula'>base_minor = round(payment_minor × rate<br>× 10^base_exponent / 10^payment_exponent)</div><details><summary>Полная политика JSON</summary>${json(p.policy)}</details><details ${selectedSource === "manifest:episode" ? "open" : ""}><summary>Manifest эпизода</summary>${json(p.manifest)}</details></article><section class='fx-register'><h3>Опубликованные курсы</h3>${
+          p.fx.length
+            ? `<div class='ledger-table-wrap'><table class='data-table'><thead><tr><th>Дата</th><th>Пара</th><th>Курс</th></tr></thead><tbody>${p.fx
+                .slice(page * 8, page * 8 + 8)
+                .map((x) => {
+                  const id = `fx:${x.date}:${x.source_currency}:${x.target_currency}`;
+                  return `<tr class='${selectedSource === id ? "selected-row" : ""}'><td>${date(x.date)}</td><td>${esc(x.source_currency)} / ${esc(x.target_currency)}</td><td><button data-proof='${esc(id)}'>${esc(x.rate)}</button></td></tr>`;
+                })
+                .join("")}</tbody></table></div>${pagination(p.fx.length, 8)}`
+            : `<p class='source-note'>В этом эпизоде валютные курсы не требуются.</p>`
+        }</section>`
+  }`;
+}
+function pagination(total, size) {
+  return `<div class='table-pagination'><span>${total ? page * size + 1 : 0}–${Math.min((page + 1) * size, total)} из ${total}</span><div><button class='tool-button' data-action='page-prev' aria-label='Предыдущая страница' ${page === 0 ? "disabled" : ""}>${icon("left")}</button><button class='tool-button' data-action='page-next' aria-label='Следующая страница' ${(page + 1) * size >= total ? "disabled" : ""}>${icon("right")}</button></div></div>`;
+}
+function findings() {
+  const c = current();
+  if (!finished())
+    return `<div class='analysis-intro'><div class='orbit-symbol'>${icon("nodes")}<i></i><i></i></div><span class='section-kicker'>СОБЕРИТЕ КАРТИНУ</span><h2>От источника<br>к доказательству.</h2><p>Просмотрите документы или запустите запись. Агент покажет, какие данные он запросил и к чему пришёл.</p><div class='start-guide-mini'><div><span>${icon("file")}</span><p>Откройте первичные документы.</p></div><div><span>${icon("play")}</span><p>Пройдите ${c.steps} действий агента.</p></div><div><span>${icon("check")}</span><p>Сопоставьте вывод с источниками.</p></div></div><button class='text-button' data-action='finish'>Открыть готовый результат</button><p class='recorded-disclaimer'>Записанный прогон · ${c.id}<br>Новые вычисления в браузере не выполняются.</p></div>`;
+  const m = c.evaluation;
+  const summary = `<div class='result-strip'><span>Оценка завершена</span>${status("Проверено")}<div><strong>${num(m.f1, 2)}</strong><span>F1</span><strong>${num(m.reward, 3)}</strong><span>Возврат</span></div><details><summary>Все метрики</summary><dl class='metric-list'><div><dt>Precision / Recall</dt><dd>${num(m.precision, 2)} / ${num(m.recall, 2)}</dd></div><div><dt>TP / FP / FN</dt><dd>${m.tp} / ${m.fp} / ${m.fn}</dd></div><div><dt>Время прогона</dt><dd>${num(c.elapsed_seconds, 3)} с</dd></div></dl></details></div>`;
+  if (!c.submission.findings.length)
+    return `${summary}<div class='clean-conclusion'>${icon("shield")}<h2>Нарушений<br>не обнаружено.</h2><p>Счёт на 1 000 KZT оплачен на 600 KZT. Остаток 400 KZT — законная задолженность.</p><span>Чистый ответ: F1 = 1, P = R = 0.</span></div><button class='download-result' data-action='download-findings'>${icon("download")}Скачать выводы</button>`;
+  findingIndex = Math.min(findingIndex, c.submission.findings.length - 1);
+  const f = c.submission.findings[findingIndex];
+  return `${summary}<div class='finding-list'>${c.submission.findings.map((x, i) => `<button class='finding ${i === findingIndex ? "selected" : ""}' data-finding='${i}' aria-pressed='${i === findingIndex}'><span class='finding-marker'>${icon("check")}</span><span><strong>${esc(names[x.type])}</strong><small>${money(x.claimed_amount_minor, x.currency)} ${esc(x.currency)}</small></span></button>`).join("")}</div><article class='finding-detail'><span class='section-kicker'>ВЫБРАННЫЙ ВЫВОД</span><h2>${esc(names[f.type])}</h2><div class='finding-value'>${money(f.claimed_amount_minor, f.currency)} <span>${esc(f.currency)}</span></div><p>${esc(explanations[f.type])}</p><div class='evidence-heading'><h3>Доказательства</h3><span>${f.evidence_ids.length} · источники</span></div><div class='evidence-list'>${f.evidence_ids.map((id) => `<button class='evidence-link ${selectedSource === id ? "selected" : ""}' data-proof='${esc(id)}'>${icon(proofIcon(id))}<span><strong>${esc(proofName(id))}</strong><small>${esc(short(id))}</small></span>${selectedSource === id ? icon("eye") : icon("file")}</button>`).join("")}</div><p class='evidence-hint'>Выберите источник — он откроется рядом.</p></article><button class='download-result' data-action='download-findings'>${icon("download")}Скачать выводы JSON</button><p class='analysis-footnote'>Суммы разных нарушений не складываются в общий ущерб. Здесь показана диагностика оценщика после завершения.</p>`;
+}
+function trace() {
+  const c = current(),
+    t = step ? c.trajectory[step - 1] : null;
+  return `<div class='trace-heading'><span class='section-kicker'>ТРАЕКТОРИЯ АГЕНТА</span><h2>${step ? "Шаг " + step + " из " + c.steps : "Расследование ещё не начато"}</h2><p>reconciler · изолированный Docker</p></div><div class='trace-timeline'>${c.trajectory.map((x, i) => `<button class='trace-step ${step > i ? "done" : ""} ${step === i + 1 ? "current" : ""}' data-step='${i + 1}' aria-label='Шаг ${i + 1}: ${esc(x.action.action)}'><span>${step > i ? icon("check") : i + 1}</span><span><strong>${esc(actionTitle(x.action))}</strong><small>${esc(x.action.action)}${x.action.table ? " · " + esc(x.action.table) : ""}</small></span></button>`).join("")}</div>${t ? `<section class='step-observation'><h3>Ответ инструмента</h3><p>${stepSummary(t)}</p><div class='observation-meta'><span>Осталось ${t.observation.remaining_steps} шагов</span><span>Награда: ${num(t.reward)}</span></div><details open><summary>Запрос</summary>${json(t.action)}</details><details><summary>Полученное наблюдение</summary>${json(t.observation)}</details></section>` : `<p class='analysis-footnote'>Запустите воспроизведение или выберите любой шаг в журнале.</p>`}`;
+}
+function actionTitle(a) {
+  if (a.action === "submit") return "Отправка выводов";
+  if (a.action === "get_document") return "Чтение документа";
+  if (a.action === "calculator") return "Проверка расчёта";
+  return (
+    {
+      ledger: "Чтение проводок",
+      invoices: "Чтение счетов",
+      payments: "Чтение платежей",
+      fx: "Проверка курсов",
+    }[a.table] || "Запрос записи"
+  );
+}
+function stepSummary(t) {
+  if (t.action.action === "submit")
+    return "Выводы переданы оценщику. Оценка закрытого прогона не возвращалась агенту.";
+  const r = t.observation.result?.records;
+  return r
+    ? `Получено ${r.length} записей через разрешённый инструмент.`
+    : "Получен ответ через ограниченный интерфейс среды.";
+}
+function transport() {
+  return `<div class='transport-bar'><div class='transport-label'><span class='record-symbol'>${icon("play")}</span><div><strong>Запись расследования</strong><span>reconciler · ${current().steps} шагов</span></div></div><div class='transport-buttons'><button class='tool-button' data-action='reset' aria-label='В начало'>${icon("reset")}</button><button class='play-button' data-action='play' aria-label='${timer ? "Приостановить" : "Воспроизвести"}'>${icon(timer ? "pause" : "play")}<span>${timer ? "Пауза" : finished() ? "Повторить" : "Воспроизвести"}</span></button><button class='tool-button' data-action='next' aria-label='Следующий шаг' ${finished() ? "disabled" : ""}>${icon("next")}</button></div><div class='transport-scrubber'><label for='replay-range'>Шаг <strong id='scrub-value'>${step}</strong> / ${current().steps}</label><input id='replay-range' type='range' min='0' max='${current().steps}' value='${step}' aria-label='Перейти к шагу расследования'></div><div class='transport-budget'><strong>${100 - step}<span>/ 100</span></strong><small>осталось действий</small></div><button class='finish-button' data-action='finish'>${icon("check")}Итоги</button></div>`;
+}
+function proofIcon(id) {
+  return id.startsWith("ledger:")
+    ? "layers"
+    : id.startsWith("fx:")
+      ? "bank"
+      : id.startsWith("policy:")
+        ? "book"
+        : "file";
+}
+function proofName(id) {
+  if (id.startsWith("policy:")) return "Политика учёта";
+  if (id.startsWith("manifest:")) return "Отчётный период";
+  if (id.startsWith("fx:")) return "Курс " + id.split(":").slice(-2).join("/");
+  if (id.startsWith("ledger:")) return "Проводка " + short(id.slice(7));
+  return current().public.invoices.some((x) => "doc:" + x.doc_id === id)
+    ? "Первичный счёт"
+    : "Первичный платёж";
+}
+function resolveProof(id) {
+  const p = current().public;
+  if (id === "policy:accounting") return p.policy;
+  if (id === "manifest:episode") return p.manifest;
+  if (id.startsWith("ledger:"))
+    return p.ledger.find((x) => "ledger:" + x.row_id === id);
+  if (id.startsWith("doc:"))
+    return docs().find((x) => "doc:" + x.doc_id === id);
+  if (id.startsWith("fx:"))
+    return p.fx.find(
+      (x) => `fx:${x.date}:${x.source_currency}:${x.target_currency}` === id,
+    );
+}
+function openSource(id) {
+  if (!resolveProof(id)) return toast("Источник не найден");
+  stop();
+  selectedSource = id;
+  raw = false;
+  filter = "";
+  page = 0;
+  if (id.startsWith("doc:")) {
+    tab = "documents";
+    docIndex = docs().findIndex((x) => "doc:" + x.doc_id === id);
+  } else if (id.startsWith("ledger:")) {
+    tab = "ledger";
+    page = Math.floor(
+      current().public.ledger.findIndex((x) => "ledger:" + x.row_id === id) / 8,
+    );
+  } else {
+    tab = "policy";
+    if (id.startsWith("fx:"))
+      page = Math.floor(
+        current().public.fx.findIndex(
+          (x) =>
+            `fx:${x.date}:${x.source_currency}:${x.target_currency}` === id,
+        ) / 8,
+      );
+  }
+  mobilePane = "sources";
+  render();
+  $("#source-content").scrollTop = 0;
+  showMobilePane();
+}
+function showMobilePane() {
+  if (matchMedia("(max-width: 800px)").matches)
+    document
+      .querySelector(".mobile-workspace-tabs")
+      ?.scrollIntoView({ block: "start", behavior: "instant" });
+}
+function setStep(value, { follow = true } = {}) {
+  step = Math.max(0, Math.min(Number(value), current().trajectory.length));
+  selectedSource = "";
+  raw = false;
+  if (finished()) {
+    stop();
+    inspector = "results";
+    mobilePane = "analysis";
+  } else if (step) {
+    inspector = "trace";
+    if (follow) {
+      const a = current().trajectory[step - 1].action;
+      filter = "";
+      page = 0;
+      if (a.table === "ledger") {
+        tab = "ledger";
+        const first =
+          current().trajectory[step - 1].observation.result?.records?.[0];
+        if (first)
+          page = Math.max(
+            0,
+            Math.floor(
+              current().public.ledger.findIndex(
+                (r) => r.row_id === first.row_id,
+              ) / 8,
+            ),
+          );
+      } else if (a.table === "fx") tab = "policy";
+      else if (a.action === "get_document") {
+        const i = docs().findIndex((d) => d.doc_id === a.doc_id);
+        if (i >= 0) {
+          tab = "documents";
+          docIndex = i;
+        } else tab = "policy";
+      } else if (a.table === "invoices" || a.table === "payments") {
+        tab = "documents";
+        const first =
+          current().trajectory[step - 1].observation.result?.records?.[0];
+        docIndex = first
+          ? Math.max(
+              0,
+              docs().findIndex((d) => d.doc_id === first.doc_id),
+            )
+          : a.table === "payments"
+            ? current().public.invoices.length
+            : 0;
+      }
+    }
+  } else inspector = "results";
+  render();
+  if (finished()) {
+    $("#results").scrollTop = 0;
+    showMobilePane();
+  }
+  if (inspector === "trace" && matchMedia("(min-width: 801px)").matches)
+    document
+      .querySelector(".trace-step.current")
+      ?.scrollIntoView({ block: "nearest", behavior: "instant" });
+}
+function pageHeading(kicker, title, description, extra = "") {
+  return `<div class='page-heading'><div><span class='section-kicker'>${kicker}</span><h1>${title}</h1><p>${description}</p></div>${extra}</div>`;
+}
+function verification() {
+  const v = data.verification;
+  const checks = v.acceptance.cases.filter((x) => x.id.startsWith(checkGroup));
+  const picked =
+    v.acceptance.cases.find((x) => x.id === selectedCheck) || checks[0];
+  const definition = checkDefinitions[picked.id] || {};
+  return `<div class='report-page'>${pageHeading("КОНТРОЛЬ КАЧЕСТВА", "Проверяем саму среду.", "От опубликованной методики до результата конкретного теста.", `<a class='secondary-button' href='assets/verification.html' target='_blank' rel='noreferrer'>${icon("external")}Полный отчёт</a>`)}<div class='quality-overview'><div class='quality-score'><strong>${v.acceptance.automatic_score}<small>/90</small></strong><span>Автоматическая часть<br>локальной матрицы</span></div><div class='quality-stat'><strong>${v.unit_tests.passed}<span> / ${v.unit_tests.run}</span></strong><span>Регрессионных тестов</span></div><div class='quality-stat'><strong>${v.sweep_passed}</strong><span>Дополнительных эпизодов</span></div><div class='quality-stat'><strong>${v.mutants_killed}<span> / ${v.selected_mutants}</span></strong><span>Дефектов обнаружено</span></div></div><p class='score-disclosure'>Ещё 10 инженерных баллов оценивает человек. Это результаты нашей проверки по ТЗ, не оценка жюри.</p>
+ <div class='audit-workbench'><aside class='audit-groups' aria-label='Группы проверок'><span class='rail-label'>Матрица приёмки</span>${v.acceptance.groups.map((g) => `<button class='group-button ${g.id === checkGroup ? "selected" : ""}' data-group='${g.id}' aria-pressed='${g.id === checkGroup}'><span>${groupNames[g.id]}</span><strong>${g.passed}/${g.total}</strong><i><span></span></i></button>`).join("")}</aside><section class='audit-register'><div class='register-heading'><h2>${groupNames[checkGroup]}</h2>${status(checks.filter((c) => c.status === "passed").length + " пройдено")}</div><div class='check-register'>${checks.map((c) => `<button class='check-row ${c.id === picked.id ? "selected" : ""}' data-check='${c.id}' aria-pressed='${c.id === picked.id}'><span class='check-id'>${c.id}</span><span>${esc(checkDefinitions[c.id]?.title || c.id)}</span>${icon(c.status === "passed" ? "check" : "close")}</button>`).join("")}</div></section><aside class='check-inspector'><span class='section-kicker'>${picked.id} / ${picked.status === "passed" ? "ПРОЙДЕНА" : "ОШИБКА"}</span><h2>${esc(definition.title || picked.id)}</h2><div class='check-duration'>${icon("clock")}${num(picked.seconds, 3)} с</div><h3>Как проверяли</h3><p>${esc(definition.procedure || "Методика опубликована в матрице приёмки.")}</p><h3>Ожидаемый результат</h3><p>${esc(definition.expected || "См. полную матрицу приёмки.")}</p><details><summary>Запись результата JSON</summary>${json(picked)}</details><a href='https://github.com/amurapan/genesis/blob/main/planning/acceptance-matrix.json' target='_blank' rel='noreferrer'>Открыть исходную матрицу</a></aside></div>
+ <section class='benchmark-section'><div><span class='section-kicker'>ОБЩИЕ УСЛОВИЯ</span><h2>Четыре политики.<br>Одна выборка.</h2><p>20 одинаковых эпизодов: 5 чистых, 5 с взаимодействиями и 10 остальных.</p></div><div class='benchmark-scroll'><table class='data-table benchmark-table'><thead><tr><th>Политика</th><th>Precision</th><th>Recall</th><th>F1</th><th>Возврат</th><th>Шаги</th></tr></thead><tbody>${v.benchmark.map((x) => `<tr><td>${x.policy}</td>${["precision", "recall", "f1", "reward", "mean_steps"].map((k) => `<td>${num(x[k], k === "mean_steps" ? 1 : 3)}</td>`).join("")}</tr>`).join("")}</tbody></table><p>Средние значения. Для правильного чистого ответа P = R = 0, F1 = 1. Oracle знает эталон и проверяет потолок награды, а не сложность среды.</p></div></section><div class='report-bottom'><span>Предельный эпизод: 2 000 проводок · 200 документов · 12 ошибок · ${v.boundary_run.steps} шагов</span><a href='data/verification.json' download='sled-verification.json'>${icon("download")}Отчёт JSON</a></div></div>`;
+}
+function architecture() {
+  return `<div class='reference-page'>${pageHeading("АРХИТЕКТУРА", "Чёткие границы доверия.", "Агент исследует документы. Эталон и оценка остаются у доверенной стороны.")}
+ <div class='trust-diagram'><div class='trust-zone public-zone'><div class='zone-title'>${icon("eye")}Контур расследования</div><div class='system-flow'>${[
+   [
+     "database",
+     "Генератор",
+     "Создаёт согласованную историю компании, затем вносит причинные изменения.",
+     "Seed + config",
+   ],
+   [
+     "layers",
+     "Среда",
+     "Выдаёт только запрошенные записи. Считает шаги и сохраняет траекторию.",
+     "reset / step",
+   ],
+   [
+     "cpu",
+     "Агент",
+     "Выбирает инструменты и отправляет выводы в изолированном контейнере.",
+     "Docker · без сети",
+   ],
+ ]
+   .map(
+     ([i, h, p, s]) =>
+       `<article class='flow-card'><span class='flow-icon'>${icon(i)}</span><h2>${h}</h2><p>${p}</p><code>${s}</code></article>`,
+   )
+   .join(
+     "",
+   )}</div></div><div class='trust-zone private-zone'><div class='zone-title'>${icon("lock")}Закрытая сторона</div><article class='flow-card'><span class='flow-icon'>${icon("shield")}</span><h2>Оценщик</h2><p>Проверяет тип, сумму, валюту, затронутые ID и полный набор доказательств.</p><code>truth + provenance</code></article><span class='trust-seal'>Агент не видит эталон</span></div></div>
+ <div class='architecture-columns'><section><span class='section-kicker'>РАЗРЕШЁННЫЕ ДЕЙСТВИЯ</span><h2>Пять инструментов.</h2><div class='tool-register'>${[
+   ["list_records", "Список записей: до 50 строк на страницу."],
+   ["get_record", "Одна запись по точному ID."],
+   ["get_document", "Первичный документ целиком."],
+   ["calculator", "Только десятичная арифметика."],
+   ["submit", "Выводы с доказательствами; завершает эпизод."],
+ ]
+   .map(([a, b]) => `<div><code>${a}</code><p>${b}</p></div>`)
+   .join(
+     "",
+   )}</div><a class='inline-link' href='https://github.com/amurapan/genesis/blob/main/docs/contract.md' target='_blank' rel='noreferrer'>Контракт инструментов</a></section><section><span class='section-kicker'>ПРОВЕРЯЕМЫЙ РЕЗУЛЬТАТ</span><h2>Награда за факты.</h2><div class='reward-equation'>clip(2 × F1 − 1<br>− 0.002 × inspection_steps,<br>−1, 1)</div><p>Исследовательские шаги дают нулевую награду. Повторный вывод считается FP. В закрытом режиме терминальную награду видит только оценщик.</p><p>Независимый валидатор выводит расхождения из публичных документов через точные дроби Fraction. Генератор считает через Decimal.</p><a class='inline-link' href='https://github.com/amurapan/genesis/blob/main/docs/accounting.md' target='_blank' rel='noreferrer'>Финансовые правила</a></section></div><div class='boundary-note'>${icon("info")}<p>Веб-интерфейс воспроизводит публичные записи прогонов. Полная среда, генератор и изолированный оценщик запускаются локально.</p></div></div>`;
+}
+function guide() {
+  return `<div class='reference-page'>${pageHeading("ДЛЯ ЖЮРИ И КОМАНДЫ", "Одно дело. Весь путь.", "Начните с валютного платежа на границе отчётного периода.")}
+ <div class='guide-hero'><div class='guide-brief'><span class='brief-label'>ДЕЛО / FX-PERIOD</span><h2>100 USD поступили<br>30 ноября.<br><em>Что попало в книгу?</em></h2><p>Четыре записи, два первичных документа и шесть действий агента.</p><button class='primary-button' data-action='start-guide'>${icon("play")}Открыть это дело</button></div><ol class='guide-steps'>${[
+   [
+     "Сверьте первичные документы",
+     "Счёт — 100 000 KZT. Платёж — 100 USD от 30 ноября. Курс — 450 KZT/USD.",
+   ],
+   [
+     "Откройте проводки",
+     "В книге 44 000 KZT датой 1 декабря. Правильное поступление — 45 000 KZT в ноябре.",
+   ],
+   [
+     "Воспроизведите запись",
+     "Нижняя панель запускает все шесть шагов. В журнале видны точные запросы и наблюдения.",
+   ],
+   [
+     "Откройте доказательства",
+     "FX-расхождение — 1 000 KZT. Ошибка периода — 45 000 KZT. Источник открывается рядом с выводом.",
+   ],
+ ]
+   .map(
+     ([h, p], i) =>
+       `<li><span>${i + 1}</span><div><h3>${h}</h3><p>${p}</p></div></li>`,
+   )
+   .join("")}</ol></div>
+ <div class='guide-resources'><section class='local-launch'><span class='section-kicker'>НЕЗАВИСИМЫЙ ПОВТОР</span><h2>Запустите всю среду.</h2><p>Linux · Python 3.11 · Docker · cgroup v2</p><pre>git clone https://github.com/amurapan/genesis.git\ncd genesis\nbash verify.sh</pre><button class='secondary-button' data-action='copy-command'>${icon("copy")}Скопировать команды</button><p class='small-note'>Первое получение базового образа может потребовать сеть. С готовыми образами: <code>bash verify.sh --offline</code>.</p></section><section class='guide-media'><span class='section-kicker'>МАТЕРИАЛЫ ПРОЕКТА</span><h2>Демонстрация и презентация.</h2><video controls preload='none' poster='assets/video-poster.png'><source src='assets/demo.mp4' type='video/mp4'>Скачать <a href='assets/demo.mp4'>видео MP4</a></video><p class='small-note'>96 секунд, объясняющие слайды на английском, без аудио.</p><div class='resource-links'><a href='assets/presentation.pdf' target='_blank' rel='noreferrer'>${icon("file")}Презентация PDF</a><a href='assets/presentation.pptx' download>${icon("download")}PPTX</a></div></section></div><div class='boundary-note'>${icon("info")}<p>Поддерживаются счета в базовой валюте, валютные поступления, один счёт на платёж и возвраты переплаты. Налогов, комиссий, переоценки и обучения весов нет.</p></div></div>`;
+}
+function download(name, value) {
+  const url = URL.createObjectURL(
+    new Blob([JSON.stringify(value, null, 2) + "\n"], {
+      type: "application/json",
+    }),
+  );
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+async function copy(value, message) {
+  try {
+    await navigator.clipboard.writeText(value);
+    toast(message);
+  } catch {
+    toast(
+      "Не удалось скопировать. Используйте адресную строку или выделите текст.",
+    );
+  }
+}
+function play() {
+  if (timer) {
+    stop();
+    render();
+    return;
+  }
+  if (finished()) step = 0;
+  timer = setInterval(() => setStep(step + 1), 1150);
+  setStep(step + 1);
+}
+document.addEventListener("click", (event) => {
+  if (event.target.closest(".skip-link")) {
+    event.preventDefault();
+    $("#main").focus();
+    return;
+  }
+  const el = event.target.closest("button, [data-action]");
+  if (!el) return;
+  if (el.dataset.case !== undefined) {
+    selectCase(Number(el.dataset.case));
+    return;
+  }
+  if (el.dataset.tab) {
+    tab = el.dataset.tab;
+    page = 0;
+    filter = "";
+    raw = false;
+    selectedSource = "";
+    render();
+    document
+      .querySelector(`[data-tab='${tab}']`)
+      ?.focus({ preventScroll: true });
+    return;
+  }
+  if (el.dataset.proof) {
+    openSource(el.dataset.proof);
+    return;
+  }
+  if (el.dataset.inspector) {
+    inspector = el.dataset.inspector;
+    render();
+    return;
+  }
+  if (el.dataset.finding !== undefined) {
+    findingIndex = Number(el.dataset.finding);
+    if (
+      !current().submission.findings[findingIndex].evidence_ids.includes(
+        selectedSource,
+      )
+    )
+      selectedSource = "";
+    render();
+    return;
+  }
+  if (el.dataset.step) {
+    stop();
+    setStep(Number(el.dataset.step));
+    return;
+  }
+  if (el.dataset.mobile) {
+    mobilePane = el.dataset.mobile;
+    render();
+    showMobilePane();
+    return;
+  }
+  if (el.dataset.group) {
+    checkGroup = el.dataset.group;
+    selectedCheck = checkGroup + "01";
+    render();
+    return;
+  }
+  if (el.dataset.check) {
+    selectedCheck = el.dataset.check;
+    render();
+    if (matchMedia("(max-width: 700px)").matches)
+      document
+        .querySelector(".check-inspector")
+        ?.scrollIntoView({ block: "start", behavior: "smooth" });
+    return;
+  }
+  switch (el.dataset.action) {
+    case "play":
+      play();
+      break;
+    case "next":
+      stop();
+      setStep(step + 1);
+      break;
+    case "reset":
+      stop();
+      tab = "documents";
+      docIndex = 0;
+      page = 0;
+      filter = "";
+      mobilePane = "sources";
+      setStep(0);
+      break;
+    case "finish":
+      stop();
+      mobilePane = "analysis";
+      setStep(current().steps);
+      $("#results").scrollTop = 0;
+      showMobilePane();
+      break;
+    case "raw":
+      raw = !raw;
+      render();
+      break;
+    case "clear-source":
+      selectedSource = "";
+      raw = false;
+      render();
+      break;
+    case "page-prev":
+      page = Math.max(0, page - 1);
+      render();
+      $("#source-content").scrollTop = 0;
+      break;
+    case "page-next":
+      page++;
+      render();
+      $("#source-content").scrollTop = 0;
+      break;
+    case "download-episode":
+      download(`sled-${current().id}-public.json`, current().public);
+      break;
+    case "download-findings":
+      download(`sled-${current().id}-findings.json`, current().submission);
+      break;
+    case "share":
+      copy(
+        new URL(`lab.html?episode=${current().id}#workspace`, location.href)
+          .href,
+        "Ссылка на дело скопирована",
+      );
+      break;
+    case "copy-command":
+      copy(
+        "git clone https://github.com/amurapan/genesis.git\ncd genesis\nbash verify.sh",
+        "Команды скопированы",
+      );
+      break;
+    case "start-guide":
+      selectCase(0, { reset: true });
+      location.hash = "workspace";
+      render();
+      break;
+  }
 });
-document.addEventListener('change',e=>{if(e.target.id==='episode-select'){stop();caseIndex=Number(e.target.value);step=0;tab='documents';page=0;filter='';const url=new URL(location.href);url.searchParams.set('episode',current().id);history.replaceState(null,'',url);render();document.querySelector('#episode-select')?.focus();}});
-document.addEventListener('input',e=>{if(e.target.id==='ledger-search'){filter=e.target.value;page=0;const pos=e.target.selectionStart;document.querySelector('#material-content').innerHTML=materials();const el=document.querySelector('#ledger-search');el.focus();el.setSelectionRange(pos,pos);}});
-document.querySelector('#close-dialog').addEventListener('click',()=>document.querySelector('#detail-dialog').close());
-document.querySelector('#detail-dialog').addEventListener('click',e=>{const d=e.currentTarget;if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});
-window.addEventListener('hashchange',()=>{if(data){render();window.scrollTo(0,0);}});
-document.addEventListener('keydown',event=>{
- const selected=event.target.closest('[data-tab]');if(!selected||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
- event.preventDefault();const tabs=[...document.querySelectorAll('[data-tab]')];const index=tabs.indexOf(selected);
- const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:tabs.length-1))%tabs.length;tabs[next].click();
+document.addEventListener("change", (e) => {
+  if (e.target.id === "episode-select") selectCase(Number(e.target.value));
+  if (e.target.id === "document-select") {
+    docIndex = Number(e.target.value);
+    selectedSource = "";
+    raw = false;
+    render();
+  }
+  if (e.target.id === "replay-range") {
+    stop();
+    setStep(e.target.value);
+  }
 });
-window.addEventListener('pagehide',stop);
+document.addEventListener("input", (e) => {
+  if (e.target.id === "ledger-search") {
+    filter = e.target.value;
+    page = 0;
+    selectedSource = "";
+    const pos = e.target.selectionStart;
+    $("#source-content").innerHTML = ledgerView();
+    const input = $("#ledger-search");
+    input.focus();
+    input.setSelectionRange(pos, pos);
+  }
+  if (e.target.id === "replay-range")
+    $("#scrub-value").textContent = e.target.value;
+});
+document.addEventListener("keydown", (e) => {
+  const list = e.target.closest("[role=tablist]");
+  if (!list || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key))
+    return;
+  e.preventDefault();
+  const tabs = [...list.querySelectorAll("[role=tab]")];
+  const i = tabs.indexOf(e.target);
+  const next =
+    e.key === "Home"
+      ? 0
+      : e.key === "End"
+        ? tabs.length - 1
+        : (i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length;
+  const target = tabs[next];
+  const key = Object.keys(target.dataset)[0],
+    value = target.dataset[key];
+  target.click();
+  document
+    .querySelector(`[data-${key}='${value}']`)
+    ?.focus({ preventScroll: true });
+});
+window.addEventListener("hashchange", () => {
+  if (data) {
+    render();
+    window.scrollTo(0, 0);
+  }
+});
+window.addEventListener("pagehide", stop);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && timer) {
+    stop();
+    render();
+  }
+});
 hydrate();
-try{const response=await fetch('data/demo.json');if(!response.ok)throw new Error(`HTTP ${response.status}`);data=await response.json();const chosen=new URL(location.href).searchParams.get('episode');caseIndex=Math.max(0,data.cases.findIndex(c=>c.id===chosen));document.querySelector('#loading').hidden=true;app.hidden=false;render();}catch(error){document.querySelector('#loading').innerHTML=`<h1>Не удалось загрузить эпизоды</h1><p>Обновите страницу или откройте <a href="https://github.com/amurapan/genesis">репозиторий проекта</a>.</p>`;console.error('Demo data unavailable:',error);}
+try {
+  const responses = await Promise.all([
+    fetch("data/demo.json"),
+    fetch("data/checks.json"),
+  ]);
+  for (const r of responses) if (!r.ok) throw new Error("HTTP " + r.status);
+  [data, checkDefinitions] = await Promise.all(responses.map((r) => r.json()));
+  const id = new URL(location.href).searchParams.get("episode");
+  caseIndex = Math.max(
+    0,
+    data.cases.findIndex((c) => c.id === id),
+  );
+  $("#loading").hidden = true;
+  $("#app").hidden = false;
+  render();
+} catch (error) {
+  $("#loading").innerHTML =
+    `<h1>Не удалось открыть лабораторию</h1><p>Обновите страницу или откройте <a href='https://github.com/amurapan/genesis'>репозиторий проекта</a>.</p>`;
+  console.error(error);
+}

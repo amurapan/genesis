@@ -18,11 +18,10 @@
   ],
   "browser_errors": [],
   "failed_requests": [],
-  "checked_at": "2026-11-19T15:29:18.966850+00:00",
-  "tested_deployment_id": "dpl_4bqHXmcVjm5461jYvoQS4hnFCP6j",
-  "published_deployment_id": "dpl_4bqHXmcVjm5461jYvoQS4hnFCP6j",
+  "tested_deployment_id": "dpl_GRz7uay7Wi1G8FFvnPnyKugmbN4j",
+  "published_deployment_id": "dpl_GRz7uay7Wi1G8FFvnPnyKugmbN4j",
   "asset_sha256": {
-    "app.js": "72dcebb08f8850f2a5355a754375e3d8400174b7ffdcc625520cec3179ab79fa",
+    "app.js": "0f7bb9adbd98fd4b77a902594186ac55bc68542ca1f3f08ba160944980c17d67",
     "assets/demo.mp4": "40612665c7d3f09fbbb48ff2e0364b950b8405833289f57763173d49118cfa66",
     "assets/fonts/OFL.txt": "8b7141c03fa4f8d44e6345d5d4931709290f0f67875e452e95ac1fd3a027802e",
     "assets/fonts/montserrat-bold.woff2": "45dd3e6dfa73356e6a6dad4180eed0f182661d770e76a0851276e893400eb24e",
@@ -36,14 +35,17 @@
     "assets/verification.html": "af6aed4e88f327ec642a4debf16d3b2bdab2a69299a3f8ee96342a40c940ef83",
     "assets/video-poster.png": "a61d879368321d0bcc1e970685a71e00fcd2fbf1854fc9d5a6d56159e22405ac",
     "base.css": "5dcc70ca6ec6fa833a6db7561d08ff6faa9600fba09dad6c57032b7646c6eb24",
+    "data/checks.json": "ef397d38df68499d64dffb545e0de1049c9ac16234bed822c328bb863c4f99c8",
     "data/demo.json": "8141867cfe9b6b6cedc0077c42d9ed84946433ce3d74b5da537f4f162baa22c1",
     "data/verification.json": "0ab27479536bd828e0fd78cb2ffa8bf5c2b7f5b2a05064425d3f08bde524ebd3",
     "index.html": "f65a94d173e4d369277d878377595c82db9dcc1e6494e91c346242e49c9297d9",
-    "lab.html": "bfc5154d192b983d809dc6843f7cd44c1716d22fa5ee870e278c6c0a3f506f6f",
+    "lab.html": "d026751c529b3ebba0c1cb8ffabee9286cfbb6261f75ad585010dc9e02e110ae",
     "landing.css": "45e821ef087c291c56be20c590d064de88168c1e5cd3e508dac8650e0f44c7af",
     "landing.js": "fcff36ca417e52adeab990627840534569a5ffe9ef1a4f1582cc7758f2d14f56",
-    "styles.css": "55f7193d70c11c460bdc5bd8bc5f803378eef88b278e6682ce762738f889f53d"
+    "styles.css": "fee7faa52c11a95dc440c5e9c894cae1717e78725a58e093e2034b56eb14be41",
+    "ui/icons.js": "97e09efcb334b7513ef5bd0b611c3ca9816af5691deed8a31291118db03c6edd"
   },
   "verified_core_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
-  "financial_core_unchanged": true
+  "financial_core_unchanged": true,
+  "checked_at": "2026-11-19T16:41:43.453039+00:00"
 }
