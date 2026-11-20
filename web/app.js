@@ -168,7 +168,7 @@ function render() {
   $("#app").innerHTML = { workspace, verification, architecture, guide }[r]();
   hydrate();
   document.title =
-    "СЛЕД · " +
+    "evidable · " +
     {
       workspace: current().title,
       verification: "Проверки среды",
@@ -233,7 +233,7 @@ function documentSheet(d) {
     : current().public.invoices.filter((i) =>
         d.invoice_refs?.includes(i.invoice_id),
       );
-  return `<article class='document-sheet'><div class='paper-letterhead'><span>СЛЕД<span class='paper-slash'>/</span>ОТКРЫТЫЕ ДАННЫЕ</span><span>${invoice ? "INVOICE" : "PAYMENT"}</span></div><div class='paper-title'><div><span>${invoice ? "Первичный счёт" : "Платёжный документ"}</span><h2>${invoice ? "Счёт на оплату" : "Поступление средств"}</h2></div>${icon(invoice ? "receipt" : "bank")}</div><div class='paper-reference'>${esc(d.invoice_id || d.payment_id)}</div><div class='paper-facts'><div><span>${invoice ? "Дата выставления" : "Дата события"}</span><strong>${date(d.issued_at || d.timestamp)}</strong></div><div><span>${invoice ? "Срок оплаты" : "Валюта платежа"}</span><strong>${invoice ? date(d.due_at) : esc(d.currency)}</strong></div></div>
+  return `<article class='document-sheet'><div class='paper-letterhead'><span>evidable<span class='paper-slash'>/</span>ОТКРЫТЫЕ ДАННЫЕ</span><span>${invoice ? "INVOICE" : "PAYMENT"}</span></div><div class='paper-title'><div><span>${invoice ? "Первичный счёт" : "Платёжный документ"}</span><h2>${invoice ? "Счёт на оплату" : "Поступление средств"}</h2></div>${icon(invoice ? "receipt" : "bank")}</div><div class='paper-reference'>${esc(d.invoice_id || d.payment_id)}</div><div class='paper-facts'><div><span>${invoice ? "Дата выставления" : "Дата события"}</span><strong>${date(d.issued_at || d.timestamp)}</strong></div><div><span>${invoice ? "Срок оплаты" : "Валюта платежа"}</span><strong>${invoice ? date(d.due_at) : esc(d.currency)}</strong></div></div>
  ${invoice ? `<div class='paper-table-wrap'><table class='paper-table'><thead><tr><th>Наименование</th><th>Кол-во</th><th>Сумма, ${esc(d.currency)}</th></tr></thead><tbody>${d.line_items.map((l) => `<tr><td>${esc(l.description)}</td><td>${esc(l.quantity)}</td><td>${money(l.total_minor, d.currency)}</td></tr>`).join("")}</tbody></table></div>` : `<div class='payment-statement'>${icon("wallet")}<p>Сумма первичного платежа в валюте поступления. Конвертация определяется опубликованной политикой учёта.</p></div>`}
  <div class='paper-total'><span>${invoice ? "Итого к оплате" : "Получено"}</span><strong>${money(amount, d.currency)} <small>${esc(d.currency)}</small></strong></div><div class='paper-bottom'><span>Синтетический документ</span><span title='${esc(d.doc_id)}'>${esc(short(d.doc_id))}</span></div></article>
  ${linked.length ? `<div class='related-documents'><h3>Связанные ${invoice ? "платежи" : "счета"}</h3>${linked.map((x) => `<button data-proof='doc:${esc(x.doc_id)}'>${icon(invoice ? "wallet" : "receipt")}<span>${esc(short(x.payment_id || x.invoice_id))}</span><strong>${money(x.amount_minor ?? x.total_minor, x.currency)} ${esc(x.currency)}</strong></button>`).join("")}</div>` : `<p class='source-note'>У документа нет явных связанных ${invoice ? "платежей" : "счетов"} в этом эпизоде.</p>`}`;

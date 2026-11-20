@@ -1,5 +1,5 @@
 {
-  "title": "СЛЕД — среда финансовых расследований",
+  "title": "evidable — среда финансовых расследований",
   "language": "ru",
   "slides": 12,
   "template": {
@@ -21,7 +21,7 @@
     "typography": "Montserrat Regular / Bold, Cyrillic; SIL Open Font License 1.1."
   },
   "source_report": "verification/report.json",
-  "verified_core_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
+  "verified_core_sha256": "19f56c4ee6383d3d7a95f315540dcf2fb55a7e973f6d30b6f5b0b787e8bbf07d",
   "tools": {
     "PyMuPDF": "1.26.6",
     "python-pptx": "1.0.2",
@@ -29,8 +29,8 @@
     "Pillow": "12.0.0"
   },
   "files": {
-    "presentation.pdf": "f59902c28c34a425a511947a5f6bd41362509c40621c8629bdc33e44d725664c",
-    "presentation.pptx": "ba675d0727bc3464f9bf5037269332a8b69610cc743037fd35f3ee04f1c64dc9"
+    "presentation.pdf": "2b56d1ab4232712d0dad16955880266a08036c78bbcd932899b5971155d2b660",
+    "presentation.pptx": "52ea0cae8c84c91b51adb7f2de944e2f8b69d223559a5c25ef4c53177930abf3"
   },
   "note": "PDF has embedded Cyrillic fonts. PPTX text, diagrams and tables are editable; template backgrounds are retained as images. Speaker notes are included."
 }

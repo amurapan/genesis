@@ -183,7 +183,7 @@ def run(output, unit_path=None):
         'I05':['docs/limitations.md','docs/accounting.md','private/benchmark.json','private/sweep.json'],
     }
     engineering=[dict(id=k,score=None,recommended_after_review=2,status='awaiting_human_review',evidence=v) for k,v in evidence.items()]
-    report=dict(project='СЛЕД',version='1.0.0',started_at=stamp,seconds=time.monotonic()-started,
+    report=dict(project='evidable',version='1.0.0',started_at=stamp,seconds=time.monotonic()-started,
                 scope='Local acceptance, not official jury grading',versions=info,unit_tests=unit,
                 acceptance=matrix,engineering=engineering,verified_automatic_score=90,automatic_max=90,
                 final_score=None,potential_total_after_human_review=100,

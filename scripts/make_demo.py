@@ -15,7 +15,7 @@ rows={r['policy']:r for r in report['benchmark']}
 real_actions=[x['action']['action']+(' '+x['action']['table'] if 'table' in x['action'] else '') for x in trace]
 boundary=report['boundary_run']
 slides=[
- ('SLED / GENESIS FinTech','A reproducible environment for financial investigations',[
+ ('evidable','У каждой ошибки есть след.',[
   'Synthetic company -> public tools -> structured findings -> separate evaluator',
   'Four configurable fault types. Two interacting scenarios. Clean distractors.',
   'The environment is the product. Training model weights is optional.']),
@@ -58,9 +58,10 @@ for index,(title,subtitle,lines) in enumerate(slides):
     page=pdf.new_page(width=1280,height=720)
     page.draw_rect(page.rect,color=None,fill=(.045,.065,.10))
     page.draw_rect(fitz.Rect(55,54,115,62),color=None,fill=(.49,.94,.71))
-    page.insert_text((55,105),'SLED  /  REPRODUCIBLE AUDIT ENVIRONMENT',fontsize=14,color=(.55,.65,.74))
+    page.insert_text((55,105),'evidable  /  REPRODUCIBLE AUDIT ENVIRONMENT',fontsize=14,color=(.55,.65,.74))
     page.insert_text((55,186),title,fontsize=42,color=(.96,.98,1),fontname='hebo')
-    page.insert_textbox(fitz.Rect(55,215,1220,290),subtitle,fontsize=23,color=(.49,.94,.71))
+    page.insert_font(fontname='Montserrat',fontfile=str(ROOT/'demo/presentation-assets/fonts/Montserrat-Regular.ttf'))
+    page.insert_textbox(fitz.Rect(55,215,1220,290),subtitle,fontsize=23,color=(.49,.94,.71),fontname='Montserrat')
     y=315
     for line in lines:
         size=20 if len(line)<112 else 18

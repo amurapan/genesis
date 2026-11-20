@@ -50,7 +50,7 @@ html.cinema-page {
   font:
     700 22px Montserrat,
     sans-serif;
-  letter-spacing: 1px;
+  letter-spacing: 0;
 }
 .header-context {
   font: 11px var(--mono);
@@ -274,7 +274,7 @@ html.cinema-page {
 }
 .shot h1 {
   font:
-    700 clamp(100px, 13vw, 200px) / 0.95 Montserrat,
+    700 clamp(76px, 8.2vw, 126px) / 0.95 Montserrat,
     sans-serif;
   letter-spacing: -0.075em;
   margin-left: -0.035em;
@@ -448,7 +448,7 @@ html.cinema-page {
 .preview-brand {
   font-size: 19px;
   font-weight: 650;
-  letter-spacing: 1px;
+  letter-spacing: 0;
 }
 .preview-brand small {
   font: 10px var(--mono);
@@ -672,7 +672,7 @@ html.cinema-page {
 }
 .slab-front > strong {
   font:
-    700 clamp(50px, 6vw, 100px) Montserrat,
+    700 clamp(40px, 4vw, 64px) Montserrat,
     sans-serif;
   color: #dbf5df;
   letter-spacing: -4px;
@@ -1223,7 +1223,7 @@ html.cinematic {
     margin-bottom: 14px;
   }
   .shot h1 {
-    font-size: clamp(85px, 25vw, 150px);
+    font-size: clamp(60px, 16vw, 104px);
     line-height: 0.95;
   }
   .hero-statement {
@@ -1373,7 +1373,7 @@ html.cinematic {
     padding: 25px;
   }
   .slab-front > strong {
-    font-size: 70px;
+    font-size: clamp(34px, 10vw, 56px);
   }
   .cinematic .film {
     --stage-height: 100dvh;
@@ -1394,7 +1394,7 @@ html.cinematic {
     display: none;
   }
   .cinematic .shot h1 {
-    font-size: clamp(85px, 24vw, 145px);
+    font-size: clamp(60px, 16vw, 104px);
   }
   .cinematic .shot .hero-statement {
     font-size: 24px;

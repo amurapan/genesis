@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "suite_name": "SLED local acceptance plan",
+  "suite_name": "evidable local acceptance plan",
   "status": "planned_not_executed",
   "authority": "Авторская локальная матрица по опубликованному ТЗ. Не является официальным набором проверок жюри.",
   "source_pdf": "/home/kudo/inbox/5495f43a-fd88-4f5c-94d8-ead5dcda0244.pdf",

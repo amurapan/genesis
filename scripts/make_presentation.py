@@ -71,7 +71,7 @@ def lines_for(text,size,width,bold=False):
 class Deck:
     def __init__(self):
         self.pdf=fitz.open();self.pptx=Presentation();self.pptx.slide_width=emu(W);self.pptx.slide_height=emu(H)
-        self.pptx.core_properties.title='СЛЕД — среда финансовых расследований'
+        self.pptx.core_properties.title='evidable — среда финансовых расследований'
         self.pptx.core_properties.subject='GENESIS.EXE 2026 / FinTech'
         self.pptx.core_properties.author='El Big 4'
         self.layout=[]
@@ -85,7 +85,7 @@ class Deck:
         self.slide_obj.notes_slide.notes_text_frame.text=note
         self.slide_obj.name=title
         color=WHITE if index==7 else PURPLE
-        self.text(1180,65,180,35,'СЛЕД / EL BIG 4',18,bold=True,color=color,align='right')
+        self.text(1090,65,270,35,'evidable / EL BIG 4',18,bold=True,color=color,align='right')
         self.text(1250,764,110,25,f'{self.number:02} / 12',16,color=color,align='right')
         self.layout.append(dict(slide=self.number,title=title,template_page=index+1,elements=self.items))
     def text(self,x,y,w,h,text,size=26,bold=False,color=INK,align='left',leading=1.25,url=None):
@@ -134,8 +134,8 @@ class Deck:
         self.slide_obj.shapes.add_picture(str(path),emu(x),emu(y),width=emu(actual_w),height=emu(actual_h))
         self.items.append(dict(kind='image',source=str(path.relative_to(ROOT)),rect=[x,y,actual_w,actual_h]))
     def save(self):
-        self.pdf.set_metadata(dict(title='СЛЕД — среда финансовых расследований',author='El Big 4',
-                                   subject='GENESIS.EXE 2026 / FinTech',keywords='СЛЕД, FinTech, GENESIS, audit, RL environment'))
+        self.pdf.set_metadata(dict(title='evidable — среда финансовых расследований',author='El Big 4',
+                                   subject='GENESIS.EXE 2026 / FinTech',keywords='evidable, FinTech, GENESIS, audit, RL environment'))
         self.pdf.subset_fonts()
         self.pdf.save(ROOT/'demo/presentation.pdf',garbage=4,deflate=True)
         self.pptx.save(ROOT/'demo/presentation.pptx')
@@ -147,9 +147,9 @@ class Deck:
 def build():
     r=json.loads((ROOT/'verification/report.json').read_text());policies={x['policy']:x for x in r['benchmark']}
     d=Deck()
-    d.slide(0,'СЛЕД','Мы построили воспроизводимую среду финансовых расследований. Агент получает документы, исследует их через инструменты и отправляет выводы с доказательствами. Отдельный оценщик проверяет результат. Проект сделан командой El Big 4 для FinTech-кейса GENESIS.')
-    d.text(150,180,1140,175,'СЛЕД',132,True,PURPLE,'center')
-    d.text(180,374,1080,145,'У каждой ошибки\nесть доказательство.',52,True,PURPLE,'center')
+    d.slide(0,'evidable','Мы построили воспроизводимую среду финансовых расследований. Агент получает документы, исследует их через инструменты и отправляет выводы с доказательствами. Отдельный оценщик проверяет результат. Проект сделан командой El Big 4 для FinTech-кейса GENESIS.')
+    d.text(150,180,1140,175,'evidable',132,True,PURPLE,'center')
+    d.text(180,374,1080,145,'У каждой ошибки\nесть след.',52,True,PURPLE,'center')
     d.text(170,562,1100,55,'Среда для финансового ИИ-аудитора',31,False,PURPLE,'center')
     d.text(140,699,600,40,'El Big 4 · GENESIS.EXE 2026',24,color=PURPLE)
     d.text(930,699,370,40,'Кейс FinTech',24,color=PURPLE,align='right')
@@ -251,7 +251,7 @@ def build():
     d.picture(ASSETS/'demo-qr.png',1015,420,280,250)
     d.text(1015,677,280,45,'Открыть демо',24,True,PURPLE,'center')
     d.save()
-    info=dict(title='СЛЕД — среда финансовых расследований',language='ru',slides=12,
+    info=dict(title='evidable — среда финансовых расследований',language='ru',slides=12,
               template=json.loads((ASSETS/'template-source.json').read_text()),
               source_report='verification/report.json',verified_core_sha256=r['versions']['source_sha256'],
               tools={'PyMuPDF':'1.26.6','python-pptx':'1.0.2','qrcode':'8.2','Pillow':'12.0.0'},

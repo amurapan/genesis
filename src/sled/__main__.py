@@ -27,7 +27,7 @@ def main():
     evaluate.add_argument('--output',type=Path,default=Path('artifacts/release'))
     package=sub.add_parser('package')
     package.add_argument('--report',type=Path,default=Path('artifacts/release'))
-    package.add_argument('--output',type=Path,default=Path('dist/sled-submission.zip'))
+    package.add_argument('--output',type=Path,default=Path('dist/evidable-submission.zip'))
     args = parser.parse_args()
     if args.command=='evaluate':
         from .release import run

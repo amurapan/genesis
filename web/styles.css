@@ -57,7 +57,7 @@ select {
 }
 .lab-header .brand > span {
   font-size: 22px;
-  letter-spacing: 1px;
+  letter-spacing: 0;
 }
 .header-divider {
   height: 20px;

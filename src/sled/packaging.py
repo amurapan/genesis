@@ -36,7 +36,7 @@ def build(report_dir, output):
         shutil.copy2(demo/'demo.mp4',folder/'demo.mp4')
         shutil.copy2(demo/'presentation.pdf',folder/'presentation.pdf')
         (folder/'GitHub.txt').write_text('https://github.com/amurapan/genesis\n')
-        (folder/'START.txt').write_text('СЛЕД / GENESIS FinTech\nLinux + Python 3.11 + Docker (cgroup v2).\nRun: bash run-offline.sh\nReport: verification/report.html\nEngineering criteria I01-I05 require human review.\nThis archive is not an official submission confirmation.\n')
+        (folder/'START.txt').write_text('evidable / GENESIS FinTech\nLinux + Python 3.11 + Docker (cgroup v2).\nRun: bash run-offline.sh\nReport: verification/report.html\nEngineering criteria I01-I05 require human review.\nThis archive is not an official submission confirmation.\n')
         # docker save includes shared layers once; gzip is a packaging tool, not a dependency.
         with (folder/'images.tar.gz').open('wb') as raw:
             with gzip.GzipFile(fileobj=raw,mode='wb',mtime=0,compresslevel=6) as compressed:

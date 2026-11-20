@@ -5,481 +5,481 @@
       "id": "C01",
       "status": "passed",
       "error": null,
-      "seconds": 0.038993
+      "seconds": 0.070151
     },
     {
       "id": "C02",
       "status": "passed",
       "error": null,
-      "seconds": 0.082809
+      "seconds": 0.148315
     },
     {
       "id": "C03",
       "status": "passed",
       "error": null,
-      "seconds": 0.017979
+      "seconds": 0.032874
     },
     {
       "id": "C04",
       "status": "passed",
       "error": null,
-      "seconds": 0.017733
+      "seconds": 0.03235
     },
     {
       "id": "C05",
       "status": "passed",
       "error": null,
-      "seconds": 0.045382
+      "seconds": 0.08406
     },
     {
       "id": "C06",
       "status": "passed",
       "error": null,
-      "seconds": 0.043453
+      "seconds": 0.07526
     },
     {
       "id": "C07",
       "status": "passed",
       "error": null,
-      "seconds": 0.055782
+      "seconds": 0.095404
     },
     {
       "id": "C08",
       "status": "passed",
       "error": null,
-      "seconds": 0.018192
+      "seconds": 0.031771
     },
     {
       "id": "C09",
       "status": "passed",
       "error": null,
-      "seconds": 0.019069
+      "seconds": 0.03201
     },
     {
       "id": "C10",
       "status": "passed",
       "error": null,
-      "seconds": 0.000108
+      "seconds": 0.000166
     },
     {
       "id": "C11",
       "status": "passed",
       "error": null,
-      "seconds": 0.00017
+      "seconds": 0.000268
     },
     {
       "id": "C12",
       "status": "passed",
       "error": null,
-      "seconds": 0.018523
+      "seconds": 0.032165
     },
     {
       "id": "C13",
       "status": "passed",
       "error": null,
-      "seconds": 0.076574
+      "seconds": 0.128465
     },
     {
       "id": "C14",
       "status": "passed",
       "error": null,
-      "seconds": 0.01833
+      "seconds": 0.032954
     },
     {
       "id": "C15",
       "status": "passed",
       "error": null,
-      "seconds": 0.038508
+      "seconds": 0.064225
     },
     {
       "id": "C16",
       "status": "passed",
       "error": null,
-      "seconds": 0.022592
+      "seconds": 0.03755
     },
     {
       "id": "C17",
       "status": "passed",
       "error": null,
-      "seconds": 0.041699
+      "seconds": 0.070405
     },
     {
       "id": "C18",
       "status": "passed",
       "error": null,
-      "seconds": 0.724123
+      "seconds": 0.761
     },
     {
       "id": "C19",
       "status": "passed",
       "error": null,
-      "seconds": 0.021833
+      "seconds": 0.03782
     },
     {
       "id": "C20",
       "status": "passed",
       "error": null,
-      "seconds": 0.316474
+      "seconds": 0.428938
     },
     {
       "id": "D01",
       "status": "passed",
       "error": null,
-      "seconds": 0.008731
+      "seconds": 0.016977
     },
     {
       "id": "D02",
       "status": "passed",
       "error": null,
-      "seconds": 0.005341
+      "seconds": 0.009448
     },
     {
       "id": "D03",
       "status": "passed",
       "error": null,
-      "seconds": 0.008765
+      "seconds": 0.014966
     },
     {
       "id": "D04",
       "status": "passed",
       "error": null,
-      "seconds": 0.005747
+      "seconds": 0.010177
     },
     {
       "id": "D05",
       "status": "passed",
       "error": null,
-      "seconds": 0.008944
+      "seconds": 0.015698
     },
     {
       "id": "D06",
       "status": "passed",
       "error": null,
-      "seconds": 0.008065
+      "seconds": 0.014054
     },
     {
       "id": "D07",
       "status": "passed",
       "error": null,
-      "seconds": 0.008067
+      "seconds": 0.01429
     },
     {
       "id": "D08",
       "status": "passed",
       "error": null,
-      "seconds": 0.008369
+      "seconds": 0.014447
     },
     {
       "id": "D09",
       "status": "passed",
       "error": null,
-      "seconds": 0.008737
+      "seconds": 0.014515
     },
     {
       "id": "D10",
       "status": "passed",
       "error": null,
-      "seconds": 0.009223
+      "seconds": 0.015567
     },
     {
       "id": "D11",
       "status": "passed",
       "error": null,
-      "seconds": 0.009229
+      "seconds": 0.015774
     },
     {
       "id": "D12",
       "status": "passed",
       "error": null,
-      "seconds": 0.009425
+      "seconds": 0.01562
     },
     {
       "id": "D13",
       "status": "passed",
       "error": null,
-      "seconds": 0.009702
+      "seconds": 0.015525
     },
     {
       "id": "D14",
       "status": "passed",
       "error": null,
-      "seconds": 0.009795
+      "seconds": 0.015627
     },
     {
       "id": "D15",
       "status": "passed",
       "error": null,
-      "seconds": 0.043503
+      "seconds": 0.069586
     },
     {
       "id": "D16",
       "status": "passed",
       "error": null,
-      "seconds": 0.009553
+      "seconds": 0.016011
     },
     {
       "id": "D17",
       "status": "passed",
       "error": null,
-      "seconds": 0.008988
+      "seconds": 0.014534
     },
     {
       "id": "D18",
       "status": "passed",
       "error": null,
-      "seconds": 0.01053
+      "seconds": 0.016265
     },
     {
       "id": "D19",
       "status": "passed",
       "error": null,
-      "seconds": 0.010594
+      "seconds": 0.015964
     },
     {
       "id": "D20",
       "status": "passed",
       "error": null,
-      "seconds": 0.010307
+      "seconds": 0.015481
     },
     {
       "id": "R01",
       "status": "passed",
       "error": null,
-      "seconds": 0.000703
+      "seconds": 0.000912
     },
     {
       "id": "R02",
       "status": "passed",
       "error": null,
-      "seconds": 0.000478
+      "seconds": 0.000692
     },
     {
       "id": "R03",
       "status": "passed",
       "error": null,
-      "seconds": 0.000442
+      "seconds": 0.000641
     },
     {
       "id": "R04",
       "status": "passed",
       "error": null,
-      "seconds": 0.000338
+      "seconds": 0.000491
     },
     {
       "id": "R05",
       "status": "passed",
       "error": null,
-      "seconds": 0.000292
+      "seconds": 0.000401
     },
     {
       "id": "R06",
       "status": "passed",
       "error": null,
-      "seconds": 0.000252
+      "seconds": 0.000381
     },
     {
       "id": "R07",
       "status": "passed",
       "error": null,
-      "seconds": 0.000633
+      "seconds": 0.001019
     },
     {
       "id": "R08",
       "status": "passed",
       "error": null,
-      "seconds": 0.000265
+      "seconds": 0.000447
     },
     {
       "id": "R09",
       "status": "passed",
       "error": null,
-      "seconds": 0.000242
+      "seconds": 0.000413
     },
     {
       "id": "R10",
       "status": "passed",
       "error": null,
-      "seconds": 0.000238
+      "seconds": 0.000416
     },
     {
       "id": "R11",
       "status": "passed",
       "error": null,
-      "seconds": 0.000318
+      "seconds": 0.000531
     },
     {
       "id": "R12",
       "status": "passed",
       "error": null,
-      "seconds": 0.000429
+      "seconds": 0.000758
     },
     {
       "id": "R13",
       "status": "passed",
       "error": null,
-      "seconds": 0.000218
+      "seconds": 0.000358
     },
     {
       "id": "R14",
       "status": "passed",
       "error": null,
-      "seconds": 0.000296
+      "seconds": 0.000463
     },
     {
       "id": "R15",
       "status": "passed",
       "error": null,
-      "seconds": 0.000236
+      "seconds": 0.000403
     },
     {
       "id": "R16",
       "status": "passed",
       "error": null,
-      "seconds": 0.000607
+      "seconds": 0.001004
     },
     {
       "id": "R17",
       "status": "passed",
       "error": null,
-      "seconds": 0.000605
+      "seconds": 0.000979
     },
     {
       "id": "R18",
       "status": "passed",
       "error": null,
-      "seconds": 0.000731
+      "seconds": 0.0012
     },
     {
       "id": "R19",
       "status": "passed",
       "error": null,
-      "seconds": 0.000206
+      "seconds": 0.000346
     },
     {
       "id": "R20",
       "status": "passed",
       "error": null,
-      "seconds": 0.000391
+      "seconds": 0.000632
     },
     {
       "id": "G01",
       "status": "passed",
       "error": null,
-      "seconds": 0.005572
+      "seconds": 0.009195
     },
     {
       "id": "G02",
       "status": "passed",
       "error": null,
-      "seconds": 0.038548
+      "seconds": 0.066212
     },
     {
       "id": "G03",
       "status": "passed",
       "error": null,
-      "seconds": 0.028932
+      "seconds": 0.049126
     },
     {
       "id": "G04",
       "status": "passed",
       "error": null,
-      "seconds": 0.070642
+      "seconds": 0.115252
     },
     {
       "id": "G05",
       "status": "passed",
       "error": null,
-      "seconds": 0.038539
+      "seconds": 0.066807
     },
     {
       "id": "G06",
       "status": "passed",
       "error": null,
-      "seconds": 0.051178
+      "seconds": 0.103955
     },
     {
       "id": "G07",
       "status": "passed",
       "error": null,
-      "seconds": 0.010222
+      "seconds": 0.01595
     },
     {
       "id": "G08",
       "status": "passed",
       "error": null,
-      "seconds": 0.048796
+      "seconds": 0.078874
     },
     {
       "id": "G09",
       "status": "passed",
       "error": null,
-      "seconds": 0.021424
+      "seconds": 0.029526
     },
     {
       "id": "G10",
       "status": "passed",
       "error": null,
-      "seconds": 0.022333
+      "seconds": 0.033163
     },
     {
       "id": "G11",
       "status": "passed",
       "error": null,
-      "seconds": 0.020154
+      "seconds": 0.029452
     },
     {
       "id": "G12",
       "status": "passed",
       "error": null,
-      "seconds": 0.019972
+      "seconds": 0.029466
     },
     {
       "id": "G13",
       "status": "passed",
       "error": null,
-      "seconds": 0.019617
+      "seconds": 0.029383
     },
     {
       "id": "G14",
       "status": "passed",
       "error": null,
-      "seconds": 0.019904
+      "seconds": 0.029399
     },
     {
       "id": "G15",
       "status": "passed",
       "error": null,
-      "seconds": 0.020303
+      "seconds": 0.0293
     },
     {
       "id": "G16",
       "status": "passed",
       "error": null,
-      "seconds": 0.020136
+      "seconds": 0.029136
     },
     {
       "id": "G17",
       "status": "passed",
       "error": null,
-      "seconds": 0.020168
+      "seconds": 0.029308
     },
     {
       "id": "G18",
       "status": "passed",
       "error": null,
-      "seconds": 0.019789
+      "seconds": 0.029508
     },
     {
       "id": "G19",
       "status": "passed",
       "error": null,
-      "seconds": 0.019911
+      "seconds": 0.029811
     },
     {
       "id": "G20",
       "status": "passed",
       "error": null,
-      "seconds": 0.200265
+      "seconds": 0.29803
     }
   ],
   "groups": [

@@ -1,7 +1,7 @@
 {
-  "source_sha256": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959",
-  "revision": "20cd5677ba06ffe14a333028d37caa84aed1b407",
-  "uncommitted_changes": false,
+  "source_sha256": "19f56c4ee6383d3d7a95f315540dcf2fb55a7e973f6d30b6f5b0b787e8bbf07d",
+  "revision": "aafc4a86e5e43235ca7f587f7ce7163e73c5b2b0",
+  "uncommitted_changes": true,
   "python": "3.11.15",
   "platform": "Linux-6.12.93-x86_64-with-glibc2.40",
   "schema_version": "1.0.0",
@@ -10,18 +10,18 @@
   "images": [
     {
       "name": "sled-agent:1.0.0",
-      "id": "sha256:e573561071ac4eb82ff55cc7483c30d0e6412237b6f828bb67f7210cc1b910bd",
-      "size_bytes": 125093788,
+      "id": "sha256:d3ce56133c36ccbe7df1085748aa9d15308b987c787c4180ecd33689641446c7",
+      "size_bytes": 125093792,
       "labels": {
-        "org.sled.agent-source": "a216ec2e79b233408debf5976246981ef481dd922fcbca5f22a7b0e9f162b549"
+        "org.sled.agent-source": "f65ea9382fa3483aeb54fe9a2691c5e71cdb804e7f625c0201b2ba9d0fe19101"
       }
     },
     {
       "name": "sled-core:1.0.0",
-      "id": "sha256:73357b1a2f7b8f77408e49dffad43e8e0773808e07daf59bbbb9739ddf573aa9",
-      "size_bytes": 125384025,
+      "id": "sha256:3844b59889981ef9da1d43737a4507e0a9527cdc4e5b588a977f79213f69137a",
+      "size_bytes": 125384717,
       "labels": {
-        "org.sled.core-source": "57db074111e8f9dcf13e9a876fcd8fa97bef734a2f9c7acccbbb603409b1b959"
+        "org.sled.core-source": "19f56c4ee6383d3d7a95f315540dcf2fb55a7e973f6d30b6f5b0b787e8bbf07d"
       }
     }
   ]

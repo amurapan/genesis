@@ -48,11 +48,11 @@ function labelTexture(kind) {
     c.strokeRect(44, 44, w - 88, h - 88);
     c.fillStyle = dark ? "#a1b9aa" : "#506557";
     c.font = "20px monospace";
-    c.fillText(cover ? "EL BIG 4 / GENESIS" : "СЛЕД / PRIMARY RECORD", 80, 95);
+    c.fillText(cover ? "EL BIG 4 / GENESIS" : "evidable / PRIMARY RECORD", 80, 95);
     if (cover) {
-      c.font = "bold 170px sans-serif";
+      c.font = "bold 145px sans-serif";
       c.fillStyle = "#dbf4df";
-      c.fillText("СЛЕД", 74, 337);
+      c.fillText("evidable", 74, 337);
       c.fillStyle = "#86edaa";
       c.fillRect(80, 390, 620, 4);
       c.font = "30px sans-serif";

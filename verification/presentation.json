@@ -206,7 +206,7 @@
       "passed": true
     },
     {
-      "check": "Core source still matches published financial report",
+      "check": "Core source matches the new verified financial report",
       "passed": true
     },
     {
@@ -219,27 +219,29 @@
     }
   ],
   "files": {
-    "presentation.pdf": "f59902c28c34a425a511947a5f6bd41362509c40621c8629bdc33e44d725664c",
-    "presentation.pptx": "ba675d0727bc3464f9bf5037269332a8b69610cc743037fd35f3ee04f1c64dc9"
+    "presentation.pdf": "2b56d1ab4232712d0dad16955880266a08036c78bbcd932899b5971155d2b660",
+    "presentation.pptx": "52ea0cae8c84c91b51adb7f2de944e2f8b69d223559a5c25ef4c53177930abf3"
   },
-  "scope": "Document content, editable slides, embedded PDF fonts, notes, links and public asset copies. Financial core unchanged; full core suite not repeated.",
-  "visual_review": "All 12 native PDF slides and all 12 LibreOffice-rendered PPTX slides reviewed.",
+  "scope": "Regenerated branded PDF/PPTX; full financial suite rerun after metadata rename.",
+  "visual_review": "Contact sheets of all 12 native PDF and 12 LibreOffice-rendered PPTX slides reviewed.",
   "published": {
-    "checked_at": "2026-11-19T10:32:31.207786+00:00",
+    "checked_at": "2026-11-20T06:17:36.170078+00:00",
     "files": [
       {
+        "file": "assets/presentation.pdf",
         "url": "https://sled-genesis.vercel.app/assets/presentation.pdf",
         "status": 200,
         "content_type": "application/pdf",
-        "bytes": 3760331,
-        "sha256": "f59902c28c34a425a511947a5f6bd41362509c40621c8629bdc33e44d725664c"
+        "bytes": 3801835,
+        "sha256": "2b56d1ab4232712d0dad16955880266a08036c78bbcd932899b5971155d2b660"
       },
       {
+        "file": "assets/presentation.pptx",
         "url": "https://sled-genesis.vercel.app/assets/presentation.pptx",
         "status": 200,
         "content_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        "bytes": 3608340,
-        "sha256": "ba675d0727bc3464f9bf5037269332a8b69610cc743037fd35f3ee04f1c64dc9"
+        "bytes": 3649864,
+        "sha256": "52ea0cae8c84c91b51adb7f2de944e2f8b69d223559a5c25ef4c53177930abf3"
       }
     ]
   }

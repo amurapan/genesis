@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="web/assets/mark.svg" width="64" height="64" alt="Логотип СЛЕД">
-  <h1>СЛЕД</h1>
-  <p><strong>У каждой финансовой ошибки есть проверяемый след.</strong></p>
+  <img src="web/assets/mark.svg" width="64" height="64" alt="Логотип evidable">
+  <h1>evidable</h1>
+  <p><strong>У каждой ошибки есть след.</strong></p>
   <p>Воспроизводимая среда финансовых расследований · GENESIS 2026 / FinTech · El Big 4</p>
   <p>
     <a href="https://sled-genesis.vercel.app">Открыть сайт</a> ·
@@ -14,11 +14,11 @@
   <p><strong>4 типа ошибок · 48/48 тестов · 80/80 локальных проверок · 10 train + 10 dev</strong></p>
 </div>
 
-![СЛЕД: объёмный архив в первом кадре интерактивной истории](docs/images/landing.png)
+![evidable: объёмный архив в первом кадре интерактивной истории](docs/images/landing.png)
 
 ## О проекте
 
-**СЛЕД — среда для разработки и проверки ИИ-аудиторов.** Чтобы агент научился
+**evidable — среда для разработки и проверки ИИ-аудиторов.** Чтобы агент научился
 находить финансовые ошибки, ему нужны повторяемые задачи, инструменты
 расследования и объективная оценка ответа. Реальные документы компаний обычно
 закрыты, а достоверный эталон ошибки получить сложно.
@@ -237,7 +237,7 @@ PYTHONPATH=src python3 -m sled package
 ```
 
 После полного прогона и подготовки медиа команда создаёт
-`dist/sled-submission.zip`: исходники, данные, Docker-образы, отчёты и материалы
+`dist/evidable-submission.zip`: исходники, данные, Docker-образы, отчёты и материалы
 сдачи. Команда после распаковки — `bash run-offline.sh`.
 Архив не включён в Git. Подробнее — [инструкция сдачи](docs/submission.md).
 
@@ -340,7 +340,7 @@ vercel deploy --prod
 
 ## Презентация для жюри
 
-[![Обложка презентации СЛЕД](docs/images/presentation.png)](demo/presentation.pdf)
+[![Обложка презентации evidable](docs/images/presentation.png)](demo/presentation.pdf)
 
 **[Открыть PDF](https://sled-genesis.vercel.app/assets/presentation.pdf)** ·
 **[Скачать PPTX](https://sled-genesis.vercel.app/assets/presentation.pptx)**
