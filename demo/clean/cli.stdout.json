@@ -1,0 +1,22 @@
+{
+  "episode_id": "ep_90713ba541734405bf80968291c9a102",
+  "policy": "reconciler",
+  "mode": "evaluation",
+  "evaluation": {
+    "error": null,
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "inspection_steps": 4,
+    "matches": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "reward": 0.992,
+    "tp": 0,
+    "valid": true
+  },
+  "steps": 5,
+  "elapsed_seconds": 0.672252,
+  "terminated": true,
+  "truncated": false
+}

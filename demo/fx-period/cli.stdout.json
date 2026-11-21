@@ -1,0 +1,31 @@
+{
+  "episode_id": "ep_8b18d205d95244869bd42fc228f3b487",
+  "policy": "reconciler",
+  "mode": "evaluation",
+  "evaluation": {
+    "error": null,
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "inspection_steps": 5,
+    "matches": [
+      {
+        "finding_index": 0,
+        "issue_id": "issue-fx"
+      },
+      {
+        "finding_index": 1,
+        "issue_id": "issue-period"
+      }
+    ],
+    "precision": 1.0,
+    "recall": 1.0,
+    "reward": 0.99,
+    "tp": 2,
+    "valid": true
+  },
+  "steps": 6,
+  "elapsed_seconds": 0.85289,
+  "terminated": true,
+  "truncated": false
+}

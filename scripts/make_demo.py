@@ -1,82 +1,104 @@
-"""Optional release media. Run with PyMuPDF 1.26.6; no model or network required."""
+"""Assemble real screen recordings. Run after scripts/record_demo.mjs.
+
+Uses Python's standard library and FFmpeg. No voice is synthesized.
+"""
+import hashlib
 import json
 from pathlib import Path
+import shutil
 import subprocess
-import fitz
+import sys
+import textwrap
 
-ROOT=Path(__file__).resolve().parents[1]
-DEST=ROOT/'artifacts/demo-release';DEST.mkdir(parents=True,exist_ok=True)
-frames=DEST/'frames';frames.mkdir(exist_ok=True)
-report=json.loads((ROOT/'artifacts/release/report.json').read_text())
-demo=json.loads((DEST/'fx-period/private/report.json').read_text())
-trace=[json.loads(x) for x in (DEST/'fx-period/trajectories.jsonl').read_text().splitlines()]
-clean=json.loads((DEST/'clean/private/report.json').read_text())
-rows={r['policy']:r for r in report['benchmark']}
-real_actions=[x['action']['action']+(' '+x['action']['table'] if 'table' in x['action'] else '') for x in trace]
-boundary=report['boundary_run']
-slides=[
- ('evidable','У каждой ошибки есть след.',[
-  'Synthetic company -> public tools -> structured findings -> separate evaluator',
-  'Four configurable fault types. Two interacting scenarios. Clean distractors.',
-  'The environment is the product. Training model weights is optional.']),
- ('One manually calculated day','Foreign payment at the reporting boundary',[
-  'Invoice: 100,000 KZT. Source payment: 100 USD on November 30.',
-  'Published rate: 450 KZT / USD. Correct receipt: 45,000 KZT.',
-  'Ledger: 44,000 KZT using the prior rate, posted on December 1.',
-  'Reporting period ends on December 1 (exclusive).']),
- ('The investigation','Actual recorded tool calls from the isolated policy',[
-  ' -> '.join(real_actions[:4]),' -> '.join(real_actions[4:]),
-  f'{demo["steps"]} steps, {demo["elapsed_seconds"]:.3f} seconds. No shell, mounts, network or private seed.',
-  'Full replayable interaction: demo/fx-period/trajectories.jsonl']),
- ('Two supported findings','Reference results revealed only after termination',[
-  'FX conversion discrepancy: 100,000 minor KZT = 1,000 KZT.',
-  'Period cutoff amount: 4,500,000 minor KZT = 45,000 KZT.',
-  'Proof: payment document + cash journal + published FX row + policy / period.',
-  f'TP={demo["evaluation"]["tp"]}, FP={demo["evaluation"]["fp"]}, F1={demo["evaluation"]["f1"]:.3f}. Closed agent reward stays zero.',
-  'Amounts describe different faults; they are not added as total damages.']),
- ('Clean cases stay clean','A partial payment is not automatically a violation',[
-  'Invoice: 1,000 KZT. Receipt: 600 KZT. Legitimate outstanding: 400 KZT.',
-  f'Actual clean run: {len(clean["submission"]["findings"])} findings; F1={clean["evaluation"]["f1"]:.3f}.',
-  'Split payments, refunds of excess cash, repeated amounts and null links are included.',
-  'Evidence and exact amounts determine rewards; persuasive text does not.']),
- ('Four policies, same 20 episodes','5 clean + 5 interacting + 10 other scenarios',[
-  f'{p:12} | mean F1 {rows[p]["f1"]:.3f} | mean return {rows[p]["reward"]:.3f} | mean steps {rows[p]["mean_steps"]:.1f}' for p in ['random','reconciler','flag_all','oracle']]),
- ('Executed release checks','Local evidence, not an official jury score',[
-  f'{report["unit_tests"]["passed"]} regression tests; 80 / 80 acceptance cases = 90 / 90 automatic points.',
-  f'{report["paired_passed"]} paired episodes; {report["sweep_passed"]} extra episodes; {report["mutants_killed"]} / {report["selected_mutants"]} selected defects caught.',
-  '10 train + 10 dev; all 20 public trajectories replay exactly.',
-  f'Boundary run: 2,000 ledger rows / 200 documents / 12 faults; {boundary["steps"]} steps, {boundary["elapsed_seconds"]:.3f}s.',
-  'Five engineering criteria (10 points) are prepared for human review.']),
- ('Reproduce and review','bash run-offline.sh',[
-  'The archive includes source, data, pinned images, reports and this demonstration.',
-  'Limits: base-denominated invoices; one invoice per payment; surplus refunds only.',
-  'No real audit certification, GPU dependency or claim of learned-model improvement.',
-  'github.com/amurapan/genesis'])
-]
-pdf=fitz.open()
-for index,(title,subtitle,lines) in enumerate(slides):
-    page=pdf.new_page(width=1280,height=720)
-    page.draw_rect(page.rect,color=None,fill=(.045,.065,.10))
-    page.draw_rect(fitz.Rect(55,54,115,62),color=None,fill=(.49,.94,.71))
-    page.insert_text((55,105),'evidable  /  REPRODUCIBLE AUDIT ENVIRONMENT',fontsize=14,color=(.55,.65,.74))
-    page.insert_text((55,186),title,fontsize=42,color=(.96,.98,1),fontname='hebo')
-    page.insert_font(fontname='Montserrat',fontfile=str(ROOT/'demo/presentation-assets/fonts/Montserrat-Regular.ttf'))
-    page.insert_textbox(fitz.Rect(55,215,1220,290),subtitle,fontsize=23,color=(.49,.94,.71),fontname='Montserrat')
-    y=315
-    for line in lines:
-        size=20 if len(line)<112 else 18
-        used=page.insert_textbox(fitz.Rect(55,y,1220,y+62),line,fontsize=size,color=(.84,.88,.93))
-        if used<0:raise ValueError('Slide overflow: '+line)
-        y+=63
-    page.insert_text((55,680),f'Actual local run | source {report["versions"]["source_sha256"][:16]} | {index+1:02}/{len(slides):02}',fontsize=13,color=(.55,.65,.74))
-    page.get_pixmap().save(frames/f'{index:02}.png')
-pdf.save(DEST/'video-slides.pdf')
-image_id=subprocess.check_output(['docker','image','inspect','--format','{{.Id}}','linuxserver/ffmpeg:latest'],text=True).strip()
-cmd=['docker','run','--rm','--network=none','-v',str(DEST)+':/work',image_id,
-     '-y','-framerate','1/12','-i','/work/frames/%02d.png','-vf','fps=24,format=yuv420p',
-     '-c:v','libx264','-preset','fast','-crf','22','-movflags','+faststart','/work/demo.mp4']
-subprocess.run(cmd,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
-version=subprocess.check_output(['docker','run','--rm','--network=none',image_id,'-version'],text=True).splitlines()[0]
-(DEST/'media-tools.json').write_text(json.dumps(dict(pymupdf=fitz.VersionBind,ffmpeg=version,image_id=image_id,
-                seconds=len(slides)*12,slides=len(slides),source_sha256=report['versions']['source_sha256'],kind='explanatory slides from actual results'),indent=2)+'\n')
-print(DEST/'demo.mp4')
+ROOT = Path(__file__).resolve().parents[1]
+RAW = ROOT / 'artifacts/live-demo'
+DEST = ROOT / 'demo'
+sys.path.insert(0, str(ROOT / 'src'))
+from sled.metadata import source_fingerprint
+
+segments = json.loads((RAW / 'segments.json').read_text())
+recording = json.loads((RAW / 'recording.json').read_text())
+report = json.loads((ROOT / 'verification/report.json').read_text())
+assert report['versions']['source_sha256'] == source_fingerprint()
+assert recording['public_submissions_match_actual_runs']
+assert len(segments) == 7
+script = {
+    '01-intro': ('Что такое evidable', 'Это evidable — среда для проверки финансовых ИИ-агентов. Мы создаём вымышленные документы с известными ошибками и оцениваем выводы по доказательствам.'),
+    'fx-cli': ('Настоящий запуск среды', 'Запускаем скриптового агента на заранее рассчитанном примере. Он работает в Docker без сети и не видит правильный ответ. После завершения показаны его действия и оценка: шесть шагов, два верных вывода, ни одного ложного обвинения. F1 равен единице. Полный результат и траектория сохранены в файлы.'),
+    '03-laboratory': ('Документы и действия агента', 'В лаборатории показана сохранённая запись этого же примера. Здесь можно открыть первичный счёт и платёж: сто долларов поступили тридцатого ноября. Запускаем воспроизведение. Видно, какие данные агент запросил и как пришёл к выводам. После шестого действия появляются два нарушения: неверный валютный курс и ошибка отчётного периода.'),
+    '04-evidence': ('Проверка доказательств', 'Откроем проводку. В книге записано сорок четыре тысячи тенге и первое декабря. Теперь проверим курс: четыреста пятьдесят тенге за доллар. Сто долларов должны дать сорок пять тысяч тенге, поэтому валютное расхождение — одна тысяча. Отдельно проверяется период платежа. Суммы этих двух нарушений не складываются в общий ущерб.'),
+    'clean-cli': ('Чистая компания', 'Теперь настоящий запуск на чистой компании. Счёт оплачен частично, поэтому осталась законная задолженность. Агент не заявляет нарушений: список выводов пуст, F1 равен единице. Этот пример проверяет, что среда отличает ошибку от корректной операции.'),
+    '06-verification': ('Проверки и изоляция', 'Сама среда прошла сорок восемь тестов и восемьдесят проверок нашей локальной матрицы. Это результаты команды, а не официальная оценка жюри. Генератор, агент и оценщик разделены; закрытый эталон остаётся на доверенной стороне.'),
+    '07-reproduce': ('Как повторить', 'Исходники, учебные эпизоды и траектории приложены. Полная проверка запускается одной командой: bash verify.sh. Команда El Big 4, проект evidable.')
+}
+concat = RAW / 'concat.txt'
+concat.write_text(''.join("file '" + str(Path(s['file'])).replace("'", "'\\''") + "'\n" for s in segments))
+subprocess.run(['ffmpeg', '-y', '-hide_banner', '-loglevel', 'error', '-f', 'concat', '-safe', '0',
+                '-i', str(concat), '-c', 'copy', '-movflags', '+faststart',
+                '-metadata', 'title=evidable — запуск среды и лаборатория', str(DEST / 'demo.mp4')], check=True)
+probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-show_format', '-show_streams',
+                                           '-of', 'json', str(DEST / 'demo.mp4')], text=True))
+video = next(s for s in probe['streams'] if s['codec_type'] == 'video')
+assert video['width'] == 1920 and video['height'] == 1080
+assert video['r_frame_rate'] == '25/1'
+assert not any(s['codec_type'] == 'audio' for s in probe['streams'])
+seconds = float(probe['format']['duration'])
+assert abs(seconds - sum(s['seconds'] for s in segments)) < .15
+
+def clock(t, ms=False):
+    millis = round(t * 1000)
+    h, rem = divmod(millis, 3600000)
+    m, rem = divmod(rem, 60000)
+    s, frac = divmod(rem, 1000)
+    return f'{h:02}:{m:02}:{s:02},{frac:03}' if ms else f'{m:02}:{s:02}'
+
+voice = ['# Текст для твоей озвучки', '',
+         'Видео записано без звука. Добавь голос поверх `demo.mp4`; длину пауз можно подстроить под свою речь.',
+         'Таймкоды совпадают с готовым MP4. `captions.srt` — необязательные субтитры для монтажа.', '']
+subtitles = []
+start = 0.0
+chapters = []
+for segment in segments:
+    title, narration = script[segment['id']]
+    end = start + segment['seconds']
+    chapters.append(dict(id=segment['id'],title=title,start_seconds=round(start,3),end_seconds=round(end,3)))
+    voice += [f'## {clock(start)}–{clock(end)} · {title}', '', narration, '']
+    lines = textwrap.wrap(narration, width=50)
+    chunks = ['\n'.join(lines[i:i+2]) for i in range(0, len(lines), 2)]
+    weights = [len(c) for c in chunks]
+    position = start
+    for chunk, weight in zip(chunks, weights):
+        finish = position + segment['seconds'] * weight / sum(weights)
+        subtitles += [str(len(subtitles)//4+1), f'{clock(position,True)} --> {clock(finish,True)}', chunk, '']
+        position = finish
+    start = end
+(DEST / 'narration.md').write_text('\n'.join(voice))
+(DEST / 'captions.srt').write_text('\n'.join(subtitles))
+for case, dest in [('fx','fx-period'), ('clean','clean')]:
+    target = DEST / dest
+    for name in ['private/report.json','trajectories.jsonl','cli.stdout.json']:
+        p = target / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(RAW / 'runs' / case / name, p)
+files = {str(p.relative_to(DEST)):hashlib.sha256(p.read_bytes()).hexdigest()
+         for p in [DEST/'demo.mp4',DEST/'narration.md',DEST/'captions.srt']}
+info = dict(kind='actual screen recording',seconds=seconds,width=1920,height=1080,fps=25,audio=False,
+            narration='Human narration to be added by the team; Russian script and optional SRT supplied.',
+            ffmpeg=subprocess.check_output(['ffmpeg','-version'],text=True).splitlines()[0],mss='10.1.0',
+            source_sha256=source_fingerprint(),chapters=chapters,files=files,
+            actual_runs={case:json.loads((RAW/'runs'/case/'cli.stdout.json').read_text()) for case in ['fx','clean']},
+            browser_recording='Actual local application. The laboratory replays saved public trajectories; CLI cases were freshly executed during capture.',
+            limitations='The recorder controls the UI and terminal. Quiet intervals between scenes are cut. No voice or music has been added.')
+(DEST / 'media-tools.json').write_text(json.dumps(info,ensure_ascii=False,indent=2)+'\n')
+shutil.copy2(DEST/'demo.mp4',ROOT/'web/assets/demo.mp4')
+shutil.copy2(DEST/'narration.md',ROOT/'web/assets/narration.txt')
+shutil.copy2(DEST/'captions.srt',ROOT/'web/assets/captions.srt')
+release = ROOT/'artifacts/demo-release'
+release.mkdir(exist_ok=True)
+for name in ['demo.mp4','narration.md','captions.srt','media-tools.json']:
+    (release/name).unlink(missing_ok=True)
+    shutil.copy2(DEST/name,release/name)
+for case in ['fx-period','clean']:
+    shutil.copytree(DEST/case,release/case,dirs_exist_ok=True)
+(release/'video-slides.pdf').unlink(missing_ok=True)
+print(json.dumps(dict(seconds=seconds,bytes=(DEST/'demo.mp4').stat().st_size,chapters=chapters),ensure_ascii=False,indent=2))

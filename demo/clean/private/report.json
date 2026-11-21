@@ -24,19 +24,19 @@
   },
   "resources": {
     "harness_peak_rss_bytes": 21016576,
-    "evaluator_peak_rss_bytes": 12906496,
-    "agent_cgroup_peak_bytes": 10608640,
+    "evaluator_peak_rss_bytes": 12894208,
+    "agent_cgroup_peak_bytes": 10719232,
     "agent_memory_limit_bytes": 268435456,
     "agent_cpu_limit": 1,
     "method": "Linux VmHWM plus agent cgroup v2 memory.peak; shared Docker daemon excluded",
-    "observed_peak_upper_bound_bytes": 44531712
+    "observed_peak_upper_bound_bytes": 44630016
   },
   "submission": {
     "episode_id": "ep_90713ba541734405bf80968291c9a102",
     "findings": []
   },
   "steps": 5,
-  "elapsed_seconds": 0.507283,
+  "elapsed_seconds": 0.672252,
   "terminated": true,
   "truncated": false
 }

@@ -1,0 +1,173 @@
+{
+  "checked_at": "2026-11-21T13:39:45.505009+00:00",
+  "source_sha256": "19f56c4ee6383d3d7a95f315540dcf2fb55a7e973f6d30b6f5b0b787e8bbf07d",
+  "scope": "Recorded demo and changed media assets; financial source unchanged. Existing core verification reused.",
+  "video": {
+    "seconds": 137.32,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "audio": false,
+    "sha256": "9ca5c128ffa33d028f9104beb3612481c510f93cf27721108e6d4b1fdffc2f1c",
+    "full_decode_exit_code": 0
+  },
+  "recording": {
+    "segments": 7,
+    "captures": {
+      "01-intro.capture": {
+        "size": "1920x1080",
+        "fps": 25,
+        "frames": 301,
+        "seconds": 12.04,
+        "wall_seconds": 12.122023916999751,
+        "duplicated_frames": 18,
+        "method": "Actual X11 display pixels captured with MSS and encoded with FFmpeg"
+      },
+      "03-laboratory.capture": {
+        "size": "1920x1080",
+        "fps": 25,
+        "frames": 751,
+        "seconds": 30.04,
+        "wall_seconds": 30.118597043998307,
+        "duplicated_frames": 9,
+        "method": "Actual X11 display pixels captured with MSS and encoded with FFmpeg"
+      },
+      "04-evidence.capture": {
+        "size": "1920x1080",
+        "fps": 25,
+        "frames": 676,
+        "seconds": 27.04,
+        "wall_seconds": 27.095990401001472,
+        "duplicated_frames": 0,
+        "method": "Actual X11 display pixels captured with MSS and encoded with FFmpeg"
+      },
+      "06-verification.capture": {
+        "size": "1920x1080",
+        "fps": 25,
+        "frames": 451,
+        "seconds": 18.04,
+        "wall_seconds": 18.1125392119975,
+        "duplicated_frames": 1,
+        "method": "Actual X11 display pixels captured with MSS and encoded with FFmpeg"
+      },
+      "07-reproduce.capture": {
+        "size": "1920x1080",
+        "fps": 25,
+        "frames": 226,
+        "seconds": 9.04,
+        "wall_seconds": 9.082288137000432,
+        "duplicated_frames": 0,
+        "method": "Actual X11 display pixels captured with MSS and encoded with FFmpeg"
+      },
+      "clean-cli.capture": {
+        "size": "1920x1080",
+        "fps": 25,
+        "frames": 452,
+        "seconds": 18.08,
+        "wall_seconds": 18.13726695099831,
+        "duplicated_frames": 0,
+        "method": "Actual X11 display pixels captured with MSS and encoded with FFmpeg"
+      },
+      "fx-cli.capture": {
+        "size": "1920x1080",
+        "fps": 25,
+        "frames": 576,
+        "seconds": 23.04,
+        "wall_seconds": 23.10154622999835,
+        "duplicated_frames": 0,
+        "method": "Actual X11 display pixels captured with MSS and encoded with FFmpeg"
+      }
+    },
+    "public_submissions_match_actual_runs": true
+  },
+  "visual_review": "Inspected sampled frames from all seven scenes for readable documents, results and commands. No voice has been added.",
+  "browser": {
+    "base": "https://sled-genesis.vercel.app",
+    "metadata": {
+      "width": 1920,
+      "height": 1080,
+      "duration": 137.32,
+      "error": null
+    },
+    "seeks": [
+      {
+        "time": 20,
+        "ready": 4,
+        "error": null
+      },
+      {
+        "time": 55,
+        "ready": 4,
+        "error": null
+      },
+      {
+        "time": 75,
+        "ready": 4,
+        "error": null
+      },
+      {
+        "time": 100,
+        "ready": 4,
+        "error": null
+      },
+      {
+        "time": 118,
+        "ready": 4,
+        "error": null
+      },
+      {
+        "time": 132,
+        "ready": 4,
+        "error": null
+      }
+    ],
+    "playback": true,
+    "downloads": [
+      {
+        "file": "narration.txt",
+        "status": 200,
+        "bytes": 3908
+      },
+      {
+        "file": "captions.srt",
+        "status": 200,
+        "bytes": 3866
+      }
+    ],
+    "errors": []
+  },
+  "published_assets": [
+    {
+      "file": "assets/demo.mp4",
+      "status": 200,
+      "bytes": 2732965,
+      "sha256": "9ca5c128ffa33d028f9104beb3612481c510f93cf27721108e6d4b1fdffc2f1c"
+    },
+    {
+      "file": "assets/narration.txt",
+      "status": 200,
+      "bytes": 3908,
+      "sha256": "2fce489db62120c9b94185d165c0941a77d40b1ac76898dc382b4761f66c8e33"
+    },
+    {
+      "file": "assets/captions.srt",
+      "status": 200,
+      "bytes": 3866,
+      "sha256": "aa2307806a2e11cb7290a41556a0437565202d69c4e07ed07e077d41fce15702"
+    },
+    {
+      "file": "assets/video-poster.png",
+      "status": 200,
+      "bytes": 638401,
+      "sha256": "46a654e350d68e4e05998abe828940baa6ee9bacc2c6f5ecc702e2002b7ff0be"
+    },
+    {
+      "file": "app.js",
+      "status": 200,
+      "bytes": 51103,
+      "sha256": "e25f3b8c3c471e65150f4b6d99c648b625ae34c8203d09f0f4a191f2646e3292"
+    }
+  ],
+  "deployment": "dpl_2zbiuP5wrsGbdnL79psRQoRoUHU7",
+  "local_preview_note": "Python http.server has no byte-range support; Chrome seekable range was [0,0]. Vercel range [0,137.32], six seeks and playback passed."
+}

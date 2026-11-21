@@ -1,9 +1,118 @@
 {
-  "pymupdf": "1.26.6",
-  "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
-  "image_id": "sha256:9872c5f1f36d4dc62906f6bbb1cfa5965e675fb46bf514ef8eccc650320a297e",
-  "seconds": 96,
-  "slides": 8,
+  "kind": "actual screen recording",
+  "seconds": 137.32,
+  "width": 1920,
+  "height": 1080,
+  "fps": 25,
+  "audio": false,
+  "narration": "Human narration to be added by the team; Russian script and optional SRT supplied.",
+  "ffmpeg": "ffmpeg version 8.0 Copyright (c) 2000-2025 the FFmpeg developers",
+  "mss": "10.1.0",
   "source_sha256": "19f56c4ee6383d3d7a95f315540dcf2fb55a7e973f6d30b6f5b0b787e8bbf07d",
-  "kind": "explanatory slides from actual results"
+  "chapters": [
+    {
+      "id": "01-intro",
+      "title": "Что такое evidable",
+      "start_seconds": 0.0,
+      "end_seconds": 12.04
+    },
+    {
+      "id": "fx-cli",
+      "title": "Настоящий запуск среды",
+      "start_seconds": 12.04,
+      "end_seconds": 35.08
+    },
+    {
+      "id": "03-laboratory",
+      "title": "Документы и действия агента",
+      "start_seconds": 35.08,
+      "end_seconds": 65.12
+    },
+    {
+      "id": "04-evidence",
+      "title": "Проверка доказательств",
+      "start_seconds": 65.12,
+      "end_seconds": 92.16
+    },
+    {
+      "id": "clean-cli",
+      "title": "Чистая компания",
+      "start_seconds": 92.16,
+      "end_seconds": 110.24
+    },
+    {
+      "id": "06-verification",
+      "title": "Проверки и изоляция",
+      "start_seconds": 110.24,
+      "end_seconds": 128.28
+    },
+    {
+      "id": "07-reproduce",
+      "title": "Как повторить",
+      "start_seconds": 128.28,
+      "end_seconds": 137.32
+    }
+  ],
+  "files": {
+    "demo.mp4": "9ca5c128ffa33d028f9104beb3612481c510f93cf27721108e6d4b1fdffc2f1c",
+    "narration.md": "2fce489db62120c9b94185d165c0941a77d40b1ac76898dc382b4761f66c8e33",
+    "captions.srt": "aa2307806a2e11cb7290a41556a0437565202d69c4e07ed07e077d41fce15702"
+  },
+  "actual_runs": {
+    "fx": {
+      "episode_id": "ep_8b18d205d95244869bd42fc228f3b487",
+      "policy": "reconciler",
+      "mode": "evaluation",
+      "evaluation": {
+        "error": null,
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "inspection_steps": 5,
+        "matches": [
+          {
+            "finding_index": 0,
+            "issue_id": "issue-fx"
+          },
+          {
+            "finding_index": 1,
+            "issue_id": "issue-period"
+          }
+        ],
+        "precision": 1.0,
+        "recall": 1.0,
+        "reward": 0.99,
+        "tp": 2,
+        "valid": true
+      },
+      "steps": 6,
+      "elapsed_seconds": 0.85289,
+      "terminated": true,
+      "truncated": false
+    },
+    "clean": {
+      "episode_id": "ep_90713ba541734405bf80968291c9a102",
+      "policy": "reconciler",
+      "mode": "evaluation",
+      "evaluation": {
+        "error": null,
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "inspection_steps": 4,
+        "matches": [],
+        "precision": 0.0,
+        "recall": 0.0,
+        "reward": 0.992,
+        "tp": 0,
+        "valid": true
+      },
+      "steps": 5,
+      "elapsed_seconds": 0.672252,
+      "terminated": true,
+      "truncated": false
+    }
+  },
+  "browser_recording": "Actual local application. The laboratory replays saved public trajectories; CLI cases were freshly executed during capture.",
+  "limitations": "The recorder controls the UI and terminal. Quiet intervals between scenes are cut. No voice or music has been added."
 }
