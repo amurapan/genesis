@@ -1,12 +1,12 @@
 {
   "url": "https://sled-genesis.vercel.app",
-  "tested_deployment_id": "dpl_wzn32bAGAy3fXGimS9VYghwZUa9b",
-  "checked_at": "2026-11-20T06:18:27.113954+00:00",
+  "tested_deployment_id": "dpl_FptZe4DNfQWXCieyhcHkx5Lb4Kr5",
+  "checked_at": "2026-11-21T12:54:26.470258+00:00",
   "browsers": {
     "chromium": {
       "url": "http://127.0.0.1:4174",
       "engine": "chromium",
-      "passed": 8,
+      "passed": 12,
       "checks": [
         "Retina canvas uses at least 2x resolution and antialiasing",
         "Live viewport fills the screen and lowers the scene without changing archive scale",
@@ -14,7 +14,11 @@
         "Both reading panels match their 3D planes within 1px at entry and exit",
         "Reading controls stay interactive and retain keyboard focus during a paused scene",
         "Reverse scrolling restores the same crisp panel and position",
-        "Seven scenes fit four phone sizes at 3x device density",
+        "Seven scenes fit nine phone sizes, including 568–739px portrait heights",
+        "Short portrait keeps its camera, canvas and scroll position when the toolbar crosses 740px",
+        "Compact HTML cards match their resized 3D frames at both reading transitions",
+        "Both compact cards remain readable and interactive without content or footer collisions",
+        "Rotating a short screen restores full 3D in portrait and readable content in landscape",
         "No page errors or fallback failures"
       ],
       "graphics": {
@@ -92,7 +96,7 @@
     "firefox": {
       "url": "https://sled-genesis.vercel.app",
       "engine": "firefox",
-      "passed": 8,
+      "passed": 12,
       "checks": [
         "Retina canvas uses at least 2x resolution and antialiasing",
         "Live viewport fills the screen and lowers the scene without changing archive scale",
@@ -100,7 +104,11 @@
         "Both reading panels match their 3D planes within 1px at entry and exit",
         "Reading controls stay interactive and retain keyboard focus during a paused scene",
         "Reverse scrolling restores the same crisp panel and position",
-        "Seven scenes fit four phone sizes at 3x device density",
+        "Seven scenes fit nine phone sizes, including 568–739px portrait heights",
+        "Short portrait keeps its camera, canvas and scroll position when the toolbar crosses 740px",
+        "Compact HTML cards match their resized 3D frames at both reading transitions",
+        "Both compact cards remain readable and interactive without content or footer collisions",
+        "Rotating a short screen restores full 3D in portrait and readable content in landscape",
         "No page errors or fallback failures"
       ],
       "graphics": {
@@ -177,10 +185,10 @@
     }
   },
   "asset_sha256": {
-    "landing.js": "48176ef76a29971b17d775c634657a55c0a26f127bf714ee328b890b01ca074a",
-    "index.html": "d9ec2e2aa739838e2c8a660d88a938ff01cbcd063766413b90134cdd1229ee3b",
+    "landing.js": "51cb535e7727385a790c3e3c62612108fada6dfe742ebc7216f1afcf2765b387",
+    "index.html": "8cf0fc5042df40053a514ae26d203640a2c6e4d24bd351fdfc8233aa1e8816c6",
     "lab.html": "0dce5a6f168dda38418f778a41d3fa124a94568e16b62a25e0838a185d1998aa",
-    "landing.css": "42d0cf2d78a058a71ba7eb63d572547e7ebc2cfeeea3b3db35b099e815a69775",
+    "landing.css": "f8175bdfc4dccaf8181f5360a9200fe10a6f7a18e9940d28977878e655c6b10c",
     "styles.css": "c690b8ec8157ec61821f90ca6f5ecad28aa43e4895e19e0aedf0957bf4faa95e",
     "base.css": "5dcc70ca6ec6fa833a6db7561d08ff6faa9600fba09dad6c57032b7646c6eb24",
     "app.js": "fd1a493058547e0de74be5d22ac62af5bda1b0004c5fb98e90394e5cae9c57e8",
@@ -205,8 +213,8 @@
     "data/verification.json": "b722830dec5484dee816c5e5df3c82ac7d165af2968897b425cc3122dae4639c",
     "data/demo.json": "b452dee2b40aa7b1b73db29fe3d1be74de193d512b446c9c1d1cc9e454c9af77",
     "data/checks.json": "ef397d38df68499d64dffb545e0de1049c9ac16234bed822c328bb863c4f99c8",
-    "cinema/sled-scene.js": "816044b658e349ee4d7bb578d19b38a9b2e82045d4c7a4af15349209f91f1d94",
+    "cinema/sled-scene.js": "fa722e11e07cfc7f3f2c3fff14a0eacf5c7a9c1ebcc9a30ee2a798d853556717",
     "cinema/timeline.js": "a7c9415bc9adae75683cd3aa330756e2198d3859d64a20e6de3dd97b18813a2c"
   },
-  "limitations": "Desktop Chromium and Firefox at mobile viewport sizes and 3x density. Chromium local, Firefox production. Physical Android not tested."
+  "limitations": "Desktop Chromium and Firefox with mobile dimensions and 3x density. Chromium local, Firefox production. Toolbar height changes modeled with a fixed small viewport. Physical Android not tested."
 }

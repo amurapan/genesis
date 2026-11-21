@@ -48,7 +48,11 @@ function labelTexture(kind) {
     c.strokeRect(44, 44, w - 88, h - 88);
     c.fillStyle = dark ? "#a1b9aa" : "#506557";
     c.font = "20px monospace";
-    c.fillText(cover ? "EL BIG 4 / GENESIS" : "evidable / PRIMARY RECORD", 80, 95);
+    c.fillText(
+      cover ? "EL BIG 4 / GENESIS" : "evidable / PRIMARY RECORD",
+      80,
+      95,
+    );
     if (cover) {
       c.font = "bold 145px sans-serif";
       c.fillStyle = "#dbf4df";
@@ -475,13 +479,22 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
     cssRig.rotation.copy(rig.rotation);
     // Portrait framing changes projection only; all transforms still use the same timeline.
     const mobileScene = matchMedia("(max-width: 900px)").matches;
+    const shortPortrait =
+      document.documentElement.classList.contains("short-portrait");
+    const panelHeight = shortPortrait ? 340 : 440;
     // A fixed horizontal field of view prevents the archive from changing
     // scale when the phone's toolbar changes the available height.
     const baseFov = T.MathUtils.radToDeg(
       2 *
         Math.atan(
           mobileScene
-            ? Math.tan(T.MathUtils.degToRad(40) / 2) / camera.aspect
+            ? Math.tan(
+                T.MathUtils.degToRad(
+                  shortPortrait
+                    ? Number(document.documentElement.dataset.portraitFov)
+                    : 40,
+                ) / 2,
+              ) / camera.aspect
             : Math.tan(T.MathUtils.degToRad(34) / 2) *
                 Math.max(1, 0.8 / camera.aspect),
         ),
@@ -492,7 +505,7 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
         Math.atan(
           Math.max(
             (mobileScene ? 4.5 : 6.8) / (2 * distance * camera.aspect * 0.9),
-            4.8 / (2 * distance * 0.9),
+            (panelHeight / 100 + 0.4) / (2 * distance * 0.9),
           ),
         ),
     );
@@ -547,7 +560,7 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
     const frameScale = mix(0.68, 1, s.screen);
     frame.scale.set(
       frameScale * (mobileScene ? 0.65 : 1),
-      frameScale,
+      frameScale * (shortPortrait ? 3.8 / 4.8 : 1),
       frameScale,
     );
     opacity(frameBody, s.screen);
@@ -594,10 +607,10 @@ export function createScene({ host, htmlHost, previews, onContextLost }) {
       // In a stationary, front-facing shot, paint text in the normal DOM.
       // Its box is projected from the very same 3D plane, so entering and
       // leaving the reading pause does not move or resize the interface.
-      const upper = new T.Vector3(-210, 220, 0)
+      const upper = new T.Vector3(-210, panelHeight / 2, 0)
         .applyMatrix4(obj.matrixWorld)
         .project(camera);
-      const lower = new T.Vector3(210, -220, 0)
+      const lower = new T.Vector3(210, -panelHeight / 2, 0)
         .applyMatrix4(obj.matrixWorld)
         .project(camera);
       const left = ((upper.x + 1) * width) / 2,

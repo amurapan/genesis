@@ -1782,3 +1782,143 @@ html.cinematic {
     display: none;
   }
 }
+
+/* Compact portrait composition is chosen from 100svh, not the live toolbar height. */
+.copy-compact {
+  display: none;
+}
+.short-portrait.cinematic .copy-full {
+  display: none;
+}
+.short-portrait.cinematic .copy-compact {
+  display: inline;
+}
+.short-portrait.cinematic .shot {
+  padding: 78px 6vw 0;
+}
+.short-portrait.cinematic .shot .eyebrow {
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+.short-portrait.cinematic .shot h1 {
+  font-size: clamp(52px, 15vw, 70px);
+}
+.short-portrait.cinematic .shot h2 {
+  font-size: 32px;
+}
+.short-portrait.cinematic .shot .hero-statement {
+  font-size: 22px;
+  margin-top: 12px;
+}
+.short-portrait.cinematic .shot .shot-description {
+  font-size: 16px;
+  line-height: 1.35;
+  margin-top: 12px;
+}
+.short-portrait.cinematic .shot .pill {
+  margin-top: 14px;
+  min-height: 40px;
+  padding: 10px 17px;
+}
+.short-portrait.cinematic .shot-opening .pill,
+.short-portrait.cinematic .chapter-note,
+.short-portrait.cinematic .tool-line,
+.short-portrait.cinematic [data-shot="fx"] .pill,
+.short-portrait.cinematic [data-shot="fx"] .case-caveat,
+.short-portrait.cinematic [data-shot="duplicate"] .pill {
+  display: none;
+}
+.short-portrait.cinematic .quiet-link {
+  margin-top: 14px;
+}
+.short-portrait.cinematic .contact-links {
+  margin-top: 14px;
+}
+.short-portrait.cinematic [data-shot="proof"] h2 {
+  font-size: 28px;
+}
+.short-portrait.cinematic .proof-score {
+  margin-top: 14px;
+}
+.short-portrait.cinematic .proof-score > strong {
+  font-size: 54px;
+}
+.short-portrait.cinematic [data-shot="fx"] h2,
+.short-portrait.cinematic [data-shot="duplicate"] h2 {
+  font-size: 26px;
+}
+.short-portrait.cinematic [data-shot="fx"] h2 br,
+.short-portrait.cinematic [data-shot="duplicate"] h2 br {
+  display: none;
+}
+.short-portrait.cinematic [data-shot="fx"] h2 em,
+.short-portrait.cinematic [data-shot="duplicate"] h2 em {
+  display: inline-block;
+  margin-left: 0.2em;
+}
+.short-portrait.cinematic .world-host,
+.short-portrait.cinematic .spatial-host {
+  top: var(--scene-top, 340px);
+}
+.short-portrait.cinematic .scene-haze {
+  background: none;
+}
+.short-portrait .spatial-preview {
+  height: 340px;
+}
+.short-portrait .spatial-preview .preview-header {
+  height: 42px;
+  padding-inline: 16px;
+}
+.short-portrait .spatial-preview .preview-tabs {
+  height: 44px;
+  padding-inline: 16px;
+}
+.short-portrait .spatial-preview .screen-content {
+  height: 208px;
+  padding: 10px 16px;
+}
+.short-portrait .spatial-preview .document-pair {
+  margin-bottom: 4px;
+}
+.short-portrait .spatial-preview .mini-document {
+  padding: 8px;
+}
+.short-portrait .spatial-preview .mini-document strong {
+  font-size: 30px;
+  margin: 6px 0 2px;
+}
+.short-portrait .spatial-preview .mini-document > p {
+  font-size: 16px;
+  line-height: 1.3;
+}
+.short-portrait .spatial-preview .preview-finding {
+  font-size: 16px;
+  line-height: 1.3;
+  padding: 7px 0;
+}
+.short-portrait .spatial-preview .preview-finding strong {
+  font-size: 16px;
+}
+.short-portrait .spatial-preview .preview-footer {
+  height: 44px;
+  padding-inline: 16px;
+  font-size: 18px;
+  white-space: nowrap;
+}
+.short-portrait .spatial-preview .preview-footer > span:nth-child(2) {
+  display: none;
+}
+.short-portrait .spatial-preview .preview-footer a {
+  font-size: 18px;
+}
+.short-portrait .spatial-preview .evidence-content > p {
+  font-size: 17px;
+  line-height: 1.3;
+  margin-bottom: 5px;
+}
+.short-portrait .spatial-preview .evidence-content > a {
+  font-size: 18px;
+  line-height: 1.25;
+  padding: 6px 0;
+}

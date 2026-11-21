@@ -28,8 +28,18 @@ const menu = document.querySelector("#site-menu"),
   shade = document.querySelector("#menu-shade"),
   motionButton = document.querySelector("#motion-toggle");
 const viewportReference = document.querySelector("#viewport-reference");
-const compactViewport = () =>
-  viewportReference.getBoundingClientRect().height < 740;
+// Portrait phones keep the film even when browser controls reduce its height.
+// The stable small viewport also keeps toolbar motion from changing layouts.
+const compactViewport = () => {
+  const h = viewportReference.getBoundingClientRect().height;
+  return h < 740 && innerWidth > h;
+};
+function syncPortraitLayout() {
+  const h = viewportReference.getBoundingClientRect().height;
+  root.classList.toggle("short-portrait", h < 740 && innerWidth <= h);
+  root.dataset.portraitFov = String(clamp(40 + ((740 - h) / 172) * 22, 40, 74));
+}
+syncPortraitLayout();
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 let stored;
 try {
@@ -141,7 +151,9 @@ function setMotionButton() {
   motionButton.setAttribute("aria-pressed", String(!cinematic));
   motionButton.disabled = wasCompact;
   motionButton.textContent = wasCompact
-    ? "3D доступно на более высоком экране"
+    ? innerWidth <= 900
+      ? "Поверните экран вертикально для 3D"
+      : "Увеличьте высоту окна для 3D"
     : cinematic
       ? "Уменьшить движение"
       : "Включить 3D-историю";
@@ -176,6 +188,14 @@ function draw() {
     travel = Math.max(1, film.offsetHeight - stage.offsetHeight);
   progress = clamp(-rect.top / travel);
   const s = sample(progress);
+  // Use the same reversible sample for the compact layout and its camera.
+  if (root.classList.contains("short-portrait")) {
+    const top = 340 - 130 * s.screen;
+    if (stage.style.getPropertyValue("--scene-top") !== `${top}px`) {
+      stage.style.setProperty("--scene-top", `${top}px`);
+      engine?.resize();
+    }
+  }
   lastState = s;
   for (let i = 0; i < shots.length; i++) {
     const a = s.shots[i],
@@ -309,6 +329,7 @@ reduced.addEventListener("change", () => {
 window.addEventListener("scroll", onScroll, { passive: true });
 function resizeScene() {
   sizeDirty = true;
+  syncPortraitLayout();
   const compact = compactViewport();
   if (compact !== wasCompact) {
     wasCompact = compact;
