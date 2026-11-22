@@ -2,7 +2,9 @@ import { sample, shotRanges, clamp } from "./cinema/timeline.js";
 // Keep previously shared laboratory links usable.
 function redirectLegacy() {
   if (
-    ["workspace", "architecture", "guide"].includes(location.hash.slice(1)) ||
+    ["company", "workspace", "architecture", "guide"].includes(
+      location.hash.slice(1),
+    ) ||
     new URLSearchParams(location.search).has("episode")
   ) {
     const target = new URL("lab.html", location.href);

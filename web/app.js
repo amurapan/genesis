@@ -52,6 +52,11 @@ const groupNames = {
   R: "Надёжность награды",
   G: "Воспроизводимость",
 };
+const companySources = [
+  { key: "invoices", label: "Счета", icon: "receipt" },
+  { key: "payments", label: "Платежи", icon: "wallet" },
+  { key: "ledger", label: "Проводки", icon: "layers" },
+];
 let data,
   checkDefinitions = {},
   caseIndex = 0,
@@ -65,6 +70,9 @@ let data,
   inspector = "results",
   findingIndex = 0,
   mobilePane = "sources",
+  companySource = "invoices",
+  companyScene = null,
+  launchFromCompany = false,
   timer = null,
   toastTimer,
   checkGroup = "C",
@@ -75,11 +83,11 @@ const finished = () => step === current().trajectory.length;
 const comparisons = () => (finished() ? (current().comparisons ?? {}) : {});
 const selectedComparison = () => comparisons()[findingIndex];
 const route = () =>
-  ["workspace", "verification", "architecture", "guide"].includes(
+  ["company", "workspace", "verification", "architecture", "guide"].includes(
     location.hash.slice(1),
   )
     ? location.hash.slice(1)
-    : "workspace";
+    : "company";
 const docs = () => [...current().public.invoices, ...current().public.payments];
 const money = (minor, currency) => {
   const e = current().public.manifest.currency_exponents[currency];
@@ -122,6 +130,7 @@ function selectCase(index, { reset = false } = {}) {
   stop();
   savedCases.set(current().id, snapshot());
   caseIndex = index;
+  companySource = "invoices";
   const s = reset ? {} : savedCases.get(current().id) || {};
   step = s.step || 0;
   tab = s.tab || "documents";
@@ -160,17 +169,27 @@ function render() {
   ]);
   const r = route();
   if (r !== "workspace") stop();
+  companyScene?.dispose();
+  companyScene = null;
   document.body.dataset.route = r;
+  document.body.dataset.playing = String(Boolean(timer));
   document.querySelectorAll("[data-nav]").forEach((el) => {
     const on = el.dataset.nav === r;
     el.classList.toggle("active", on);
     el.setAttribute("aria-current", on ? "page" : "false");
   });
-  $("#app").innerHTML = { workspace, verification, architecture, guide }[r]();
+  $("#app").innerHTML = {
+    company,
+    workspace,
+    verification,
+    architecture,
+    guide,
+  }[r]();
   hydrate();
   document.title =
     "evidable · " +
     {
+      company: current().title,
       workspace: current().title,
       verification: "Проверки среды",
       architecture: "Устройство среды",
@@ -189,6 +208,113 @@ function render() {
       ? document.querySelector(`[data-${focusKey}='${CSS.escape(focusValue)}']`)
       : null;
   target?.focus({ preventScroll: true });
+  if (r === "company") mountCompany();
+}
+
+function episodeSelect() {
+  return `<label class='case-select'><span class='sr-only'>Выбрать дело</span><select id='episode-select' aria-label='Выбрать эпизод'>${data.cases.map((item, i) => `<option value='${i}' ${i === caseIndex ? "selected" : ""}>${esc(item.title)}</option>`).join("")}</select>${icon("chevron")}</label>`;
+}
+
+function flow(stage) {
+  const stages = [
+    ["company", "Компания"],
+    ["replay", "Прогон"],
+    ["result", "Сверка"],
+  ];
+  return `<ol class='lab-flow' aria-label='Этапы расследования'>${stages
+    .map(([key, label], index) => {
+      const active = key === stage ? " aria-current='step'" : "";
+      const text = `<span>${index + 1}</span>${label}`;
+      return `<li${active}>${key === "company" && key !== stage ? `<a href='#company'>${text}</a>` : text}</li>`;
+    })
+    .join("")}</ol>`;
+}
+
+function companySample() {
+  const record = current().public[companySource][0];
+  if (!record) return `<p>В этом деле нет записей этого типа.</p>`;
+  const labels = {
+    invoices: "Счёт на оплату",
+    payments: "Первичный платёж",
+    ledger: accounts[record.account] || "Проводка",
+  };
+  const amount =
+    record.total_minor ??
+    record.amount_minor ??
+    (record.debit_minor || record.credit_minor);
+  const amountLabel =
+    companySource === "ledger"
+      ? record.debit_minor
+        ? "Дебет"
+        : "Кредит"
+      : "Сумма";
+  return `<div><span>Первая запись</span><strong>${esc(labels[companySource])}</strong></div><dl><div><dt>Дата</dt><dd>${date(record.issued_at || record.timestamp)}</dd></div><div><dt>${amountLabel}</dt><dd>${money(amount, record.currency)} ${esc(record.currency)}</dd></div></dl>`;
+}
+
+function company() {
+  const c = current();
+  const m = c.public.manifest;
+  const playLabel = finished()
+    ? "Повторить прогон"
+    : step
+      ? "Продолжить прогон"
+      : "Воспроизвести прогон";
+  return `<section class='company-page' aria-labelledby='company-title'>
+    <div class='company-top'>${flow("company")}<div class='company-switcher'><span>${data.cases.length} дел</span>${episodeSelect()}</div></div>
+    <div class='company-hero'>
+      <div class='company-copy'>
+        <p class='company-kicker'>Вымышленная компания</p>
+        <h1 id='company-title'>${esc(c.title)}</h1>
+        <p class='company-description'>Посмотрите документы компании и запустите запись расследования. После ответа агента откроется сверка.</p>
+        <dl class='company-meta'><div><dt>Отчётный период</dt><dd>${date(m.period_start)} — ${date(m.period_end)}</dd></div><div><dt>Валюта учёта</dt><dd>${esc(m.base_currency)}</dd></div></dl>
+        <div class='company-actions'><button class='button primary' data-action='company-run'>${icon("play")}${playLabel}</button><button class='button ghost' data-action='company-documents'>${icon("file")}Открыть источники</button></div>
+        <p class='company-replay-note'>Запись реального прогона · ${c.steps} действий</p>
+      </div>
+      <div class='company-visual'>
+        <div id='company-scene' class='company-scene' aria-hidden='true'><div class='company-fallback'>${companySources.map(({ key, label }) => `<div data-stack='${key}'><span>${esc(label)}</span><strong>${num(c.public[key].length)}</strong></div>`).join("")}</div></div>
+        <div class='company-source-list' role='group' aria-label='Выделить записи на модели'>${companySources.map(({ key, label, icon: symbol }) => `<button class='company-source' data-company-source='${key}' aria-pressed='${companySource === key}'>${icon(symbol)}<span>${label}</span><strong>${num(c.public[key].length)}</strong></button>`).join("")}</div>
+      </div>
+    </div>
+    <div class='company-sample' id='company-sample' aria-live='polite'>${companySample()}</div>
+  </section>`;
+}
+
+function selectCompanySource(key) {
+  const button = document.querySelector(
+    `[data-company-source='${CSS.escape(key)}']`,
+  );
+  if (!button || companySource === key) return;
+  companySource = key;
+  document
+    .querySelectorAll("[data-company-source]")
+    .forEach((item) =>
+      item.setAttribute("aria-pressed", String(item === button)),
+    );
+  $("#company-sample").innerHTML = companySample();
+  $("#company-scene").dataset.selected = key;
+  companyScene?.select(key);
+}
+
+async function mountCompany() {
+  const host = $("#company-scene");
+  host.dataset.selected = companySource;
+  host.dataset.renderer = "css";
+  const sources = companySources.map((source) => ({
+    ...source,
+    count: current().public[source.key].length,
+  }));
+  try {
+    const { createCompanyScene } = await import("./cinema/company-scene.js");
+    if (host.isConnected)
+      companyScene = createCompanyScene(
+        host,
+        sources,
+        companySource,
+        selectCompanySource,
+      );
+  } catch {
+    // The CSS model and source controls remain available without WebGL.
+  }
 }
 function sourceTabs() {
   return `<div class='source-tabs' role='tablist' aria-label='Источники дела'>${[
@@ -208,7 +334,7 @@ function sourceTabs() {
 function workspace() {
   const c = current(),
     m = c.public.manifest;
-  return `<section class='case-header'><div><div class='case-breadcrumb'><span>Открытое расследование</span><span>/</span><code>${esc(c.id)}</code></div><h1>${esc(c.title)}</h1><p>${esc(c.company)}<span>·</span>${date(m.period_start)} — ${date(m.period_end)}<span>·</span>${esc(m.base_currency)}</p></div><div class='case-header-actions'><label class='case-select'><span class='sr-only'>Выбрать дело</span><select id='episode-select' aria-label='Выбрать эпизод'>${data.cases.map((x, i) => `<option value='${i}' ${i === caseIndex ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select>${icon("chevron")}</label><button class='tool-button' data-action='share' aria-label='Скопировать ссылку на дело'>${icon("copy")}</button><button class='tool-button' data-action='download-episode' aria-label='Скачать документы дела'>${icon("download")}</button></div></section>
+  return `<section class='case-header'><div>${flow(finished() ? "result" : "replay")}<h1>${esc(c.title)}</h1><p>${esc(c.company)}<span>·</span>${date(m.period_start)} — ${date(m.period_end)}<span>·</span>${esc(m.base_currency)}</p></div><div class='case-header-actions'>${episodeSelect()}<button class='tool-button' data-action='share' aria-label='Скопировать ссылку на дело'>${icon("copy")}</button><button class='tool-button' data-action='download-episode' aria-label='Скачать документы дела'>${icon("download")}</button></div></section>
  <div class='mobile-workspace-tabs' role='tablist' aria-label='Панели расследования'><button data-mobile='sources' role='tab' tabindex='${mobilePane === "sources" ? 0 : -1}' aria-selected='${mobilePane === "sources"}'>${icon("file")}Источники</button><button data-mobile='analysis' role='tab' tabindex='${mobilePane === "analysis" ? 0 : -1}' aria-selected='${mobilePane === "analysis"}'>${icon("eye")}Разбор${finished() ? `<span>${c.submission.findings.length}</span>` : ""}</button></div>
  <div class='investigation-desk' data-mobile-pane='${mobilePane}'><aside class='case-library'><div class='rail-label'>Библиотека дел <span>${data.cases.length}</span></div><div class='case-list'>${data.cases.map((x, i) => `<button class='case-item ${i === caseIndex ? "selected" : ""}' data-case='${i}' aria-pressed='${i === caseIndex}'><span class='case-symbol'>${icon(x.icon)}</span><span><strong>${esc(x.title)}</strong><small>${x.public.manifest.document_count} док. · ${x.steps} шагов</small></span>${(i === caseIndex ? step : savedCases.get(x.id)?.step) === x.trajectory.length ? `<span class='case-complete'>${icon("check")}</span>` : ""}</button>`).join("")}</div><div class='rail-note'><span class='rail-mark'>${icon("lock")}</span><strong>Вы исследуете<br>открытую запись.</strong><p>Все операции вымышлены. Здесь воспроизводится уже выполненный прогон агента.</p><a href='#guide'>Как пройти расследование</a></div><a class='rail-bottom' href='#verification'>${icon("shield")}Надёжность среды<span>${data.verification.acceptance.cases.filter((c) => c.status === "passed").length}/${data.verification.acceptance.cases.length}</span></a></aside>
  <section class='source-workspace' aria-label='Просмотр источника'><div class='source-toolbar'>${sourceTabs()}${tab === "comparison" ? "" : `<button class='tool-button raw-toggle ${raw ? "selected" : ""}' data-action='raw' aria-label='${raw ? "Показать читаемый вид" : "Показать исходный JSON"}' aria-pressed='${raw}'>${icon("code")}</button>`}</div><div class='source-content' data-scroll='sources' id='source-content'>${sourceContent()}</div><div class='source-footer'>${icon("shield")}${tab === "comparison" ? "Сверка по открытым источникам" : "Первичный источник"}<span>Только чтение</span></div></section>
@@ -630,6 +756,10 @@ document.addEventListener("click", (event) => {
     selectCase(Number(el.dataset.case));
     return;
   }
+  if (el.dataset.companySource) {
+    selectCompanySource(el.dataset.companySource);
+    return;
+  }
   if (el.dataset.tab) {
     tab = el.dataset.tab;
     page = 0;
@@ -689,6 +819,22 @@ document.addEventListener("click", (event) => {
     return;
   }
   switch (el.dataset.action) {
+    case "company-run":
+      launchFromCompany = true;
+      mobilePane = "analysis";
+      location.hash = "workspace";
+      break;
+    case "company-documents":
+      tab = companySource === "ledger" ? "ledger" : "documents";
+      docIndex =
+        companySource === "payments" ? current().public.invoices.length : 0;
+      page = 0;
+      filter = "";
+      selectedSource = "";
+      raw = false;
+      mobilePane = "sources";
+      location.hash = "workspace";
+      break;
     case "play":
       play();
       break;
@@ -747,8 +893,10 @@ document.addEventListener("click", (event) => {
       break;
     case "share":
       copy(
-        new URL(`lab.html?episode=${current().id}#workspace`, location.href)
-          .href,
+        new URL(
+          `lab.html?episode=${current().id}#${route() === "company" ? "company" : "workspace"}`,
+          location.href,
+        ).href,
         "Ссылка на дело скопирована",
       );
       break;
@@ -819,8 +967,13 @@ document.addEventListener("keydown", (e) => {
 });
 window.addEventListener("hashchange", () => {
   if (data) {
+    const start = launchFromCompany && route() === "workspace";
+    launchFromCompany = false;
     render();
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "instant" });
+    if (route() === "company" || start)
+      $("#main").focus({ preventScroll: true });
+    if (start) play();
   }
 });
 window.addEventListener("pagehide", stop);
@@ -838,11 +991,18 @@ try {
   ]);
   for (const r of responses) if (!r.ok) throw new Error("HTTP " + r.status);
   [data, checkDefinitions] = await Promise.all(responses.map((r) => r.json()));
-  const id = new URL(location.href).searchParams.get("episode");
+  const url = new URL(location.href);
+  const id =
+    url.searchParams.get("episode") ??
+    (route() === "company" ? "generated" : null);
   caseIndex = Math.max(
     0,
     data.cases.findIndex((c) => c.id === id),
   );
+  if (route() === "company" && !url.searchParams.has("episode")) {
+    url.searchParams.set("episode", current().id);
+    history.replaceState(null, "", url);
+  }
   $("#loading").hidden = true;
   $("#app").hidden = false;
   render();

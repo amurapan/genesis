@@ -311,6 +311,11 @@ html.cinema-page {
   color: #789785;
   margin-top: 29px;
 }
+.opening-footnote a {
+  color: #b4c9bc;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 .chapter-note {
   display: flex;
   gap: 20px;

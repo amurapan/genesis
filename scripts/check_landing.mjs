@@ -99,7 +99,7 @@ export default async ({ context }) => {
     pass(
       "Hover and menu interactions work, with Escape returning keyboard focus",
     );
-    await page.locator("[data-shot=opening] .pill").click();
+    await page.locator("[data-shot=opening] a[href='#detail']").click();
     await page.waitForFunction(
       () => Math.abs(window.sledFilm.snapshot().progress - 0.19) < 0.001,
     );
