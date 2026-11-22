@@ -10,8 +10,9 @@
     <a href="#как-проверить-решение">Сценарий для жюри</a> ·
     <a href="demo/presentation.pdf">Презентация PDF</a> ·
     <a href="demo/presentation.pptx">Редактируемая PPTX</a> ·
-    <a href="https://sled-genesis.vercel.app/assets/demo.mp4">Демо · 2:17</a> ·
-    <a href="demo/narration.md">Текст озвучки</a>
+    <a href="https://sled-genesis.vercel.app/assets/demo.mp4">Видео · 2:42</a> ·
+    <a href="demo/narration.md">Текст озвучки</a> ·
+    <a href="https://sled-genesis.vercel.app/team">Команда</a>
   </p>
   <p><strong>4 типа ошибок · 48/48 тестов · 80/80 локальных проверок · 10 train + 10 dev</strong></p>
 </div>

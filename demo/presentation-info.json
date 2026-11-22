@@ -29,8 +29,8 @@
     "Pillow": "12.0.0"
   },
   "files": {
-    "presentation.pdf": "2b56d1ab4232712d0dad16955880266a08036c78bbcd932899b5971155d2b660",
-    "presentation.pptx": "52ea0cae8c84c91b51adb7f2de944e2f8b69d223559a5c25ef4c53177930abf3"
+    "presentation.pdf": "69b0ffc37c909dd1299482964f7a8cd93fd741534802baac26c106bb60f124e1",
+    "presentation.pptx": "a33d9bfa3fd747020aafbf92d67ce9045187fccac2ec861e1fc2e86ef3a94728"
   },
   "note": "PDF has embedded Cyrillic fonts. PPTX text, diagrams and tables are editable; template backgrounds are retained as images. Speaker notes are included."
 }

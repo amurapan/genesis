@@ -1,62 +1,74 @@
 {
-  "kind": "actual screen recording",
-  "seconds": 137.32,
+  "kind": "recorded screen interactions with synchronized narration and highlights",
+  "seconds": 162.333,
   "width": 1920,
   "height": 1080,
-  "fps": 25,
-  "audio": false,
-  "narration": "Human narration to be added by the team; Russian script and optional SRT supplied.",
+  "fps": 30,
+  "audio": true,
+  "narration": "Russian narration by the team using ElevenLabs Denis. Optional Russian subtitles are embedded.",
   "ffmpeg": "ffmpeg version 8.0 Copyright (c) 2000-2025 the FFmpeg developers",
   "mss": "10.1.0",
   "source_sha256": "19f56c4ee6383d3d7a95f315540dcf2fb55a7e973f6d30b6f5b0b787e8bbf07d",
   "chapters": [
     {
-      "id": "01-intro",
-      "title": "Что такое evidable",
+      "id": "intro",
+      "title": "El Big Four и evidable.",
       "start_seconds": 0.0,
-      "end_seconds": 12.04
+      "end_seconds": 11.733
+    },
+    {
+      "id": "documents",
+      "title": "Первичные документы",
+      "start_seconds": 11.733,
+      "end_seconds": 26.3
     },
     {
       "id": "fx-cli",
-      "title": "Настоящий запуск среды",
-      "start_seconds": 12.04,
-      "end_seconds": 35.08
+      "title": "Запуск среды",
+      "start_seconds": 26.3,
+      "end_seconds": 37.0
     },
     {
-      "id": "03-laboratory",
-      "title": "Документы и действия агента",
-      "start_seconds": 35.08,
-      "end_seconds": 65.12
+      "id": "replay",
+      "title": "Шесть действий аудитора",
+      "start_seconds": 37.0,
+      "end_seconds": 58.833
     },
     {
-      "id": "04-evidence",
-      "title": "Проверка доказательств",
-      "start_seconds": 65.12,
-      "end_seconds": 92.16
+      "id": "fx",
+      "title": "Ошибка валютного курса",
+      "start_seconds": 58.833,
+      "end_seconds": 76.0
     },
     {
-      "id": "clean-cli",
-      "title": "Чистая компания",
-      "start_seconds": 92.16,
-      "end_seconds": 110.24
+      "id": "period",
+      "title": "Ошибка отчётного периода",
+      "start_seconds": 76.0,
+      "end_seconds": 101.433
     },
     {
-      "id": "06-verification",
-      "title": "Проверки и изоляция",
-      "start_seconds": 110.24,
-      "end_seconds": 128.28
+      "id": "architecture",
+      "title": "Как устроена среда",
+      "start_seconds": 101.433,
+      "end_seconds": 126.533
     },
     {
-      "id": "07-reproduce",
+      "id": "verification",
+      "title": "Локальные проверки",
+      "start_seconds": 126.533,
+      "end_seconds": 152.433
+    },
+    {
+      "id": "reproduce",
       "title": "Как повторить",
-      "start_seconds": 128.28,
-      "end_seconds": 137.32
+      "start_seconds": 152.433,
+      "end_seconds": 162.333
     }
   ],
   "files": {
-    "demo.mp4": "9ca5c128ffa33d028f9104beb3612481c510f93cf27721108e6d4b1fdffc2f1c",
-    "narration.md": "2fce489db62120c9b94185d165c0941a77d40b1ac76898dc382b4761f66c8e33",
-    "captions.srt": "aa2307806a2e11cb7290a41556a0437565202d69c4e07ed07e077d41fce15702"
+    "demo.mp4": "e30150f8a5d84dfac48185b0d9466151e21adf844311c3ef5f7ce76787cfba9d",
+    "narration.md": "d2a5850a5ab42d3d9520e3bf8d58e8937d7ff911e2d1a2af875d9a1dc61c7dd9",
+    "captions.srt": "96d917fd638312c64523ff57ae3a3a76a71dc7f6f0f266c39254deb28016f73c"
   },
   "actual_runs": {
     "fx": {
@@ -86,33 +98,11 @@
         "valid": true
       },
       "steps": 6,
-      "elapsed_seconds": 0.85289,
-      "terminated": true,
-      "truncated": false
-    },
-    "clean": {
-      "episode_id": "ep_90713ba541734405bf80968291c9a102",
-      "policy": "reconciler",
-      "mode": "evaluation",
-      "evaluation": {
-        "error": null,
-        "f1": 1.0,
-        "fn": 0,
-        "fp": 0,
-        "inspection_steps": 4,
-        "matches": [],
-        "precision": 0.0,
-        "recall": 0.0,
-        "reward": 0.992,
-        "tp": 0,
-        "valid": true
-      },
-      "steps": 5,
-      "elapsed_seconds": 0.672252,
+      "elapsed_seconds": 0.695085,
       "terminated": true,
       "truncated": false
     }
   },
-  "browser_recording": "Actual local application. The laboratory replays saved public trajectories; CLI cases were freshly executed during capture.",
-  "limitations": "The recorder controls the UI and terminal. Quiet intervals between scenes are cut. No voice or music has been added."
+  "browser_recording": "The laboratory replays the saved FX trajectory. The same episode was run live in Docker for the terminal scene.",
+  "editing": "Cuts, zooms and highlights follow actual documents, actions and local verification records."
 }
