@@ -162,6 +162,9 @@
 .lab-header :is(.product-name, .header-team, .header-github) {
   color: var(--md-on-variant);
 }
+.lab-header .header-team:hover {
+  color: var(--md-primary);
+}
 .lab-header nav {
   gap: 3px;
   margin-left: clamp(0px, 1vw, 14px);
