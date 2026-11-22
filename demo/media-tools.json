@@ -66,7 +66,7 @@
     }
   ],
   "files": {
-    "demo.mp4": "4e1ab2ad14983e89fd5f66ac7826f48996d29b5bc905a47520e3faf49322d9ac",
+    "demo.mp4": "5a269ea1b6a313bcd0dbb0749c88fda5fb055e504f1d2fcb1d96ad39982a828d",
     "narration.md": "d2a5850a5ab42d3d9520e3bf8d58e8937d7ff911e2d1a2af875d9a1dc61c7dd9",
     "captions.srt": "96d917fd638312c64523ff57ae3a3a76a71dc7f6f0f266c39254deb28016f73c"
   },
@@ -104,5 +104,5 @@
     }
   },
   "browser_recording": "The laboratory replays the saved FX trajectory. The same episode was run live in Docker for the terminal scene.",
-  "editing": "The application stays fully framed. Outlines mark the relevant fields and enlarged excerpts show key values alongside their sources. The cuts follow the narration."
+  "editing": "Three continuous zooms bring the invoice, amount comparison and reporting boundary closer within the stationary workbench. Outlines and enlarged excerpts follow the narration."
 }
