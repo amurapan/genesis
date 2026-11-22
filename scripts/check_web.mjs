@@ -350,9 +350,11 @@ export default async ({ context }) => {
     );
 
     await page.locator('[data-nav="architecture"]').click();
+    await page.locator(".flow-card").first().waitFor();
     assert.equal(await page.locator(".flow-card").count(), 4);
     assert.equal(await page.locator(".tool-register>div").count(), 5);
     await page.locator('[data-nav="guide"]').click();
+    await page.locator(".guide-steps").waitFor();
     assert.equal(await page.locator(".guide-steps li").count(), 4);
     assert.equal(await page.locator("video").count(), 1);
     const pdf = await page.request.get(base + "/assets/presentation.pdf");

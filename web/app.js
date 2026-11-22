@@ -24,6 +24,12 @@ const names = {
   fx_conversion: "Неверный валютный курс",
   period_cutoff: "Ошибка отчётного периода",
 };
+const comparisonLabels = {
+  duplicate_invoice: "Повторный счёт",
+  payment_allocation: "Распределение",
+  fx_conversion: "Сумма и курс",
+  period_cutoff: "Отчётный период",
+};
 const accounts = {
   accounts_receivable: "Дебиторская задолженность",
   revenue: "Выручка",
@@ -248,8 +254,13 @@ function comparisonView() {
       choices.length > 1
         ? `<label class='comparison-picker' for='comparison-finding'><span>Вывод для сверки</span><select id='comparison-finding'>${choices
             .map((index) => {
-              const choice = findings[index];
-              return `<option value='${index}' ${Number(index) === findingIndex ? "selected" : ""}>${esc(names[choice.type])} · ${money(choice.claimed_amount_minor, choice.currency)} ${esc(choice.currency)}</option>`;
+              const type = findings[index].type;
+              const sameType = choices.filter(
+                (key) => findings[key].type === type,
+              );
+              const suffix =
+                sameType.length > 1 ? ` · ${sameType.indexOf(index) + 1}` : "";
+              return `<option value='${index}' ${Number(index) === findingIndex ? "selected" : ""}>${esc(comparisonLabels[type] + suffix)}</option>`;
             })
             .join("")}</select>${icon("chevron")}</label>`
         : ""
