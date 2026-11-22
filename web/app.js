@@ -40,13 +40,6 @@ const explanations = {
   period_cutoff:
     "Дата первичного события и дата проводки относятся к разным отчётным периодам. Сумма — объём неверно отнесённого события.",
 };
-const caseIcons = ["bank", "layers", "shield", "database"];
-const caseLabels = [
-  "Валюта и период",
-  "Дубль и распределение",
-  "Чистая компания",
-  "Синтетическая компания",
-];
 const groupNames = {
   C: "Контракт и изоляция",
   D: "Данные и эталон",
@@ -73,6 +66,8 @@ let data,
 const savedCases = new Map();
 const current = () => data.cases[caseIndex];
 const finished = () => step === current().trajectory.length;
+const comparisons = () => (finished() ? (current().comparisons ?? {}) : {});
+const selectedComparison = () => comparisons()[findingIndex];
 const route = () =>
   ["workspace", "verification", "architecture", "guide"].includes(
     location.hash.slice(1),
@@ -191,6 +186,9 @@ function render() {
 }
 function sourceTabs() {
   return `<div class='source-tabs' role='tablist' aria-label='Источники дела'>${[
+    ...(Object.keys(comparisons()).length
+      ? [["comparison", "Сверка", null]]
+      : []),
     ["documents", "Документы", current().public.manifest.document_count],
     ["ledger", "Проводки", current().public.ledger.length],
     ["policy", "Правила", null],
@@ -204,13 +202,14 @@ function sourceTabs() {
 function workspace() {
   const c = current(),
     m = c.public.manifest;
-  return `<section class='case-header'><div><div class='case-breadcrumb'><span>Открытое расследование</span><span>/</span><code>${esc(c.id)}</code></div><h1>${esc(c.title)}</h1><p>${caseIndex === 3 ? "Синтетическая компания" : "Компания «Орион»"}<span>·</span>${date(m.period_start)} — ${date(m.period_end)}<span>·</span>${esc(m.base_currency)}</p></div><div class='case-header-actions'><label class='case-select'><span class='sr-only'>Выбрать дело</span><select id='episode-select' aria-label='Выбрать эпизод'>${data.cases.map((x, i) => `<option value='${i}' ${i === caseIndex ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select>${icon("chevron")}</label><button class='tool-button' data-action='share' aria-label='Скопировать ссылку на дело'>${icon("copy")}</button><button class='tool-button' data-action='download-episode' aria-label='Скачать документы дела'>${icon("download")}</button></div></section>
+  return `<section class='case-header'><div><div class='case-breadcrumb'><span>Открытое расследование</span><span>/</span><code>${esc(c.id)}</code></div><h1>${esc(c.title)}</h1><p>${esc(c.company)}<span>·</span>${date(m.period_start)} — ${date(m.period_end)}<span>·</span>${esc(m.base_currency)}</p></div><div class='case-header-actions'><label class='case-select'><span class='sr-only'>Выбрать дело</span><select id='episode-select' aria-label='Выбрать эпизод'>${data.cases.map((x, i) => `<option value='${i}' ${i === caseIndex ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select>${icon("chevron")}</label><button class='tool-button' data-action='share' aria-label='Скопировать ссылку на дело'>${icon("copy")}</button><button class='tool-button' data-action='download-episode' aria-label='Скачать документы дела'>${icon("download")}</button></div></section>
  <div class='mobile-workspace-tabs' role='tablist' aria-label='Панели расследования'><button data-mobile='sources' role='tab' tabindex='${mobilePane === "sources" ? 0 : -1}' aria-selected='${mobilePane === "sources"}'>${icon("file")}Источники</button><button data-mobile='analysis' role='tab' tabindex='${mobilePane === "analysis" ? 0 : -1}' aria-selected='${mobilePane === "analysis"}'>${icon("eye")}Разбор${finished() ? `<span>${c.submission.findings.length}</span>` : ""}</button></div>
- <div class='investigation-desk' data-mobile-pane='${mobilePane}'><aside class='case-library'><div class='rail-label'>Библиотека дел <span>4</span></div><div class='case-list'>${data.cases.map((x, i) => `<button class='case-item ${i === caseIndex ? "selected" : ""}' data-case='${i}' aria-pressed='${i === caseIndex}'><span class='case-symbol'>${icon(caseIcons[i])}</span><span><strong>${caseLabels[i]}</strong><small>${x.public.manifest.document_count} док. · ${x.steps} шагов</small></span>${(i === caseIndex ? step : savedCases.get(x.id)?.step) === x.trajectory.length ? `<span class='case-complete'>${icon("check")}</span>` : ""}</button>`).join("")}</div><div class='rail-note'><span class='rail-mark'>${icon("lock")}</span><strong>Вы исследуете<br>открытую запись.</strong><p>Все операции вымышлены. Здесь воспроизводится уже выполненный прогон агента.</p><a href='#guide'>Как пройти расследование</a></div><a class='rail-bottom' href='#verification'>${icon("shield")}Надёжность среды<span>${data.verification.acceptance.cases.filter((c) => c.status === "passed").length}/${data.verification.acceptance.cases.length}</span></a></aside>
- <section class='source-workspace' aria-label='Просмотр источника'><div class='source-toolbar'>${sourceTabs()}<button class='tool-button raw-toggle ${raw ? "selected" : ""}' data-action='raw' aria-label='${raw ? "Показать читаемый вид" : "Показать исходный JSON"}' aria-pressed='${raw}'>${icon("code")}</button></div><div class='source-content' data-scroll='sources' id='source-content'>${sourceContent()}</div><div class='source-footer'>${icon("shield")}Первичный источник<span>Только чтение</span></div></section>
+ <div class='investigation-desk' data-mobile-pane='${mobilePane}'><aside class='case-library'><div class='rail-label'>Библиотека дел <span>${data.cases.length}</span></div><div class='case-list'>${data.cases.map((x, i) => `<button class='case-item ${i === caseIndex ? "selected" : ""}' data-case='${i}' aria-pressed='${i === caseIndex}'><span class='case-symbol'>${icon(x.icon)}</span><span><strong>${esc(x.title)}</strong><small>${x.public.manifest.document_count} док. · ${x.steps} шагов</small></span>${(i === caseIndex ? step : savedCases.get(x.id)?.step) === x.trajectory.length ? `<span class='case-complete'>${icon("check")}</span>` : ""}</button>`).join("")}</div><div class='rail-note'><span class='rail-mark'>${icon("lock")}</span><strong>Вы исследуете<br>открытую запись.</strong><p>Все операции вымышлены. Здесь воспроизводится уже выполненный прогон агента.</p><a href='#guide'>Как пройти расследование</a></div><a class='rail-bottom' href='#verification'>${icon("shield")}Надёжность среды<span>${data.verification.acceptance.cases.filter((c) => c.status === "passed").length}/${data.verification.acceptance.cases.length}</span></a></aside>
+ <section class='source-workspace' aria-label='Просмотр источника'><div class='source-toolbar'>${sourceTabs()}${tab === "comparison" ? "" : `<button class='tool-button raw-toggle ${raw ? "selected" : ""}' data-action='raw' aria-label='${raw ? "Показать читаемый вид" : "Показать исходный JSON"}' aria-pressed='${raw}'>${icon("code")}</button>`}</div><div class='source-content' data-scroll='sources' id='source-content'>${sourceContent()}</div><div class='source-footer'>${icon("shield")}${tab === "comparison" ? "Сверка по открытым источникам" : "Первичный источник"}<span>Только чтение</span></div></section>
  <aside class='analysis-workspace' aria-label='Разбор расследования'><div class='analysis-tabs' role='tablist' aria-label='Результат или журнал'><button data-inspector='results' role='tab' tabindex='${inspector === "results" ? 0 : -1}' aria-selected='${inspector === "results"}'>Выводы${finished() ? `<span>${c.submission.findings.length}</span>` : ""}</button><button data-inspector='trace' role='tab' tabindex='${inspector === "trace" ? 0 : -1}' aria-selected='${inspector === "trace"}'>Журнал <span>${step}/${c.trajectory.length}</span></button></div><div class='analysis-content' data-scroll='analysis' id='results'>${inspector === "results" ? findings() : trace()}</div></aside></div>${transport()}`;
 }
 function sourceContent() {
+  if (tab === "comparison") return comparisonView();
   if (tab === "documents") {
     const all = docs();
     docIndex = Math.min(docIndex, all.length - 1);
@@ -222,6 +221,41 @@ function sourceContent() {
 }
 function sourceContext(id) {
   return `<div class='source-context'>${icon("eye")}<span>Открыто доказательство <strong>${esc(proofName(id))}</strong></span><button data-action='clear-source' aria-label='Снять выделение доказательства'>${icon("close")}</button></div>`;
+}
+function comparisonCard(record, label) {
+  return `<article class='comparison-card'><header><span>${esc(label)}</span><h3>${esc(record.title)}</h3></header>
+    <dl>${record.fields
+      .map((field) => {
+        const value = field.currency
+          ? money(field.minor, field.currency) + " " + field.currency
+          : field.text;
+        return `<div class='comparison-field${field.mismatch ? " comparison-mismatch" : ""}'><dt>${esc(field.label)}${field.mismatch ? "<span>Расхождение</span>" : ""}</dt><dd>${esc(value)}</dd></div>`;
+      })
+      .join("")}</dl>
+    <footer>${record.sources.map((id) => `<button class='comparison-source' data-proof='${esc(id)}' title='${esc(id)}'>${icon(proofIcon(id))}${esc(proofName(id))}</button>`).join("")}</footer>
+  </article>`;
+}
+function comparisonView() {
+  const item = selectedComparison();
+  if (!item)
+    return `<p class='source-note'>Выберите подтверждённый вывод для сверки.</p>`;
+  const findings = current().submission.findings;
+  const finding = findings[findingIndex];
+  const choices = Object.keys(comparisons());
+  return `<section class='comparison-sheet' aria-labelledby='comparison-title'>
+    <div class='comparison-heading'>${status("Подтверждено оценщиком")}<h2 id='comparison-title'>${esc(names[finding.type])}</h2><p>${esc(item.note)}</p></div>
+    ${
+      choices.length > 1
+        ? `<label class='comparison-picker' for='comparison-finding'><span>Вывод для сверки</span><select id='comparison-finding'>${choices
+            .map((index) => {
+              const choice = findings[index];
+              return `<option value='${index}' ${Number(index) === findingIndex ? "selected" : ""}>${esc(names[choice.type])} · ${money(choice.claimed_amount_minor, choice.currency)} ${esc(choice.currency)}</option>`;
+            })
+            .join("")}</select>${icon("chevron")}</label>`
+        : ""
+    }
+    <div class='comparison-pair'>${comparisonCard(item.reference, "Источник и правило")}${comparisonCard(item.booked, "Записано в учёте")}</div>
+  </section>`;
 }
 function documentSheet(d) {
   const invoice = "invoice_id" in d;
@@ -290,10 +324,10 @@ function findings() {
   const m = c.evaluation;
   const summary = `<div class='result-strip'><span>Оценка завершена</span>${status("Проверено")}<div><strong>${num(m.f1, 2)}</strong><span>F1</span><strong>${num(m.reward, 3)}</strong><span>Возврат</span></div><details><summary>Все метрики</summary><dl class='metric-list'><div><dt>Precision / Recall</dt><dd>${num(m.precision, 2)} / ${num(m.recall, 2)}</dd></div><div><dt>TP / FP / FN</dt><dd>${m.tp} / ${m.fp} / ${m.fn}</dd></div><div><dt>Время прогона</dt><dd>${num(c.elapsed_seconds, 3)} с</dd></div></dl></details></div>`;
   if (!c.submission.findings.length)
-    return `${summary}<div class='clean-conclusion'>${icon("shield")}<h2>Нарушений<br>не обнаружено.</h2><p>Счёт на 1 000 KZT оплачен на 600 KZT. Остаток 400 KZT — законная задолженность.</p><span>Чистый ответ: F1 = 1, P = R = 0.</span></div><button class='download-result' data-action='download-findings'>${icon("download")}Скачать выводы</button>`;
+    return `${summary}<div class='clean-conclusion'>${icon("shield")}<h2>Нарушений<br>не обнаружено.</h2><p>${esc(c.description)}</p><span>Чистый ответ: F1 = 1, P = R = 0.</span></div><button class='download-result' data-action='download-findings'>${icon("download")}Скачать выводы</button>`;
   findingIndex = Math.min(findingIndex, c.submission.findings.length - 1);
   const f = c.submission.findings[findingIndex];
-  return `${summary}<div class='finding-list'>${c.submission.findings.map((x, i) => `<button class='finding ${i === findingIndex ? "selected" : ""}' data-finding='${i}' aria-pressed='${i === findingIndex}'><span class='finding-marker'>${icon("check")}</span><span><strong>${esc(names[x.type])}</strong><small>${money(x.claimed_amount_minor, x.currency)} ${esc(x.currency)}</small></span></button>`).join("")}</div><article class='finding-detail'><span class='section-kicker'>ВЫБРАННЫЙ ВЫВОД</span><h2>${esc(names[f.type])}</h2><div class='finding-value'>${money(f.claimed_amount_minor, f.currency)} <span>${esc(f.currency)}</span></div><p>${esc(explanations[f.type])}</p><div class='evidence-heading'><h3>Доказательства</h3><span>${f.evidence_ids.length} · источники</span></div><div class='evidence-list'>${f.evidence_ids.map((id) => `<button class='evidence-link ${selectedSource === id ? "selected" : ""}' data-proof='${esc(id)}'>${icon(proofIcon(id))}<span><strong>${esc(proofName(id))}</strong><small>${esc(short(id))}</small></span>${selectedSource === id ? icon("eye") : icon("file")}</button>`).join("")}</div><p class='evidence-hint'>Выберите источник — он откроется рядом.</p></article><button class='download-result' data-action='download-findings'>${icon("download")}Скачать выводы JSON</button><p class='analysis-footnote'>Суммы разных нарушений не складываются в общий ущерб. Здесь показана диагностика оценщика после завершения.</p>`;
+  return `${summary}<div class='finding-list'>${c.submission.findings.map((x, i) => `<button class='finding ${i === findingIndex ? "selected" : ""}' data-finding='${i}' aria-pressed='${i === findingIndex}'><span class='finding-marker'>${icon("check")}</span><span><strong>${esc(names[x.type])}</strong><small>${money(x.claimed_amount_minor, x.currency)} ${esc(x.currency)}</small></span></button>`).join("")}</div><article class='finding-detail'><span class='section-kicker'>ВЫБРАННЫЙ ВЫВОД</span><h2>${esc(names[f.type])}</h2><div class='finding-value'>${money(f.claimed_amount_minor, f.currency)} <span>${esc(f.currency)}</span></div><p>${esc(explanations[f.type])}</p>${selectedComparison() ? `<button class='comparison-open' data-action='compare'>${icon("layers")}Сверить поля</button>` : ""}<div class='evidence-heading'><h3>Доказательства</h3><span>${f.evidence_ids.length} · источники</span></div><div class='evidence-list'>${f.evidence_ids.map((id) => `<button class='evidence-link ${selectedSource === id ? "selected" : ""}' data-proof='${esc(id)}'>${icon(proofIcon(id))}<span><strong>${esc(proofName(id))}</strong><small>${esc(short(id))}</small></span>${selectedSource === id ? icon("eye") : icon("file")}</button>`).join("")}</div><p class='evidence-hint'>Выберите источник — он откроется рядом.</p></article><button class='download-result' data-action='download-findings'>${icon("download")}Скачать выводы JSON</button><p class='analysis-footnote'>Суммы разных нарушений не складываются в общий ущерб. Здесь показана диагностика оценщика после завершения.</p>`;
 }
 function trace() {
   const c = current(),
@@ -398,7 +432,12 @@ function setStep(value, { follow = true } = {}) {
   if (finished()) {
     stop();
     inspector = "results";
-    mobilePane = "analysis";
+    if (selectedComparison()) {
+      tab = "comparison";
+      mobilePane = "sources";
+    } else {
+      mobilePane = "analysis";
+    }
   } else if (step) {
     inspector = "trace";
     if (follow) {
@@ -440,8 +479,10 @@ function setStep(value, { follow = true } = {}) {
       }
     }
   } else inspector = "results";
+  if (!finished() && tab === "comparison") tab = "documents";
   render();
   if (finished()) {
+    if (tab === "comparison") $("#source-content").scrollTop = 0;
     $("#results").scrollTop = 0;
     showMobilePane();
   }
@@ -559,7 +600,10 @@ function play() {
     render();
     return;
   }
-  if (finished()) step = 0;
+  if (finished()) {
+    step = 0;
+    findingIndex = 0;
+  }
   timer = setInterval(() => setStep(step + 1), 1150);
   setStep(step + 1);
 }
@@ -645,6 +689,7 @@ document.addEventListener("click", (event) => {
       stop();
       tab = "documents";
       docIndex = 0;
+      findingIndex = 0;
       page = 0;
       filter = "";
       mobilePane = "sources";
@@ -652,9 +697,16 @@ document.addEventListener("click", (event) => {
       break;
     case "finish":
       stop();
-      mobilePane = "analysis";
       setStep(current().steps);
       $("#results").scrollTop = 0;
+      break;
+    case "compare":
+      if (!selectedComparison()) break;
+      tab = "comparison";
+      mobilePane = "sources";
+      selectedSource = "";
+      render();
+      $("#source-content").scrollTop = 0;
       showMobilePane();
       break;
     case "raw":
@@ -704,6 +756,10 @@ document.addEventListener("click", (event) => {
 });
 document.addEventListener("change", (e) => {
   if (e.target.id === "episode-select") selectCase(Number(e.target.value));
+  if (e.target.id === "comparison-finding" && finished()) {
+    findingIndex = Number(e.target.value);
+    render();
+  }
   if (e.target.id === "document-select") {
     docIndex = Number(e.target.value);
     selectedSource = "";

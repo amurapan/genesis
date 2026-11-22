@@ -41,7 +41,7 @@ export default async ({ context }) => {
       await page.locator("#app h1").textContent(),
       /Валюта и граница периода/,
     );
-    assert.equal(await page.locator(".case-item").count(), 4);
+    assert.equal(await page.locator(".case-item").count(), 10);
     for (const selector of [
       ".case-library",
       ".source-workspace",
@@ -135,6 +135,7 @@ export default async ({ context }) => {
     await page.locator('[data-action="reset"]').click();
     assert.equal(await page.locator("#replay-range").inputValue(), "0");
     assert.equal(await page.locator(".analysis-intro").count(), 1);
+    assert.equal(await page.locator('[data-tab="comparison"]').count(), 0);
     pass(
       "Step, forward/backward scrubbing and reset update sources and preserve keyboard focus",
     );
@@ -148,10 +149,36 @@ export default async ({ context }) => {
     assert.equal(await page.locator("#replay-range").inputValue(), "6");
     assert.equal(await page.locator('[data-action="next"]').isDisabled(), true);
     assert.match(await page.locator(".result-strip").textContent(), /0,990/);
-    assert.equal(await page.locator("#results").evaluate(el => el.scrollTop), 0);
+    assert.equal(
+      await page.locator("#results").evaluate((el) => el.scrollTop),
+      0,
+    );
     assert.equal(
       await page.locator(".case-item.selected .case-complete").count(),
       1,
+    );
+    assert.equal(await page.locator(".comparison-card").count(), 2);
+    assert.match(
+      await page.locator(".comparison-pair").textContent(),
+      /45\s000,00\sKZT/,
+    );
+    assert.match(
+      await page.locator(".comparison-mismatch").textContent(),
+      /44\s000,00\sKZT/,
+    );
+    await page.locator("#comparison-finding").selectOption("1");
+    assert.match(
+      await page.locator(".comparison-pair").textContent(),
+      /30\.11\.2026/,
+    );
+    assert.match(
+      await page.locator(".comparison-mismatch").textContent(),
+      /01\.12\.2026/,
+    );
+    await page.locator("#comparison-finding").selectOption("0");
+    await screenshot("comparison");
+    pass(
+      "Confirmed findings reveal side-by-side evidence with only the booked mismatch marked",
     );
     await page.locator('[data-tab="documents"]').click();
     await page.locator("#document-select").selectOption("1");
@@ -222,8 +249,8 @@ export default async ({ context }) => {
     assert.equal(await page.locator("#replay-range").inputValue(), "2");
     pass("Switching cases restores each investigation position");
 
-    const counts = [2, 2, 0, 4];
-    for (let i = 0; i < 4; i++) {
+    const counts = [2, 2, 0, 4, 1, 1, 1, 1, 0, 4];
+    for (let i = 0; i < counts.length; i++) {
       await page.locator(`[data-case="${i}"]`).click();
       await finish();
       assert.equal(await page.locator(".finding").count(), counts[i]);
@@ -231,15 +258,30 @@ export default async ({ context }) => {
         await page.locator("#app").textContent(),
         /undefined|NaN/,
       );
-      if (i === 2)
+      if (!counts[i]) {
         assert.match(
           await page.locator(".clean-conclusion").textContent(),
           /Нарушений\s*не обнаружено/,
         );
+        assert.equal(await page.locator('[data-tab="comparison"]').count(), 0);
+      } else {
+        for (let index = 0; index < counts[i]; index++) {
+          if (counts[i] > 1)
+            await page
+              .locator("#comparison-finding")
+              .selectOption(String(index));
+          assert.equal(await page.locator(".comparison-mismatch").count(), 1);
+          assert.doesNotMatch(
+            await page.locator(".comparison-pair").textContent(),
+            /undefined|NaN/,
+          );
+        }
+      }
     }
     pass(
-      "All four cases show actual findings, including the clean-company outcome",
+      "All ten cases show actual findings and comparisons with clean companies left unmarked",
     );
+    await page.locator('[data-case="3"]').click();
     await page.locator('[data-tab="ledger"]').click();
     const before = await page.locator(".data-table tbody").textContent();
     await page.locator('[data-action="page-next"]').click();
@@ -357,6 +399,13 @@ export default async ({ context }) => {
     await page.locator("#episode-select").selectOption("1");
     await page.locator("#episode-select").selectOption("0");
     await finish();
+    assert.equal(await page.locator(".comparison-mismatch").isVisible(), true);
+    await page.locator("#comparison-finding").selectOption("1");
+    assert.match(
+      await page.locator(".comparison-mismatch").textContent(),
+      /01\.12\.2026/,
+    );
+    await page.locator('[data-mobile="analysis"]').click();
     assert.equal(await page.locator(".analysis-workspace").isVisible(), true);
     await page.locator('[data-finding="1"]').click();
     await evidence("ledger:r3").click();
