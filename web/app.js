@@ -87,7 +87,7 @@ const route = () =>
     location.hash.slice(1),
   )
     ? location.hash.slice(1)
-    : "company";
+    : "workspace";
 const docs = () => [...current().public.invoices, ...current().public.payments];
 const money = (minor, currency) => {
   const e = current().public.manifest.currency_exponents[currency];
@@ -994,7 +994,7 @@ try {
   const url = new URL(location.href);
   const id =
     url.searchParams.get("episode") ??
-    (route() === "company" ? "generated" : null);
+    (route() === "company" ? "generated" : "fx-period");
   caseIndex = Math.max(
     0,
     data.cases.findIndex((c) => c.id === id),

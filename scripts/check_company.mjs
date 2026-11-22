@@ -23,10 +23,48 @@ export default async ({ context }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.bringToFront();
     await page.goto(base);
+    await page.waitForFunction(
+      () => window.sledFilm && !window.sledFilm.snapshot().loading,
+    );
+    await page.screenshot({ path: resolve(shots, "landing.png") });
     await Promise.all([
-      page.waitForURL(/episode=generated#company$/),
+      page.waitForURL(/episode=fx-period#workspace$/),
       page.locator("[data-shot='opening'] .pill").click(),
     ]);
+    await page.locator(".document-sheet").waitFor();
+    assert.match(
+      await page.locator(".case-header h1").textContent(),
+      /Валюта и граница периода/,
+    );
+    assert.equal(await scene().count(), 0);
+    await page.locator(".transport-bar [data-action='play']").click();
+    await page.locator(".comparison-mismatch").waitFor({ timeout: 11000 });
+    assert.match(
+      await page.locator(".comparison-mismatch").textContent(),
+      /44\s000,00/,
+    );
+    checks.push(
+      "The primary entry opens the FX documents and one click replays the case through comparison",
+    );
+
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.goto(base);
+    assert.match(
+      await page.locator(".header-lab").getAttribute("href"),
+      /episode=fx-period#workspace$/,
+    );
+    await page.locator("#menu-toggle").click();
+    assert.equal(
+      await page
+        .locator("#site-menu")
+        .evaluate((menu) => menu.getBoundingClientRect().bottom <= innerHeight),
+      true,
+    );
+    await Promise.all([
+      page.waitForURL(/episode=generated#company$/),
+      page.locator("#site-menu a[href$='#company']").click(),
+    ]);
+    await page.setViewportSize({ width: 1440, height: 1000 });
     await company().waitFor();
     assert.equal(
       await page.locator("#company-title").textContent(),
@@ -40,7 +78,7 @@ export default async ({ context }) => {
     );
     assert.equal(await page.locator(".comparison-mismatch").count(), 0);
     checks.push(
-      "Landing opens the generated episode, with actual counts and no results shown",
+      "Company is reachable from the mobile landing menu, with actual counts and no results shown",
     );
 
     await page
@@ -111,6 +149,12 @@ export default async ({ context }) => {
     );
 
     await page.goto(base + "/lab.html");
+    await page.locator(".document-sheet").waitFor();
+    assert.match(
+      await page.locator(".case-header h1").textContent(),
+      /Валюта и граница периода/,
+    );
+    await page.goto(base + "/lab.html?episode=generated#company");
     await company().waitFor();
     assert.equal(
       await page.locator("#company-title").textContent(),
@@ -138,7 +182,7 @@ export default async ({ context }) => {
       fullPage: true,
     });
     checks.push(
-      "Bare Lab opens the company and the three source choices fit narrow viewports",
+      "Bare Lab opens the FX case and the separate company view fits narrow viewports",
     );
 
     await page.addInitScript(() => {
