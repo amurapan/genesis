@@ -57,8 +57,7 @@
   margin-inline: auto;
   padding: clamp(14px, 2.5vw, 38px) clamp(14px, 3.2vw, 52px) 52px;
 }
-.company-top,
-.company-switcher {
+.company-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,18 +66,6 @@
 }
 .company-top {
   margin-bottom: 16px;
-}
-.company-switcher > span {
-  color: #9fb6a8;
-  font-size: 0.875rem;
-}
-.company-switcher .case-select {
-  display: block;
-  min-width: 0;
-  flex: 0 1 auto;
-}
-.company-switcher .case-select select {
-  max-width: min(320px, 77vw);
 }
 .company-hero {
   display: grid;
@@ -326,9 +313,6 @@
 @media (max-width: 720px) {
   .company-top {
     gap: 10px;
-  }
-  .company-switcher {
-    gap: 8px;
   }
   .company-hero {
     grid-template-columns: 1fr;

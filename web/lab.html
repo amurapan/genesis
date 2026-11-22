@@ -53,6 +53,26 @@
       </div>
       <div id="app" hidden></div>
     </main>
+    <dialog
+      id="case-picker"
+      class="case-picker"
+      aria-labelledby="case-picker-title"
+    >
+      <div class="case-picker-frame">
+        <header class="case-picker-header">
+          <h2 id="case-picker-title">Выбрать дело</h2>
+          <button
+            type="button"
+            class="tool-button"
+            data-action="close-cases"
+            aria-label="Закрыть список дел"
+            data-icon="close"
+            autofocus
+          ></button>
+        </header>
+        <div id="case-picker-options" class="case-picker-options"></div>
+      </div>
+    </dialog>
     <div id="toast" role="status" class="toast" hidden></div>
     <noscript
       ><div class="no-script">

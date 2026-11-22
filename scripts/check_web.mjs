@@ -33,6 +33,16 @@ export default async ({ context }) => {
     await page.locator("#replay-range").dispatchEvent("change");
   };
   const evidence = (id) => page.locator(`.evidence-link[data-proof="${id}"]`);
+  const casePicker = page.locator("#case-picker");
+  const openCases = async () => {
+    await page.locator("#open-cases").click();
+    await casePicker.waitFor();
+  };
+  const pickCase = async (index) => {
+    await openCases();
+    await casePicker.locator(`[data-case="${index}"]`).click();
+    await casePicker.waitFor({ state: "hidden" });
+  };
   await mkdir(resolve(root, "docs/images"), { recursive: true });
   try {
     await page.setViewportSize({ width: 1440, height: 1080 });
@@ -41,9 +51,10 @@ export default async ({ context }) => {
       await page.locator("#app h1").textContent(),
       /Валюта и граница периода/,
     );
-    assert.equal(await page.locator(".case-item").count(), 10);
+    assert.equal(await casePicker.isVisible(), false);
+    assert.equal(await page.locator(".investigation-desk > *").count(), 2);
     for (const selector of [
-      ".case-library",
+      "#open-cases",
       ".source-workspace",
       ".analysis-workspace",
       ".transport-bar",
@@ -61,7 +72,34 @@ export default async ({ context }) => {
     );
     await screenshot("workspace");
     pass(
-      "Desktop workbench exposes cases, readable document, analysis and playback without page overflow",
+      "Desktop workbench has two panes with case switching in the header and no page overflow",
+    );
+    await openCases();
+    assert.equal(await casePicker.locator("[data-case]").count(), 10);
+    assert.deepEqual(
+      await casePicker
+        .locator(".case-picker-featured strong")
+        .allTextContents(),
+      [
+        "Валюта и граница периода",
+        "Чистая компания",
+        "Сгенерированная компания",
+      ],
+    );
+    assert.equal(
+      await casePicker
+        .locator('[aria-current="true"]')
+        .getAttribute("data-case"),
+      "0",
+    );
+    await screenshot("case-picker");
+    await page.keyboard.press("Escape");
+    await casePicker.waitFor({ state: "hidden" });
+    await page.waitForFunction(
+      () => document.activeElement.id === "open-cases",
+    );
+    pass(
+      "All ten cases are grouped in the dialog and Escape returns keyboard focus",
     );
 
     await page
@@ -153,10 +191,15 @@ export default async ({ context }) => {
       await page.locator("#results").evaluate((el) => el.scrollTop),
       0,
     );
-    assert.equal(
-      await page.locator(".case-item.selected .case-complete").count(),
-      1,
+    await openCases();
+    assert.match(
+      await casePicker
+        .locator('.case-choice[aria-current="true"]')
+        .textContent(),
+      /Завершено/,
     );
+    await page.keyboard.press("Escape");
+    await casePicker.waitFor({ state: "hidden" });
     assert.equal(await page.locator(".comparison-card").count(), 2);
     assert.match(
       await page.locator(".comparison-pair").textContent(),
@@ -242,16 +285,22 @@ export default async ({ context }) => {
     pass("Findings export downloads valid JSON from the chosen episode");
 
     await scrub(2);
-    await page.locator('[data-case="1"]').click();
+    await pickCase(1);
     assert.equal(await page.locator("#replay-range").inputValue(), "0");
     await finish();
-    await page.locator('[data-case="0"]').click();
+    await openCases();
+    assert.match(
+      await casePicker.locator('[data-case="0"]').textContent(),
+      /Шаг 2 из 6/,
+    );
+    await casePicker.locator('[data-case="0"]').click();
+    await casePicker.waitFor({ state: "hidden" });
     assert.equal(await page.locator("#replay-range").inputValue(), "2");
     pass("Switching cases restores each investigation position");
 
     const counts = [2, 2, 0, 4, 1, 1, 1, 1, 0, 4];
     for (let i = 0; i < counts.length; i++) {
-      await page.locator(`[data-case="${i}"]`).click();
+      await pickCase(i);
       await finish();
       assert.equal(await page.locator(".finding").count(), counts[i]);
       assert.doesNotMatch(
@@ -281,7 +330,7 @@ export default async ({ context }) => {
     pass(
       "All ten cases show actual findings and comparisons with clean companies left unmarked",
     );
-    await page.locator('[data-case="3"]').click();
+    await pickCase(3);
     await page.locator('[data-tab="ledger"]').click();
     const before = await page.locator(".data-table tbody").textContent();
     await page.locator('[data-action="page-next"]').click();
@@ -360,7 +409,11 @@ export default async ({ context }) => {
     const pdf = await page.request.get(base + "/assets/presentation.pdf");
     assert.equal(pdf.status(), 200);
     await page.locator('[data-action="start-guide"]').click();
-    assert.equal(await page.locator("#episode-select").inputValue(), "0");
+    await page.locator(".case-header h1").waitFor();
+    assert.match(
+      await page.locator(".case-header h1").textContent(),
+      /Валюта и граница периода/,
+    );
     assert.equal(await page.locator("#replay-range").inputValue(), "0");
     pass(
       "Architecture and jury guide explain the environment and open the exact example",
@@ -398,8 +451,28 @@ export default async ({ context }) => {
 
     await page.setViewportSize({ width: 390, height: 844 });
     await open();
-    await page.locator("#episode-select").selectOption("1");
-    await page.locator("#episode-select").selectOption("0");
+    await page.setViewportSize({ width: 320, height: 568 });
+    await openCases();
+    assert.equal(
+      await casePicker.evaluate((el) => {
+        const bounds = el.getBoundingClientRect();
+        return (
+          bounds.left >= 0 &&
+          bounds.right <= innerWidth &&
+          bounds.top >= 0 &&
+          bounds.bottom <= innerHeight
+        );
+      }),
+      true,
+    );
+    await casePicker.locator('[data-case="9"]').click();
+    await casePicker.waitFor({ state: "hidden" });
+    assert.match(
+      await page.locator(".case-header h1").textContent(),
+      /Валюты и часовой пояс/,
+    );
+    await page.setViewportSize({ width: 390, height: 844 });
+    await pickCase(0);
     await finish();
     assert.equal(await page.locator(".comparison-mismatch").isVisible(), true);
     await page.locator("#comparison-finding").selectOption("1");

@@ -71,7 +71,10 @@ export default async ({ context }) => {
       "Сгенерированная компания",
     );
     assert.match(await currentStage(), /Компания/);
-    assert.equal(await page.locator(".case-select option").count(), 10);
+    await page.locator("#open-cases").click();
+    assert.equal(await page.locator("#case-picker [data-case]").count(), 10);
+    await page.keyboard.press("Escape");
+    await page.locator("#case-picker").waitFor({ state: "hidden" });
     assert.deepEqual(
       await page.locator(".company-source strong").allTextContents(),
       ["40", "45", "305"],
@@ -128,9 +131,9 @@ export default async ({ context }) => {
 
     await page.locator(".lab-flow a[href='#company']").click();
     await company().waitFor();
-    await page
-      .locator("#episode-select")
-      .selectOption({ label: "Валюта и граница периода" });
+    await page.locator("#open-cases").click();
+    await page.locator('#case-picker [data-case="0"]').click();
+    await page.locator("#case-picker").waitFor({ state: "hidden" });
     assert.deepEqual(
       await page.locator(".company-source strong").allTextContents(),
       ["1", "1", "4"],

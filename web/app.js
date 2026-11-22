@@ -57,6 +57,11 @@ const companySources = [
   { key: "payments", label: "Платежи", icon: "wallet" },
   { key: "ledger", label: "Проводки", icon: "layers" },
 ];
+const introductoryCases = new Map([
+  ["fx-period", "Короткий прогон с валютным платежом."],
+  ["clean", "Частичная оплата и корректный остаток долга."],
+  ["generated", "Больше документов и несколько типов ошибок."],
+]);
 let data,
   checkDefinitions = {},
   caseIndex = 0,
@@ -158,7 +163,6 @@ function render() {
     "inspector",
     "group",
     "check",
-    "case",
     "mobile",
   ].find((k) => active?.dataset?.[k] !== undefined);
   const focusValue = focusKey ? active.dataset[focusKey] : null;
@@ -211,8 +215,47 @@ function render() {
   if (r === "company") mountCompany();
 }
 
-function episodeSelect() {
-  return `<label class='case-select'><span class='sr-only'>Выбрать дело</span><select id='episode-select' aria-label='Выбрать эпизод'>${data.cases.map((item, i) => `<option value='${i}' ${i === caseIndex ? "selected" : ""}>${esc(item.title)}</option>`).join("")}</select>${icon("chevron")}</label>`;
+function casePickerButton() {
+  return `<button type='button' id='open-cases' class='case-switch' data-action='open-cases' aria-haspopup='dialog' aria-controls='case-picker'>${icon("layers")}Сменить дело${icon("chevron")}</button>`;
+}
+
+function caseChoice(c, index, hint) {
+  const active = index === caseIndex;
+  const lastStep = active ? step : savedCases.get(c.id)?.step || 0;
+  const progress =
+    lastStep === c.steps
+      ? "Завершено"
+      : lastStep > 0
+        ? `Шаг ${lastStep} из ${c.steps}`
+        : "";
+  return `<button type='button' class='case-choice' data-case='${index}'${active ? " aria-current='true'" : ""}>
+    ${icon(c.icon)}<span class='case-choice-text'><strong>${esc(c.title)}</strong>${hint ? `<span>${esc(hint)}</span>` : ""}<small>${num(c.public.manifest.document_count)} док. · ${c.steps} действий${progress ? ` · ${progress}` : ""}</small></span>${active ? `<span class='case-choice-current'>${icon("check")}</span>` : ""}
+  </button>`;
+}
+
+function openCasePicker() {
+  if (timer) {
+    stop();
+    render();
+  }
+  const featured = [...introductoryCases]
+    .map(([id, hint]) => {
+      const index = data.cases.findIndex((c) => c.id === id);
+      return index < 0 ? "" : caseChoice(data.cases[index], index, hint);
+    })
+    .join("");
+  const others = data.cases
+    .map((c, i) => (introductoryCases.has(c.id) ? "" : caseChoice(c, i)))
+    .join("");
+  const group = (title, content, css) =>
+    content
+      ? `<section class='case-picker-group'><h3>${title}</h3><div class='case-picker-list ${css}'>${content}</div></section>`
+      : "";
+  $("#case-picker-options").innerHTML =
+    group("Для знакомства", featured, "case-picker-featured") +
+    group("Остальные дела", others, "");
+  $("#case-picker-options").scrollTop = 0;
+  $("#case-picker").showModal();
 }
 
 function flow(stage) {
@@ -260,7 +303,7 @@ function company() {
       ? "Продолжить прогон"
       : "Воспроизвести прогон";
   return `<section class='company-page' aria-labelledby='company-title'>
-    <div class='company-top'>${flow("company")}<div class='company-switcher'><span>${data.cases.length} дел</span>${episodeSelect()}</div></div>
+    <div class='company-top'>${flow("company")}${casePickerButton()}</div>
     <div class='company-hero'>
       <div class='company-copy'>
         <p class='company-kicker'>Вымышленная компания</p>
@@ -334,9 +377,9 @@ function sourceTabs() {
 function workspace() {
   const c = current(),
     m = c.public.manifest;
-  return `<section class='case-header'><div>${flow(finished() ? "result" : "replay")}<h1>${esc(c.title)}</h1><p>${esc(c.company)}<span>·</span>${date(m.period_start)} — ${date(m.period_end)}<span>·</span>${esc(m.base_currency)}</p></div><div class='case-header-actions'>${episodeSelect()}<button class='tool-button' data-action='share' aria-label='Скопировать ссылку на дело'>${icon("copy")}</button><button class='tool-button' data-action='download-episode' aria-label='Скачать документы дела'>${icon("download")}</button></div></section>
+  return `<section class='case-header'><div>${flow(finished() ? "result" : "replay")}<h1>${esc(c.title)}</h1><p>${esc(c.company)}<span>·</span>${date(m.period_start)} — ${date(m.period_end)}<span>·</span>${esc(m.base_currency)}</p></div><div class='case-header-actions'>${casePickerButton()}<button class='tool-button' data-action='share' aria-label='Скопировать ссылку на дело'>${icon("copy")}</button><button class='tool-button' data-action='download-episode' aria-label='Скачать документы дела'>${icon("download")}</button></div></section>
  <div class='mobile-workspace-tabs' role='tablist' aria-label='Панели расследования'><button data-mobile='sources' role='tab' tabindex='${mobilePane === "sources" ? 0 : -1}' aria-selected='${mobilePane === "sources"}'>${icon("file")}Источники</button><button data-mobile='analysis' role='tab' tabindex='${mobilePane === "analysis" ? 0 : -1}' aria-selected='${mobilePane === "analysis"}'>${icon("eye")}Разбор${finished() ? `<span>${c.submission.findings.length}</span>` : ""}</button></div>
- <div class='investigation-desk' data-mobile-pane='${mobilePane}'><aside class='case-library'><div class='rail-label'>Библиотека дел <span>${data.cases.length}</span></div><div class='case-list'>${data.cases.map((x, i) => `<button class='case-item ${i === caseIndex ? "selected" : ""}' data-case='${i}' aria-pressed='${i === caseIndex}'><span class='case-symbol'>${icon(x.icon)}</span><span><strong>${esc(x.title)}</strong><small>${x.public.manifest.document_count} док. · ${x.steps} шагов</small></span>${(i === caseIndex ? step : savedCases.get(x.id)?.step) === x.trajectory.length ? `<span class='case-complete'>${icon("check")}</span>` : ""}</button>`).join("")}</div><div class='rail-note'><span class='rail-mark'>${icon("lock")}</span><strong>Вы исследуете<br>открытую запись.</strong><p>Все операции вымышлены. Здесь воспроизводится уже выполненный прогон агента.</p><a href='#guide'>Как пройти расследование</a></div><a class='rail-bottom' href='#verification'>${icon("shield")}Надёжность среды<span>${data.verification.acceptance.cases.filter((c) => c.status === "passed").length}/${data.verification.acceptance.cases.length}</span></a></aside>
+ <div class='investigation-desk' data-mobile-pane='${mobilePane}'>
  <section class='source-workspace' aria-label='Просмотр источника'><div class='source-toolbar'>${sourceTabs()}${tab === "comparison" ? "" : `<button class='tool-button raw-toggle ${raw ? "selected" : ""}' data-action='raw' aria-label='${raw ? "Показать читаемый вид" : "Показать исходный JSON"}' aria-pressed='${raw}'>${icon("code")}</button>`}</div><div class='source-content' data-scroll='sources' id='source-content'>${sourceContent()}</div><div class='source-footer'>${icon("shield")}${tab === "comparison" ? "Сверка по открытым источникам" : "Первичный источник"}<span>Только чтение</span></div></section>
  <aside class='analysis-workspace' aria-label='Разбор расследования'><div class='analysis-tabs' role='tablist' aria-label='Результат или журнал'><button data-inspector='results' role='tab' tabindex='${inspector === "results" ? 0 : -1}' aria-selected='${inspector === "results"}'>Выводы${finished() ? `<span>${c.submission.findings.length}</span>` : ""}</button><button data-inspector='trace' role='tab' tabindex='${inspector === "trace" ? 0 : -1}' aria-selected='${inspector === "trace"}'>Журнал <span>${step}/${c.trajectory.length}</span></button></div><div class='analysis-content' data-scroll='analysis' id='results'>${inspector === "results" ? findings() : trace()}</div></aside></div>${transport()}`;
 }
@@ -753,7 +796,9 @@ document.addEventListener("click", (event) => {
   const el = event.target.closest("button, [data-action]");
   if (!el) return;
   if (el.dataset.case !== undefined) {
-    selectCase(Number(el.dataset.case));
+    const index = Number(el.dataset.case);
+    if (index !== caseIndex) selectCase(index);
+    $("#case-picker").close();
     return;
   }
   if (el.dataset.companySource) {
@@ -819,6 +864,12 @@ document.addEventListener("click", (event) => {
     return;
   }
   switch (el.dataset.action) {
+    case "open-cases":
+      openCasePicker();
+      break;
+    case "close-cases":
+      $("#case-picker").close();
+      break;
     case "company-run":
       launchFromCompany = true;
       mobilePane = "analysis";
@@ -914,7 +965,6 @@ document.addEventListener("click", (event) => {
   }
 });
 document.addEventListener("change", (e) => {
-  if (e.target.id === "episode-select") selectCase(Number(e.target.value));
   if (e.target.id === "comparison-finding" && finished()) {
     findingIndex = Number(e.target.value);
     render();
@@ -929,6 +979,21 @@ document.addEventListener("change", (e) => {
     stop();
     setStep(e.target.value);
   }
+});
+const caseDialog = $("#case-picker");
+caseDialog.addEventListener("close", () =>
+  $("#open-cases")?.focus({ preventScroll: true }),
+);
+caseDialog.addEventListener("click", (event) => {
+  if (event.target !== caseDialog) return;
+  const bounds = caseDialog.getBoundingClientRect();
+  if (
+    event.clientX < bounds.left ||
+    event.clientX > bounds.right ||
+    event.clientY < bounds.top ||
+    event.clientY > bounds.bottom
+  )
+    caseDialog.close();
 });
 document.addEventListener("input", (e) => {
   if (e.target.id === "ledger-search") {
@@ -967,6 +1032,7 @@ document.addEventListener("keydown", (e) => {
 });
 window.addEventListener("hashchange", () => {
   if (data) {
+    if (caseDialog.open) caseDialog.close();
     const start = launchFromCompany && route() === "workspace";
     launchFromCompany = false;
     render();
