@@ -500,7 +500,12 @@ function pagination(total, size) {
 function findings() {
   const c = current();
   if (!finished())
-    return `<div class='analysis-intro'><div class='orbit-symbol'>${icon("nodes")}<i></i><i></i></div><span class='section-kicker'>СОБЕРИТЕ КАРТИНУ</span><h2>От источника<br>к доказательству.</h2><p>Просмотрите документы или запустите запись. Агент покажет, какие данные он запросил и к чему пришёл.</p><div class='start-guide-mini'><div><span>${icon("file")}</span><p>Откройте первичные документы.</p></div><div><span>${icon("play")}</span><p>Пройдите ${c.steps} действий агента.</p></div><div><span>${icon("check")}</span><p>Сопоставьте вывод с источниками.</p></div></div><button class='text-button' data-action='finish'>Открыть готовый результат</button><p class='recorded-disclaimer'>Записанный прогон · ${c.id}<br>Новые вычисления в браузере не выполняются.</p></div>`;
+    return `<div class='analysis-intro'>
+      <div class='analysis-start-icon'>${icon("play")}</div>
+      <h2>Прогон агента</h2><p>Посмотрите, какие документы запросил агент. После ${c.steps} действий откроется сверка.</p>
+      <div class='analysis-start-actions'><button class='primary-button' data-action='analysis-play'>${icon("play")}Воспроизвести</button><button class='text-button' data-action='finish'>Открыть результат</button></div>
+      <p class='recorded-disclaimer'>Воспроизведение сохранённого прогона.</p>
+    </div>`;
   const m = c.evaluation;
   const summary = `<div class='result-strip'><span>Оценка завершена</span>${status("Проверено")}<div><strong>${num(m.f1, 2)}</strong><span>F1</span><strong>${num(m.reward, 3)}</strong><span>Возврат</span></div><details><summary>Все метрики</summary><dl class='metric-list'><div><dt>Precision / Recall</dt><dd>${num(m.precision, 2)} / ${num(m.recall, 2)}</dd></div><div><dt>TP / FP / FN</dt><dd>${m.tp} / ${m.fp} / ${m.fn}</dd></div><div><dt>Время прогона</dt><dd>${num(c.elapsed_seconds, 3)} с</dd></div></dl></details></div>`;
   if (!c.submission.findings.length)
@@ -886,6 +891,7 @@ document.addEventListener("click", (event) => {
       mobilePane = "sources";
       location.hash = "workspace";
       break;
+    case "analysis-play":
     case "play":
       play();
       break;

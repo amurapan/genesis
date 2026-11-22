@@ -116,7 +116,7 @@ reward = clip(2 × F1 − 1 − 0.002 × inspection_steps, −1, 1)
 | Ядро и тесты | Python 3.11, стандартная библиотека: `Decimal`, `Fraction`, `json`, `csv`, `unittest`, `subprocess` |
 | Изоляция и поставка | Docker, Linux/cgroup v2, Bash; базовые образы закреплены digest |
 | Форматы | JSON, JSONL, CSV, JSON Schema 2020-12; ISO-8601; целые minor units |
-| Веб-интерфейс | HTML, CSS, JavaScript ES modules; Three.js 0.180.0, WebGL2, CSS3DRenderer и Canvas 2D на лендинге; библиотеки поставляются локально, сборка для запуска не нужна |
+| Веб-интерфейс | HTML, CSS, JavaScript ES modules, Material Design 3 и локальный Roboto в лаборатории. Three.js 0.180.0, WebGL2, CSS3DRenderer и Canvas 2D для объёмных сцен. Сборка для запуска не нужна |
 | Шрифты | Montserrat для знака и крупного названия, локальные WOFF2 с SIL OFL 1.1; системные шрифты текста и Georgia для документов лаборатории |
 | Хостинг демо | Vercel, статическая публикация каталога `web/` |
 | Проверка интерфейса | Playwright, настольные и мобильные размеры экрана |

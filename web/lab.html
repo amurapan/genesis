@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#101514" />
+    <meta name="theme-color" content="#101512" />
     <meta
       name="description"
       content="Рабочий стол финансового расследования evidable. Изучайте источники, воспроизводите действия агента и проверяйте доказательства рядом с выводами."
@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="base.css" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="company.css" />
+    <link rel="stylesheet" href="material3.css" />
     <script type="module" src="app.js"></script>
   </head>
   <body class="lab">
@@ -30,11 +31,49 @@
       ><span class="header-divider"></span
       ><span class="product-name">Лаборатория</span>
       <nav aria-label="Разделы лаборатории">
-        <a href="#company" data-nav="company">Компания</a
-        ><a href="#workspace" data-nav="workspace">Расследование</a
-        ><a href="#verification" data-nav="verification">Проверки</a
-        ><a href="#architecture" data-nav="architecture">Устройство</a
-        ><a href="#guide" data-nav="guide">Быстрый старт</a>
+        <a href="#company" data-nav="company"
+          ><span
+            class="destination-icon"
+            data-icon="bank"
+            aria-hidden="true"
+          ></span
+          >Компания</a
+        >
+        <a href="#workspace" data-nav="workspace" aria-label="Расследование"
+          ><span
+            class="destination-icon"
+            data-icon="receipt"
+            aria-hidden="true"
+          ></span
+          >Дело</a
+        >
+        <a href="#verification" data-nav="verification"
+          ><span
+            class="destination-icon"
+            data-icon="shield"
+            aria-hidden="true"
+          ></span
+          >Проверки</a
+        >
+        <a
+          href="#architecture"
+          data-nav="architecture"
+          aria-label="Устройство среды"
+          ><span
+            class="destination-icon"
+            data-icon="nodes"
+            aria-hidden="true"
+          ></span
+          >Система</a
+        >
+        <a href="#guide" data-nav="guide" aria-label="Быстрый старт"
+          ><span
+            class="destination-icon"
+            data-icon="book"
+            aria-hidden="true"
+          ></span
+          >Старт</a
+        >
       </nav>
       <a
         class="header-github"
